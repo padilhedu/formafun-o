@@ -153,19 +153,25 @@ export function EstoqueClient({ itensIniciais }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="card p-4">
-          <p className="table-header mb-1">Total de Itens</p>
-          <p className="text-offwhite text-2xl font-semibold" style={{ fontFamily: 'var(--font-cormorant)' }}>{itens.length}</p>
+        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+          <p className="table-header mb-2">Total de Itens</p>
+          <p className="heading text-3xl font-semibold text-offwhite">{itens.length}</p>
+          <p className="text-muted text-xs mt-1">{itens.filter(i => i.categoria).length} categorias</p>
         </div>
-        <div className="card p-4" style={{ borderColor: abaixoMinimo.length > 0 ? 'rgba(251,191,36,0.3)' : undefined }}>
-          <p className="table-header mb-1">Abaixo do Mínimo</p>
-          <p className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-cormorant)', color: abaixoMinimo.length > 0 ? '#FBBF24' : '#F5F2EA' }}>{abaixoMinimo.length}</p>
+        <div className="card p-5" style={{ borderLeft: `3px solid ${abaixoMinimo.length > 0 ? '#FBBF24' : '#4ADE80'}` }}>
+          <p className="table-header mb-2">Abaixo do Mínimo</p>
+          <p className="heading text-3xl font-semibold" style={{ color: abaixoMinimo.length > 0 ? '#FBBF24' : '#4ADE80' }}>{abaixoMinimo.length}</p>
+          <div className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1"
+            style={{ background: abaixoMinimo.length > 0 ? 'rgba(251,191,36,0.1)' : 'rgba(74,222,128,0.1)', color: abaixoMinimo.length > 0 ? '#FBBF24' : '#4ADE80' }}>
+            {abaixoMinimo.length > 0 ? '↓ reposição necessária' : '✓ estoque ok'}
+          </div>
         </div>
-        <div className="card p-4">
-          <p className="table-header mb-1">Valor Total</p>
-          <p className="text-offwhite text-2xl font-semibold" style={{ fontFamily: 'var(--font-cormorant)' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #60A5FA' }}>
+          <p className="table-header mb-2">Valor Total em Estoque</p>
+          <p className="heading text-3xl font-semibold text-offwhite">
             {itens.reduce((s, i) => s + (i.quantidade * (i.valor_unitario ?? 0)), 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
           </p>
+          <p className="text-muted text-xs mt-1">{itens.length} itens contabilizados</p>
         </div>
       </div>
 

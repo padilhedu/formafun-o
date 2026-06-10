@@ -23,12 +23,12 @@ const TOOLTIP_STYLE = {
   borderRadius: 8, color: '#F5F2EA', fontSize: '0.75rem',
 };
 
-function KPI({ label, valor, sub, cor }: { label: string; valor: string; sub?: string; cor?: string }) {
+function KPI({ label, valor, sub, cor, accent }: { label: string; valor: string; sub?: string; cor?: string; accent?: string }) {
   return (
-    <div className="card p-5">
-      <p className="table-header mb-1">{label}</p>
-      <p className="font-semibold" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.6rem', color: cor ?? '#F5F2EA' }}>{valor}</p>
-      {sub && <p className="text-muted mt-0.5" style={{ fontSize: '0.68rem' }}>{sub}</p>}
+    <div className="card p-5" style={{ borderLeft: `3px solid ${accent ?? cor ?? '#B89A5A'}` }}>
+      <p className="table-header mb-2">{label}</p>
+      <p className="heading text-3xl font-semibold" style={{ color: cor ?? '#F5F2EA' }}>{valor}</p>
+      {sub && <p className="text-muted mt-1" style={{ fontSize: '0.7rem' }}>{sub}</p>}
     </div>
   );
 }
@@ -40,10 +40,10 @@ export function RelatoriosClient({ fluxo, pacientesPorMes, consultasPorStatus, t
     <div className="space-y-6">
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <KPI label="Total de Pacientes" valor={String(totalPacientes)} />
-        <KPI label="Recebido no Ano" valor={totalRecebidoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#4ADE80" />
-        <KPI label="Pago no Ano" valor={totalPagoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#F87171" />
-        <KPI label="Saldo do Ano" valor={saldoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor={saldoAno >= 0 ? '#4ADE80' : '#F87171'}
+        <KPI label="Total de Pacientes" valor={String(totalPacientes)} accent="#B89A5A" />
+        <KPI label="Recebido no Ano" valor={totalRecebidoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#4ADE80" accent="#4ADE80" />
+        <KPI label="Pago no Ano" valor={totalPagoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#F87171" accent="#F87171" />
+        <KPI label="Saldo do Ano" valor={saldoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor={saldoAno >= 0 ? '#4ADE80' : '#F87171'} accent={saldoAno >= 0 ? '#4ADE80' : '#F87171'}
           sub={inadimplencia > 0 ? `Inadimplência: ${inadimplencia.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}` : undefined} />
       </div>
 

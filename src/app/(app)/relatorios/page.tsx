@@ -70,9 +70,9 @@ export default async function RelatoriosPage() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="heading text-offwhite" style={{ fontSize: '1.6rem' }}>Relatórios</h1>
-        <p className="text-muted text-xs mt-0.5">Visão consolidada do desempenho clínico e financeiro da clínica.</p>
+      <div className="mb-2">
+        <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>Relatórios</h1>
+        <p className="text-muted text-sm">Visão consolidada do desempenho clínico e financeiro da clínica.</p>
       </div>
       <RelatoriosClient
         fluxo={fluxo}

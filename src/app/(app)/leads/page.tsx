@@ -14,9 +14,11 @@ export default async function LeadsPage() {
   const { data: leads } = await client.from('leads').select('*').order('criado_em', { ascending: false });
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="heading text-offwhite" style={{ fontSize: '1.6rem' }}>CRM / Leads</h1>
-        <p className="text-muted text-xs mt-0.5">Pipeline de captação. Avance os cards com as setas ou clique para editar.</p>
+      <div className="flex items-start justify-between mb-2">
+        <div>
+          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>CRM / Leads</h1>
+          <p className="text-muted text-sm">Pipeline de captação. Avance os cards com as setas ou clique para editar.</p>
+        </div>
       </div>
       <LeadsKanban leadsIniciais={leads ?? []} />
     </div>

@@ -36,9 +36,11 @@ export default async function AgendaPage() {
 
   return (
     <div className="flex flex-col gap-4" style={{ height: '100%' }}>
-      <div>
-        <h1 className="heading text-offwhite" style={{ fontSize: '1.6rem' }}>Agenda</h1>
-        <p className="text-muted text-xs mt-0.5">Visualize e gerencie consultas. Clique em um horário para criar evento.</p>
+      <div className="flex items-start justify-between mb-2">
+        <div>
+          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>Agenda</h1>
+          <p className="text-muted text-sm">Visualize e gerencie consultas. Clique em um horário para criar evento.</p>
+        </div>
       </div>
       <AgendaClient
         eventosIniciais={eventos ?? []}

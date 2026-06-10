@@ -96,12 +96,41 @@ export function LeadsKanban({ leadsIniciais }: Props) {
     if (res.ok) { const data = await res.json(); onSalvo(data); }
   }
 
+  const convertidos = leads.filter(l => l.status === 'convertido').length;
+  const perdidos = leads.filter(l => l.status === 'perdido').length;
+  const ativos = leads.filter(l => !['convertido','perdido'].includes(l.status)).length;
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-muted text-xs">{leads.length} lead{leads.length !== 1 ? 's' : ''} no total</p>
+      {/* KPIs */}
+      <div className="grid grid-cols-4 gap-4">
+        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+          <p className="table-header mb-2">Total de Leads</p>
+          <p className="heading text-3xl font-semibold text-offwhite">{leads.length}</p>
+          <p className="text-muted text-xs mt-1">{ativos} em andamento</p>
         </div>
+        <div className="card p-5" style={{ borderLeft: '3px solid #4ADE80' }}>
+          <p className="table-header mb-2">Convertidos</p>
+          <p className="heading text-3xl font-semibold" style={{ color: '#4ADE80' }}>{convertidos}</p>
+          <div className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1"
+            style={{ background: 'rgba(74,222,128,0.1)', color: '#4ADE80' }}>
+            {leads.length > 0 ? `${Math.round((convertidos / leads.length) * 100)}% taxa` : '—'}
+          </div>
+        </div>
+        <div className="card p-5" style={{ borderLeft: '3px solid #FBBF24' }}>
+          <p className="table-header mb-2">Em Andamento</p>
+          <p className="heading text-3xl font-semibold" style={{ color: '#FBBF24' }}>{ativos}</p>
+          <p className="text-muted text-xs mt-1">aguardando ação</p>
+        </div>
+        <div className="card p-5" style={{ borderLeft: '3px solid #F87171' }}>
+          <p className="table-header mb-2">Perdidos</p>
+          <p className="heading text-3xl font-semibold" style={{ color: '#F87171' }}>{perdidos}</p>
+          <p className="text-muted text-xs mt-1">não convertidos</p>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div />
         <button onClick={() => setModal(null)} className="btn-primary">+ Novo Lead</button>
       </div>
 

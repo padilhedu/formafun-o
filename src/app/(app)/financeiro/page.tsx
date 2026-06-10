@@ -80,7 +80,7 @@ export default async function FinanceiroPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="heading text-4xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+        <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
           Financeiro
         </h1>
         <p className="text-muted text-sm">Visão geral — fluxo de caixa e inadimplência</p>
@@ -89,11 +89,11 @@ export default async function FinanceiroPage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
         {kpis.map(k => (
-          <Link key={k.label} href={k.href} className="card block hover:border-gold transition-colors" style={{ padding: '16px 18px' }}>
+          <Link key={k.label} href={k.href} className="card block hover:border-gold transition-colors" style={{ padding: '16px 18px', borderLeft: `3px solid ${k.cor}` }}>
             <div className="text-muted mb-2" style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
               {k.label}
             </div>
-            <div style={{ color: k.cor, fontFamily: 'var(--font-montserrat)', fontSize: 19, fontWeight: 700 }}>
+            <div className="heading" style={{ color: k.cor, fontFamily: 'var(--font-cormorant)', fontSize: '1.7rem', fontWeight: 600 }}>
               {formatBRL(k.valor)}
             </div>
             {k.sub && <div className="text-muted mt-1" style={{ fontSize: 10 }}>{k.sub}</div>}

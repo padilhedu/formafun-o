@@ -14,9 +14,11 @@ export default async function EstoquePage() {
   const { data: itens } = await client.from('estoque_itens').select('*').eq('ativo', true).order('nome');
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="heading text-offwhite" style={{ fontSize: '1.6rem' }}>Estoque</h1>
-        <p className="text-muted text-xs mt-0.5">Controle de materiais, insumos e EPIs. Clique em "Mover" para registrar entrada ou saída.</p>
+      <div className="flex items-start justify-between mb-2">
+        <div>
+          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>Estoque</h1>
+          <p className="text-muted text-sm">Controle de materiais, insumos e EPIs. Clique em "Mover" para registrar entrada ou saída.</p>
+        </div>
       </div>
       <EstoqueClient itensIniciais={itens ?? []} />
     </div>

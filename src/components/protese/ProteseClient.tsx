@@ -120,14 +120,23 @@ export function ProteseClient({ pedidosIniciais, pacientes }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="card p-4"><p className="table-header mb-1">Em Aberto</p><p className="text-offwhite text-2xl font-semibold" style={{ fontFamily: 'var(--font-cormorant)' }}>{emAberto}</p></div>
-        <div className="card p-4" style={{ borderColor: prontos > 0 ? 'rgba(74,222,128,0.3)' : undefined }}>
-          <p className="table-header mb-1">Prontos para Entrega</p>
-          <p className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-cormorant)', color: prontos > 0 ? '#4ADE80' : '#F5F2EA' }}>{prontos}</p>
+        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+          <p className="table-header mb-2">Em Aberto</p>
+          <p className="heading text-3xl font-semibold text-offwhite">{emAberto}</p>
+          <p className="text-muted text-xs mt-1">pedidos ativos</p>
         </div>
-        <div className="card p-4">
-          <p className="table-header mb-1">Total</p>
-          <p className="text-offwhite text-2xl font-semibold" style={{ fontFamily: 'var(--font-cormorant)' }}>{pedidos.length}</p>
+        <div className="card p-5" style={{ borderLeft: `3px solid ${prontos > 0 ? '#4ADE80' : '#8A8A93'}` }}>
+          <p className="table-header mb-2">Prontos para Entrega</p>
+          <p className="heading text-3xl font-semibold" style={{ color: prontos > 0 ? '#4ADE80' : '#F5F2EA' }}>{prontos}</p>
+          <div className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1"
+            style={{ background: prontos > 0 ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)', color: prontos > 0 ? '#4ADE80' : '#8A8A93' }}>
+            {prontos > 0 ? '↑ aguardando retirada' : '— nenhum pronto'}
+          </div>
+        </div>
+        <div className="card p-5" style={{ borderLeft: '3px solid #60A5FA' }}>
+          <p className="table-header mb-2">Total de Pedidos</p>
+          <p className="heading text-3xl font-semibold text-offwhite">{pedidos.length}</p>
+          <p className="text-muted text-xs mt-1">{pedidos.filter(p => p.status === 'entregue').length} entregues</p>
         </div>
       </div>
 

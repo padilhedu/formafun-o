@@ -40,7 +40,7 @@ export default async function OrcamentosPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="heading text-4xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
             Orçamentos
           </h1>
           <p className="text-muted text-sm">Pipeline de orçamentos por status</p>
