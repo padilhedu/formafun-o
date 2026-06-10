@@ -2,23 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-function supabase() {
-  const cookieStore = cookies();
+async function sb() {
+  const c = await cookies();
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} } }
+    { cookies: { getAll: () => c.getAll(), setAll: () => {} } }
   );
 }
 
-// GET /api/agenda?inicio=2026-06-01&fim=2026-06-30
 export async function GET(req: NextRequest) {
-  const sb = supabase();
+  const client = await sb();
   const { searchParams } = new URL(req.url);
   const inicio = searchParams.get('inicio');
   const fim = searchParams.get('fim');
 
-  let query = sb
+  let query = client
     .from('agenda_eventos')
     .select('*, pacientes(nome, telefone)')
     .order('inicio');
@@ -31,9 +30,8 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(data);
 }
 
-// POST /api/agenda
 export async function POST(req: NextRequest) {
-  const sb = supabase();
+  const client = await sb();
   const body = await req.json();
   const { titulo, descricao, tipo, inicio, fim, paciente_id, dentista_id, cor } = body;
 
@@ -41,17 +39,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'titulo, inicio e fim são obrigatórios' }, { status: 400 });
   }
 
-  const { data, error } = await sb
+  const { data, error } = await client
     .from('agenda_eventos')
     .insert({
-      titulo,
-      descricao: descricao || null,
-      tipo: tipo || 'consulta',
-      inicio,
-      fim,
-      paciente_id: paciente_id || null,
-      dentista_id: dentista_id || null,
-      cor: cor || '#59399E',
+      titulo, descricao: descricao || null, tipo: tipo || 'consulta',
+      inicio, fim, paciente_id: paciente_id || null,
+      dentista_id: dentista_id || null, cor: cor || '#59399E',
     })
     .select('*, pacientes(nome, telefone)')
     .single();

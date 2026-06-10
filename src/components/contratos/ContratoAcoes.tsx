@@ -72,7 +72,7 @@ export function ContratoAcoes({ contratoId, status, pdfToken }: Props) {
         </a>
 
         {/* Send to ZapSign */}
-        {(status === 'rascunho' || status === 'enviado') && status !== 'assinado' && (
+        {(status === 'rascunho' || status === 'enviado') && (
           <button
             onClick={enviar}
             disabled={!!loading}

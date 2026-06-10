@@ -4,13 +4,14 @@ import { LeadsKanban } from '@/components/leads/LeadsKanban';
 
 export const dynamic = 'force-dynamic';
 
-function sb() {
-  const c = cookies();
+async function sb() {
+  const c = await cookies();
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { cookies: { getAll: () => c.getAll(), setAll: () => {} } });
 }
 
 export default async function LeadsPage() {
-  const { data: leads } = await sb().from('leads').select('*').order('criado_em', { ascending: false });
+  const client = await sb();
+  const { data: leads } = await client.from('leads').select('*').order('criado_em', { ascending: false });
   return (
     <div className="space-y-4">
       <div>

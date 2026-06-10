@@ -4,8 +4,8 @@ import { AgendaClient } from '@/components/agenda/AgendaClient';
 
 export const dynamic = 'force-dynamic';
 
-function supabase() {
-  const cookieStore = cookies();
+async function supabase() {
+  const cookieStore = await cookies();
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -14,9 +14,8 @@ function supabase() {
 }
 
 export default async function AgendaPage() {
-  const sb = supabase();
+  const sb = await supabase();
 
-  // Semana atual (Seg–Dom)
   const hoje = new Date();
   const dow = hoje.getDay();
   const diff = dow === 0 ? -6 : 1 - dow;

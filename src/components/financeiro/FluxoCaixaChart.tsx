@@ -36,8 +36,8 @@ export function FluxoCaixaChart({ data }: { data: FluxoMes[] }) {
               fontSize: 12,
             }}
             labelStyle={{ color: '#F5F2EA' }}
-            formatter={(value: number | string | Array<number | string>, name: string) => [
-              Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+            formatter={(value, name) => [
+              Number(value ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
               name === 'recebido' ? 'Recebido' : 'Pago',
             ]}
           />

@@ -4,13 +4,14 @@ import { EstoqueClient } from '@/components/estoque/EstoqueClient';
 
 export const dynamic = 'force-dynamic';
 
-function sb() {
-  const c = cookies();
+async function sb() {
+  const c = await cookies();
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { cookies: { getAll: () => c.getAll(), setAll: () => {} } });
 }
 
 export default async function EstoquePage() {
-  const { data: itens } = await sb().from('estoque_itens').select('*').eq('ativo', true).order('nome');
+  const client = await sb();
+  const { data: itens } = await client.from('estoque_itens').select('*').eq('ativo', true).order('nome');
   return (
     <div className="space-y-4">
       <div>

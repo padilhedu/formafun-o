@@ -55,7 +55,7 @@ export function RelatoriosClient({ fluxo, pacientesPorMes, consultasPorStatus, t
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
             <XAxis dataKey="mes" tick={{ fill: '#8A8A93', fontSize: 11 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fill: '#8A8A93', fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={v => `R$${(v/1000).toFixed(0)}k`} />
-            <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v: number) => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} />
+            <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => Number(v ?? 0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} />
             <Legend wrapperStyle={{ fontSize: '0.72rem', color: '#8A8A93' }} />
             <Bar dataKey="recebido" name="Recebido" fill="#4ADE80" radius={[4,4,0,0]} />
             <Bar dataKey="pago" name="Pago" fill="#F87171" radius={[4,4,0,0]} />

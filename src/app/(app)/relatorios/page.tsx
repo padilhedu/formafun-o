@@ -6,8 +6,8 @@ export const dynamic = 'force-dynamic';
 
 const MESES_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
-function sb() {
-  const c = cookies();
+async function sb() {
+  const c = await cookies();
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { cookies: { getAll: () => c.getAll(), setAll: () => {} } });
 }
 
@@ -15,7 +15,6 @@ export default async function RelatoriosPage() {
   const agora = new Date();
   const anoAtual = agora.getFullYear();
 
-  // Últimos 6 meses
   const meses6: { label: string; inicio: string; fim: string }[] = [];
   for (let i = 5; i >= 0; i--) {
     const d = new Date(agora.getFullYear(), agora.getMonth() - i, 1);
@@ -23,7 +22,7 @@ export default async function RelatoriosPage() {
     meses6.push({ label: MESES_PT[d.getMonth()], inicio: d.toISOString(), fim: fim.toISOString() });
   }
 
-  const client = sb();
+  const client = await sb();
 
   const [
     { data: receber },
@@ -37,7 +36,6 @@ export default async function RelatoriosPage() {
     client.from('agenda_eventos').select('status').gte('inicio', `${anoAtual}-01-01`),
   ]);
 
-  // Fluxo por mês
   const fluxo = meses6.map(({ label, inicio, fim }) => {
     const recebido = (receber ?? [])
       .filter(r => r.status === 'pago' && r.pago_em >= inicio && r.pago_em <= fim)
@@ -48,13 +46,11 @@ export default async function RelatoriosPage() {
     return { mes: label, recebido, pago, saldo: recebido - pago };
   });
 
-  // Novos pacientes por mês
   const pacientesPorMes = meses6.map(({ label, inicio, fim }) => ({
     mes: label,
     novos: (pacientes ?? []).filter(p => p.criado_em >= inicio && p.criado_em <= fim).length,
   }));
 
-  // Consultas por status
   const statusMap: Record<string, { cor: string }> = {
     agendado: { cor: '#7B5DC0' },
     confirmado: { cor: '#4ADE80' },
@@ -70,7 +66,7 @@ export default async function RelatoriosPage() {
 
   const totalRecebidoAno = (receber ?? []).filter(r => r.status === 'pago').reduce((s, r) => s + Number(r.valor_pago ?? 0), 0);
   const totalPagoAno = (pagar ?? []).filter(p => p.status === 'pago').reduce((s, p) => s + Number(p.valor ?? 0), 0);
-  const inadimplencia = (receber ?? []).filter(r => r.status === 'pendente').reduce((s, r) => s + 0, 0);
+  const inadimplencia = (receber ?? []).filter(r => r.status === 'pendente').reduce((s) => s + 0, 0);
 
   return (
     <div className="space-y-4">
