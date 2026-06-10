@@ -15,6 +15,11 @@ const config: Config = {
         gold: "#B89A5A",
         champagne: "#D9C9A3",
         offwhite: "#F5F2EA",
+        // sidebar Capim
+        "sidebar-dark": "#42414B",
+        "brand-purple": "#59399E",
+        "brand-purple-light": "#7B5DC0",
+        "brand-purple-dim": "rgba(89,57,158,0.15)",
         // "muted" do app (texto cinza) — manter; o token shadcn equivalente é "muted-shad"
         muted: "#8A8A93",
         success: "#4ADE80",

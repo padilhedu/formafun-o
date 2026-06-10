@@ -96,6 +96,14 @@ function IconMegaphone() {
     </svg>
   );
 }
+function IconReport() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M2 12l3.5-4 2.5 2.5L11 7l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  );
+}
 function IconSettings() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -149,7 +157,6 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/pacientes", label: "Pacientes", icon: <IconPeople /> },
       { href: "/agenda", label: "Agenda", icon: <IconCalendar /> },
-      { href: "/protese", label: "Prótese", icon: <IconProtese /> },
     ],
   },
   {
@@ -164,7 +171,9 @@ const NAV_GROUPS: NavGroup[] = [
     title: "OPERACIONAL",
     items: [
       { href: "/estoque", label: "Estoque", icon: <IconBox /> },
+      { href: "/protese", label: "Prótese", icon: <IconProtese /> },
       { href: "/marketing", label: "Marketing", icon: <IconMegaphone /> },
+      { href: "/relatorios", label: "Relatórios", icon: <IconReport /> },
       { href: "/configuracoes", label: "Configurações", icon: <IconSettings /> },
     ],
   },
@@ -187,23 +196,23 @@ export function Sidebar() {
     <aside
       className="fixed left-0 top-0 h-screen w-56 flex flex-col z-30"
       style={{
-        background: "#0D0D0F",
-        borderRight: "1px solid rgba(255,255,255,0.07)",
+        background: "#42414B",
+        borderRight: "1px solid rgba(255,255,255,0.08)",
       }}
     >
       {/* Logo */}
       <div
         className="flex items-center gap-3 px-5 py-5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
       >
         <div
-          className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-          style={{ border: "1px solid rgba(184,154,90,0.35)" }}
+          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ background: "rgba(89,57,158,0.35)", border: "1px solid rgba(89,57,158,0.5)" }}
         >
           <svg width="16" height="16" viewBox="0 0 28 28" fill="none">
             <path
               d="M14 3C8.477 3 4 7.477 4 13c0 3.09 1.394 5.86 3.6 7.73L14 25l6.4-4.27A9.964 9.964 0 0 0 24 13c0-5.523-4.477-10-10-10Z"
-              stroke="#B89A5A"
+              stroke="#A07FD4"
               strokeWidth="1.8"
               fill="none"
             />
@@ -211,27 +220,27 @@ export function Sidebar() {
         </div>
         <div>
           <div
-            className="text-offwhite font-semibold text-sm leading-tight"
+            className="text-white font-semibold leading-tight"
             style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem" }}
           >
             Forma & Função
           </div>
-          <div className="text-muted" style={{ fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          <div style={{ fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
             Odontologia
           </div>
         </div>
       </div>
 
       {/* Navegação */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3">
+      <nav className="flex-1 overflow-y-auto py-3 px-3">
         {NAV_GROUPS.map((group) => (
           <div key={group.title} className="mb-1">
             <button
               onClick={() => toggleGroup(group.title)}
               className="flex items-center justify-between w-full px-2 py-1.5 mb-0.5 rounded"
-              style={{ color: "#8A8A93" }}
+              style={{ color: "rgba(255,255,255,0.35)" }}
             >
-              <span style={{ fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+              <span style={{ fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
                 {group.title}
               </span>
               <IconChevron open={openGroups[group.title]} />
@@ -240,31 +249,33 @@ export function Sidebar() {
             {openGroups[group.title] && (
               <ul className="space-y-0.5 mb-2">
                 {group.items.map((item) => {
-                  const active = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href));
+                  const active =
+                    pathname === item.href ||
+                    (item.href !== "/dashboard" && pathname.startsWith(item.href));
                   return (
                     <li key={item.href}>
                       <Link
                         href={item.href}
-                        className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors"
+                        className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-all"
                         style={{
-                          color: active ? "#B89A5A" : "#8A8A93",
-                          background: active ? "rgba(184,154,90,0.1)" : "transparent",
+                          color: active ? "#ffffff" : "rgba(255,255,255,0.6)",
+                          background: active ? "#59399E" : "transparent",
                           fontFamily: "var(--font-montserrat)",
                         }}
                         onMouseEnter={(e) => {
                           if (!active) {
-                            (e.currentTarget as HTMLElement).style.color = "#D9C9A3";
-                            (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
+                            (e.currentTarget as HTMLElement).style.color = "#ffffff";
+                            (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!active) {
-                            (e.currentTarget as HTMLElement).style.color = "#8A8A93";
+                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)";
                             (e.currentTarget as HTMLElement).style.background = "transparent";
                           }
                         }}
                       >
-                        <span style={{ color: active ? "#B89A5A" : "inherit" }}>{item.icon}</span>
+                        <span style={{ opacity: active ? 1 : 0.7 }}>{item.icon}</span>
                         {item.label}
                       </Link>
                     </li>
@@ -276,10 +287,14 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer versão */}
+      {/* Footer */}
       <div
-        className="px-5 py-3 text-muted"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.06)", fontSize: "0.6rem" }}
+        className="px-5 py-3"
+        style={{
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          fontSize: "0.6rem",
+          color: "rgba(255,255,255,0.3)",
+        }}
       >
         v0.1.0 · Forma & Função
       </div>

@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Rotas públicas
-  const publicRoutes = ["/login", "/api/webhooks", "/demo"];
+  const publicRoutes = ["/login", "/api/webhooks", "/demo", "/api/webhooks/whatsapp"];
   const isPublic = publicRoutes.some((r) => pathname.startsWith(r));
 
   if (!user && !isPublic) {

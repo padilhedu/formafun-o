@@ -1,11 +1,26 @@
-import { PlaceholderPage } from "@/components/layout/PlaceholderPage";
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import { ProteseClient } from '@/components/protese/ProteseClient';
 
-export default function ProtesePage() {
+export const dynamic = 'force-dynamic';
+
+function sb() {
+  const c = cookies();
+  return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { cookies: { getAll: () => c.getAll(), setAll: () => {} } });
+}
+
+export default async function ProtesePage() {
+  const [{ data: pedidos }, { data: pacientes }] = await Promise.all([
+    sb().from('protese_pedidos').select('*, pacientes(nome)').order('criado_em', { ascending: false }),
+    sb().from('pacientes').select('id, nome').eq('ativo', true).order('nome'),
+  ]);
   return (
-    <PlaceholderPage
-      title="Prótese"
-      description="Controle de trabalhos protéticos com laboratórios: kanban por status, alertas de atraso e notificações automáticas."
-      phase="Fase 8 — Em desenvolvimento"
-    />
+    <div className="space-y-4">
+      <div>
+        <h1 className="heading text-offwhite" style={{ fontSize: '1.6rem' }}>Prótese</h1>
+        <p className="text-muted text-xs mt-0.5">Pedidos a laboratórios. Acompanhe status, prazo e entrega de cada trabalho protético.</p>
+      </div>
+      <ProteseClient pedidosIniciais={pedidos ?? []} pacientes={pacientes ?? []} />
+    </div>
   );
 }

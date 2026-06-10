@@ -1,11 +1,23 @@
-import { PlaceholderPage } from "@/components/layout/PlaceholderPage";
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import { LeadsKanban } from '@/components/leads/LeadsKanban';
 
-export default function LeadsPage() {
+export const dynamic = 'force-dynamic';
+
+function sb() {
+  const c = cookies();
+  return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { cookies: { getAll: () => c.getAll(), setAll: () => {} } });
+}
+
+export default async function LeadsPage() {
+  const { data: leads } = await sb().from('leads').select('*').order('criado_em', { ascending: false });
   return (
-    <PlaceholderPage
-      title="CRM / Leads"
-      description="Pipeline de captação: Instagram, Google, indicações. Kanban por status com taxa de conversão e disparos de WhatsApp."
-      phase="Fase 8 — Em desenvolvimento"
-    />
+    <div className="space-y-4">
+      <div>
+        <h1 className="heading text-offwhite" style={{ fontSize: '1.6rem' }}>CRM / Leads</h1>
+        <p className="text-muted text-xs mt-0.5">Pipeline de captação. Avance os cards com as setas ou clique para editar.</p>
+      </div>
+      <LeadsKanban leadsIniciais={leads ?? []} />
+    </div>
   );
 }
