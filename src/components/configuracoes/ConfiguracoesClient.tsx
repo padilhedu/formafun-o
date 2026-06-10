@@ -9,6 +9,7 @@ import { TabProcedimentos } from './tabs/TabProcedimentos';
 import { TabUsuarios } from './tabs/TabUsuarios';
 import { TabSeguranca } from './tabs/TabSeguranca';
 import { TabIntegracoes } from './tabs/TabIntegracoes';
+import { TabDocumentos } from './tabs/TabDocumentos';
 
 const TABS = [
   { id: 'clinica',        label: 'Clínica' },
@@ -66,21 +67,11 @@ export function ConfiguracoesClient({ config, profissionais, procedimentos, usua
         {activeTab === 'agenda'        && <TabAgenda config={config} />}
         {activeTab === 'financeiro'    && <TabFinanceiro config={config} />}
         {activeTab === 'procedimentos' && <TabProcedimentos procedimentos={procedimentos as ProcedimentoRow[]} />}
-        {activeTab === 'documentos'    && <TabDocumentosPlaceholder />}
+        {activeTab === 'documentos'    && <TabDocumentos />}
         {activeTab === 'usuarios'      && <TabUsuarios usuarios={usuarios as UsuarioRow[]} />}
         {activeTab === 'seguranca'     && <TabSeguranca auditLog={auditLog as AuditRow[]} />}
         {activeTab === 'integracoes'   && <TabIntegracoes />}
       </div>
-    </div>
-  );
-}
-
-function TabDocumentosPlaceholder() {
-  return (
-    <div className="card p-8 text-center" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.2)' }}>
-      <p className="heading text-offwhite mb-2" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.5rem' }}>Documentos & Templates</p>
-      <p className="text-muted text-sm">Implementado na Fase 11 — Contratos por Procedimento.</p>
-      <p className="text-muted text-xs mt-2">Biblioteca de contratos e TCLEs com versionamento.</p>
     </div>
   );
 }

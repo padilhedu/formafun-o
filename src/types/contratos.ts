@@ -4,13 +4,29 @@ export type ContratoStatus =
 export type TemplateTipo =
   | 'prestacao_servico' | 'ortodontia' | 'implante' | 'aditivo' | 'consentimento' | 'lgpd';
 
+export type CategoriaDocumento = 'contrato' | 'tcle';
+export type OrigemTemplate = 'sistema' | 'juridico';
+
 export interface ContratoTemplate {
   id: string;
   nome: string;
   tipo: TemplateTipo;
+  categoria_documento: CategoriaDocumento;
+  origem: OrigemTemplate;
+  versao: number;
+  vigente: boolean;
   corpo_html: string;
+  arquivo_drive_id: string | null;
   ativo: boolean;
   created_at: string;
+}
+
+export interface ProcedimentoDocumento {
+  id: string;
+  categoria_procedimento: string;
+  template_id: string;
+  obrigatorio: boolean;
+  criado_em: string;
 }
 
 export interface Contrato {
