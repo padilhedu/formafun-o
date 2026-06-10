@@ -1,0 +1,317 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-cormorant: "Cormorant Garamond", Georgia, serif;
+    --font-montserrat: "Montserrat", system-ui, sans-serif;
+
+    /* ===== Tema shadcn (verde/creme) — triplets RGB p/ alpha no Tailwind 3 ===== */
+    --background: 248 245 240;          /* #f8f5f0 */
+    --foreground: 62 39 35;             /* #3e2723 */
+    --card: 248 245 240;                /* #f8f5f0 */
+    --card-foreground: 62 39 35;        /* #3e2723 */
+    --popover: 248 245 240;             /* #f8f5f0 */
+    --popover-foreground: 62 39 35;     /* #3e2723 */
+    --primary: 46 125 50;               /* #2e7d32 */
+    --primary-foreground: 255 255 255;  /* #ffffff */
+    --secondary: 232 245 233;           /* #e8f5e9 */
+    --secondary-foreground: 27 94 32;   /* #1b5e20 */
+    --muted-shad: 240 233 224;          /* #f0e9e0 (renomeado: "muted" já é cor do app) */
+    --muted-foreground: 109 76 65;      /* #6d4c41 */
+    --accent: 200 230 201;              /* #c8e6c9 */
+    --accent-foreground: 27 94 32;      /* #1b5e20 */
+    --destructive: 198 40 40;           /* #c62828 */
+    --destructive-foreground: 255 255 255;
+    --border-shad: 224 214 201;         /* #e0d6c9 (renomeado: "border" já é cor do app) */
+    --input: 224 214 201;               /* #e0d6c9 */
+    --ring: 46 125 50;                  /* #2e7d32 */
+    --radius: 0.5rem;
+    --chart-1: #4caf50;
+    --chart-2: #388e3c;
+    --chart-3: #2e7d32;
+    --chart-4: #1b5e20;
+    --chart-5: #0a1f0c;
+    --sidebar: #f0e9e0;
+    --sidebar-foreground: #3e2723;
+    --sidebar-primary: #2e7d32;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #c8e6c9;
+    --sidebar-accent-foreground: #1b5e20;
+    --sidebar-border: #e0d6c9;
+    --sidebar-ring: #2e7d32;
+  }
+
+  .dark {
+    --background: 28 42 31;             /* #1c2a1f */
+    --foreground: 240 235 229;          /* #f0ebe5 */
+    --card: 45 58 46;                   /* #2d3a2e */
+    --card-foreground: 240 235 229;
+    --popover: 45 58 46;
+    --popover-foreground: 240 235 229;
+    --primary: 76 175 80;               /* #4caf50 */
+    --primary-foreground: 10 31 12;     /* #0a1f0c */
+    --secondary: 62 74 61;              /* #3e4a3d */
+    --secondary-foreground: 215 224 214;/* #d7e0d6 */
+    --muted-shad: 45 58 46;             /* #2d3a2e */
+    --muted-foreground: 215 207 196;    /* #d7cfc4 */
+    --accent: 56 142 60;                /* #388e3c */
+    --accent-foreground: 240 235 229;
+    --destructive: 198 40 40;
+    --destructive-foreground: 240 235 229;
+    --border-shad: 62 74 61;            /* #3e4a3d */
+    --input: 62 74 61;
+    --ring: 76 175 80;
+    --chart-1: #81c784;
+    --chart-2: #66bb6a;
+    --chart-3: #4caf50;
+    --chart-4: #43a047;
+    --chart-5: #388e3c;
+    --sidebar: #1c2a1f;
+    --sidebar-foreground: #f0ebe5;
+    --sidebar-primary: #4caf50;
+    --sidebar-primary-foreground: #0a1f0c;
+    --sidebar-accent: #388e3c;
+    --sidebar-accent-foreground: #f0ebe5;
+    --sidebar-border: #3e4a3d;
+    --sidebar-ring: #4caf50;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #0A0A0B;
+    color: #F5F2EA;
+    font-family: var(--font-montserrat);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #121214;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Seleção */
+  ::selection {
+    background: rgba(184, 154, 90, 0.3);
+    color: #F5F2EA;
+  }
+}
+
+@layer components {
+  .heading {
+    font-family: var(--font-cormorant);
+    font-weight: 600;
+  }
+
+  .card {
+    background: #121214;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+  }
+
+  .card-elevated {
+    background: #1A1A1E;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+  }
+
+  .btn-primary {
+    background: #B89A5A;
+    color: #0A0A0B;
+    font-family: var(--font-montserrat);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+  }
+  .btn-primary:hover {
+    background: #D9C9A3;
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: #8A8A93;
+    font-family: var(--font-montserrat);
+    font-size: 0.8rem;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn-ghost:hover {
+    color: #F5F2EA;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .input-field {
+    background: #1A1A1E;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+    color: #F5F2EA;
+    font-family: var(--font-montserrat);
+    font-size: 0.875rem;
+    padding: 0.625rem 0.875rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input-field::placeholder {
+    color: #8A8A93;
+  }
+  .input-field:focus {
+    border-color: #B89A5A;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: var(--font-montserrat);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .table-header {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8A8A93;
+  }
+
+  .table-row-hover {
+    transition: background 0.1s;
+  }
+  .table-row-hover:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+/* ===== Animações dos componentes ui/sign-in ===== */
+
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slideRightIn {
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateX(0px);
+  }
+}
+
+@keyframes testimonialIn {
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0px) scale(1);
+  }
+}
+
+@layer utilities {
+  .animate-element {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(14px);
+    animation: fadeSlideIn 0.6s ease forwards;
+  }
+
+  .animate-slide-right {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateX(40px);
+    animation: slideRightIn 0.8s ease forwards;
+  }
+
+  .animate-testimonial {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(20px) scale(0.96);
+    animation: testimonialIn 0.7s ease forwards;
+  }
+
+  .animate-delay-100 { animation-delay: 0.1s; }
+  .animate-delay-200 { animation-delay: 0.2s; }
+  .animate-delay-300 { animation-delay: 0.3s; }
+  .animate-delay-400 { animation-delay: 0.4s; }
+  .animate-delay-500 { animation-delay: 0.5s; }
+  .animate-delay-600 { animation-delay: 0.6s; }
+  .animate-delay-700 { animation-delay: 0.7s; }
+  .animate-delay-800 { animation-delay: 0.8s; }
+  .animate-delay-900 { animation-delay: 0.9s; }
+  .animate-delay-1000 { animation-delay: 1s; }
+  .animate-delay-1200 { animation-delay: 1.2s; }
+  .animate-delay-1400 { animation-delay: 1.4s; }
+
+  .font-geist {
+    font-family: var(--font-montserrat);
+  }
+}
+
+.custom-checkbox {
+  appearance: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0.3rem;
+  border: 1px solid rgb(var(--border-shad));
+  background: rgb(var(--background));
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s;
+}
+.custom-checkbox:checked {
+  background: rgb(var(--primary));
+  border-color: rgb(var(--primary));
+}
+.custom-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 0.32rem;
+  top: 0.12rem;
+  width: 0.3rem;
+  height: 0.55rem;
+  border: solid rgb(var(--primary-foreground));
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
