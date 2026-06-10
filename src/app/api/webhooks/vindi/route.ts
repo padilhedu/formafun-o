@@ -1,17 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { createHmac, timingSafeEqual } from 'crypto';
 
-// Webhook Vindi — service role (sem sessão de usuário em contexto de webhook)
-export async function POST(req: NextRequest) {
-  const body = await req.json() as {
-    event?: {
-      type?: string;
-      data?: {
-        bill?: { id: number; status: string; charges?: { id: number; payment_method?: { code: string } }[] };
-        charge?: { id: number; status: string; bill?: { id: number }; payment_method?: { code: string } };
-      };
+function verifyVindiSignature(rawBody: string, signature: string | null, secret: string): boolean {
+  if (!signature) return false;
+  const expected = createHmac('sha256', secret).update(rawBody).digest('hex');
+  try {
+    return timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(signature, 'hex'));
+  } catch {
+    return false;
+  }
+}
+
+type VindiEvent = {
+  event?: {
+    type?: string;
+    data?: {
+      bill?: { id: number; status: string; charges?: { id: number; payment_method?: { code: string } }[] };
+      charge?: { id: number; status: string; bill?: { id: number }; payment_method?: { code: string } };
     };
   };
+};
+
+export async function POST(req: NextRequest) {
+  const rawBody = await req.text();
+
+  const webhookSecret = process.env.VINDI_WEBHOOK_SECRET;
+  if (webhookSecret) {
+    const sig = req.headers.get('x-vindi-signature') ?? req.headers.get('x-hub-signature-256')?.replace('sha256=', '') ?? null;
+    if (!verifyVindiSignature(rawBody, sig, webhookSecret)) {
+      return NextResponse.json({ error: 'Assinatura inválida' }, { status: 401 });
+    }
+  }
+
+  let body: VindiEvent;
+  try { body = JSON.parse(rawBody); } catch { return NextResponse.json({ ok: true }); }
 
   const type = body.event?.type;
   if (!type) return NextResponse.json({ ok: true });

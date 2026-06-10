@@ -1,25 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { createHmac, timingSafeEqual } from 'crypto';
 
-// ZapSign webhook — use service role client (no RLS bypass needed, but this is a public route)
+function verifyHmacSha256(rawBody: string, signature: string, secret: string): boolean {
+  const expected = createHmac('sha256', secret).update(rawBody).digest('hex');
+  try {
+    return timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(signature, 'hex'));
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(req: NextRequest) {
-  const body = await req.json() as {
-    event_type?: string;
-    doc_token?: string;
-    signer_token?: string;
-  };
+  const rawBody = await req.text();
+
+  // Validate HMAC signature when secret is configured
+  const webhookSecret = process.env.ZAPSIGN_WEBHOOK_SECRET;
+  if (webhookSecret) {
+    const sig = (
+      req.headers.get('x-zapsign-signature') ??
+      req.headers.get('x-hub-signature-256')?.replace('sha256=', '')
+    );
+    if (!sig || !verifyHmacSha256(rawBody, sig, webhookSecret)) {
+      return NextResponse.json({ error: 'Assinatura inválida' }, { status: 401 });
+    }
+  }
+
+  let body: { event_type?: string; doc_token?: string; signer_token?: string };
+  try { body = JSON.parse(rawBody); } catch { return NextResponse.json({ ok: true }); }
 
   const { event_type, doc_token } = body;
   if (!doc_token) return NextResponse.json({ ok: true });
 
-  // Use service role for webhook (no auth session available)
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
   if (event_type === 'sign' || event_type === 'doc_signed') {
-    // Find contract by ZapSign token
     const { data: contrato } = await supabase
       .from('contratos')
       .select('id, orcamento_id, paciente_id')
@@ -27,13 +45,13 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (contrato) {
-      // Update contract to signed
+      const c = contrato as { id: string; orcamento_id: string | null; paciente_id: string };
+
       await supabase
         .from('contratos')
         .update({ status: 'assinado', assinado_em: new Date().toISOString() })
-        .eq('id', (contrato as { id: string }).id);
+        .eq('id', c.id);
 
-      // Try to download the signed PDF from ZapSign and store in Supabase Storage
       if (process.env.ZAPSIGN_API_TOKEN) {
         try {
           const docRes = await fetch(`https://api.zapsign.com.br/api/v1/docs/${doc_token}/`, {
@@ -42,20 +60,15 @@ export async function POST(req: NextRequest) {
           if (docRes.ok) {
             const docData = await docRes.json() as { signed_file?: string };
             if (docData.signed_file) {
-              // Download and store PDF
               const pdfRes = await fetch(docData.signed_file);
               if (pdfRes.ok) {
                 const pdfBuffer = await pdfRes.arrayBuffer();
-                const path = `contratos/${(contrato as { id: string }).id}/assinado.pdf`;
+                const path = `contratos/${c.id}/assinado.pdf`;
                 await supabase.storage.from('documentos').upload(path, pdfBuffer, {
-                  contentType: 'application/pdf',
-                  upsert: true,
+                  contentType: 'application/pdf', upsert: true,
                 });
                 const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
-                await supabase
-                  .from('contratos')
-                  .update({ pdf_url: urlData.publicUrl, storage_path: path })
-                  .eq('id', (contrato as { id: string }).id);
+                await supabase.from('contratos').update({ pdf_url: urlData.publicUrl, storage_path: path }).eq('id', c.id);
               }
             }
           }
@@ -64,18 +77,12 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      // Lock the linked budget
-      const orcId = (contrato as { orcamento_id: string | null }).orcamento_id;
-      if (orcId) {
-        await supabase
-          .from('orcamentos')
-          .update({ travado: true })
-          .eq('id', orcId);
-
+      if (c.orcamento_id) {
+        await supabase.from('orcamentos').update({ travado: true }).eq('id', c.orcamento_id);
         await supabase.from('orcamento_historico').insert({
-          orcamento_id: orcId,
+          orcamento_id: c.orcamento_id,
           evento: 'contrato_assinado',
-          detalhes: { contrato_id: (contrato as { id: string }).id, doc_token },
+          detalhes: { contrato_id: c.id, doc_token },
         });
       }
     }
