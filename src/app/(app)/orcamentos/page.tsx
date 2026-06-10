@@ -51,7 +51,7 @@ export default async function OrcamentosPage() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-5 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
         {COLUNAS.map(status => {
           const lista = byStatus[status];
           const total = lista.reduce((s, o) => s + o.valor_total, 0);
@@ -132,8 +132,8 @@ export default async function OrcamentosPage() {
           <h2 className="text-muted mb-4" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             Todos os orçamentos
           </h2>
-          <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <div className="card" style={{ padding: 0, overflow: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 560 }}>
               <thead>
                 <tr>
                   {['Código', 'Paciente', 'Status', 'Validade', 'Total', ''].map(h => (

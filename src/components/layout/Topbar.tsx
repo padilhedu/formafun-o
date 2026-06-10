@@ -7,46 +7,26 @@ import type { Profile } from "@/types/database";
 
 interface TopbarProps {
   profile: Profile | null;
+  onMenuToggle: () => void;
 }
 
 function IconBell() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M9 2a5.5 5.5 0 0 0-5.5 5.5c0 2.5-.7 4-1.5 5h14c-.8-1-1.5-2.5-1.5-5A5.5 5.5 0 0 0 9 2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-      <path d="M7.5 14.5a1.5 1.5 0 0 0 3 0" stroke="currentColor" strokeWidth="1.3" />
-    </svg>
-  );
+  return <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a5.5 5.5 0 0 0-5.5 5.5c0 2.5-.7 4-1.5 5h14c-.8-1-1.5-2.5-1.5-5A5.5 5.5 0 0 0 9 2z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M7.5 14.5a1.5 1.5 0 0 0 3 0" stroke="currentColor" strokeWidth="1.3" /></svg>;
 }
-
 function IconSearch() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-      <circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.3" />
-      <path d="M9.5 9.5l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-    </svg>
-  );
+  return <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.3" /><path d="M9.5 9.5l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>;
 }
-
 function IconPlus() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M7 2v10M2 7h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  );
+  return <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>;
 }
-
 function IconChevronDown() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-      <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  return <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+}
+function IconMenu() {
+  return <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>;
 }
 
-const ROLE_LABELS: Record<string, string> = {
-  admin: "Dentista",
-  recepcao: "Recepção",
-};
+const ROLE_LABELS: Record<string, string> = { admin: "Dentista", recepcao: "Recepção" };
 
 const ACOES = [
   { label: "Novo Paciente", href: "/pacientes/novo" },
@@ -55,7 +35,7 @@ const ACOES = [
   { label: "Nova Despesa", href: "/financeiro/pagar" },
 ];
 
-export function Topbar({ profile }: TopbarProps) {
+export function Topbar({ profile, onMenuToggle }: TopbarProps) {
   const router = useRouter();
   const [acoesOpen, setAcoesOpen] = useState(false);
 
@@ -67,70 +47,77 @@ export function Topbar({ profile }: TopbarProps) {
   }
 
   const initials = profile?.nome
-    ? profile.nome
-        .split(" ")
-        .slice(0, 2)
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
+    ? profile.nome.split(" ").slice(0, 2).map((n) => n[0]).join("").toUpperCase()
     : "??";
 
   return (
     <header
-      className="fixed top-0 right-0 z-20 flex items-center justify-between px-6 h-14"
+      className="fixed top-0 right-0 z-30 flex items-center justify-between h-14"
       style={{
-        left: "224px",
-        background: "rgba(10,10,11,0.9)",
+        left: 0,
+        paddingLeft: "var(--topbar-pl, 1rem)",
+        paddingRight: "1.5rem",
+        background: "rgba(10,10,11,0.92)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(255,255,255,0.06)",
       }}
     >
-      {/* Busca global */}
-      <button
-        className="flex items-center gap-2 transition-colors"
-        style={{
-          background: "#1A1A1E",
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: "8px",
-          padding: "0.4rem 0.875rem",
-          fontSize: "0.75rem",
-          fontFamily: "var(--font-montserrat)",
-          color: "#8A8A93",
-          minWidth: "220px",
-        }}
-        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F5F2EA")}
-        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8A8A93")}
-      >
-        <IconSearch />
-        <span>Buscar paciente, orçamento...</span>
-        <span
-          className="ml-auto"
-          style={{
-            background: "rgba(255,255,255,0.06)",
-            borderRadius: "4px",
-            padding: "0.1rem 0.35rem",
-            fontSize: "0.65rem",
-            letterSpacing: "0.03em",
-          }}
-        >
-          Ctrl K
-        </span>
-      </button>
+      <style>{`@media(min-width:1024px){:root{--topbar-pl:calc(224px + 1.5rem)}}`}</style>
 
-      {/* Ações direita */}
+      {/* Esquerda: hambúrguer (mobile) + busca (desktop) */}
       <div className="flex items-center gap-3">
-        {/* Botão + Ações */}
+        {/* Hambúrguer — só mobile */}
+        <button
+          className="lg:hidden flex items-center justify-center w-8 h-8 text-muted hover:text-offwhite transition-colors"
+          onClick={onMenuToggle}
+          aria-label="Abrir menu"
+        >
+          <IconMenu />
+        </button>
+
+        {/* Logo compacto — mobile only */}
+        <span className="lg:hidden heading text-offwhite" style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem" }}>
+          Forma & Função
+        </span>
+
+        {/* Busca global — só desktop */}
+        <button
+          className="hidden lg:flex items-center gap-2 transition-colors"
+          style={{
+            background: "#1A1A1E",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderRadius: "8px",
+            padding: "0.4rem 0.875rem",
+            fontSize: "0.75rem",
+            fontFamily: "var(--font-montserrat)",
+            color: "#8A8A93",
+            minWidth: "220px",
+          }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F5F2EA")}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8A8A93")}
+        >
+          <IconSearch />
+          <span>Buscar paciente, orçamento...</span>
+          <span className="ml-auto" style={{ background: "rgba(255,255,255,0.06)", borderRadius: "4px", padding: "0.1rem 0.35rem", fontSize: "0.65rem" }}>
+            Ctrl K
+          </span>
+        </button>
+      </div>
+
+      {/* Direita */}
+      <div className="flex items-center gap-2 lg:gap-3">
+        {/* + Ações */}
         <div className="relative">
           <button
             onClick={() => setAcoesOpen((v) => !v)}
-            className="flex items-center gap-2 font-semibold transition-all"
+            className="flex items-center gap-1.5 lg:gap-2 font-semibold transition-all"
             style={{
               background: "#59399E",
               color: "#ffffff",
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.75rem",
               letterSpacing: "0.02em",
-              padding: "0.45rem 1rem",
+              padding: "0.45rem 0.65rem",
               borderRadius: "8px",
               border: "none",
               cursor: "pointer",
@@ -139,29 +126,20 @@ export function Topbar({ profile }: TopbarProps) {
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#59399E")}
           >
             <IconPlus />
-            Ações
-            <IconChevronDown />
+            <span className="hidden sm:inline">Ações</span>
+            <span className="hidden sm:inline"><IconChevronDown /></span>
           </button>
 
           {acoesOpen && (
             <>
-              <div
-                className="fixed inset-0 z-40"
-                onClick={() => setAcoesOpen(false)}
-              />
-              <div
-                className="absolute right-0 top-full mt-2 w-48 card py-1 z-50"
-                style={{ zIndex: 60 }}
-              >
+              <div className="fixed inset-0 z-40" onClick={() => setAcoesOpen(false)} />
+              <div className="absolute right-0 top-full mt-2 w-48 card py-1" style={{ zIndex: 60 }}>
                 {ACOES.map((a) => (
                   <button
                     key={a.href}
                     onClick={() => { router.push(a.href); setAcoesOpen(false); }}
                     className="w-full text-left px-4 py-2.5 text-xs transition-colors"
-                    style={{
-                      fontFamily: "var(--font-montserrat)",
-                      color: "#F5F2EA",
-                    }}
+                    style={{ fontFamily: "var(--font-montserrat)", color: "#F5F2EA" }}
                     onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(89,57,158,0.15)")}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
                   >
@@ -183,32 +161,19 @@ export function Topbar({ profile }: TopbarProps) {
         </button>
 
         {/* Perfil */}
-        <div className="flex items-center gap-2.5 group relative">
+        <div className="flex items-center gap-2 group relative">
           <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer"
-            style={{
-              background: "rgba(89,57,158,0.2)",
-              border: "1px solid rgba(89,57,158,0.4)",
-              color: "#A07FD4",
-              fontFamily: "var(--font-montserrat)",
-            }}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer flex-shrink-0"
+            style={{ background: "rgba(89,57,158,0.2)", border: "1px solid rgba(89,57,158,0.4)", color: "#A07FD4", fontFamily: "var(--font-montserrat)" }}
           >
             {initials}
           </div>
-          <div className="hidden sm:block">
-            <div className="text-offwhite text-xs font-medium leading-tight">
-              {profile?.nome ?? "Usuário"}
-            </div>
-            <div className="text-muted" style={{ fontSize: "0.65rem" }}>
-              {profile ? ROLE_LABELS[profile.role] ?? profile.role : ""}
-            </div>
+          <div className="hidden lg:block">
+            <div className="text-offwhite text-xs font-medium leading-tight">{profile?.nome ?? "Usuário"}</div>
+            <div className="text-muted" style={{ fontSize: "0.65rem" }}>{profile ? ROLE_LABELS[profile.role] ?? profile.role : ""}</div>
           </div>
 
-          {/* Dropdown */}
-          <div
-            className="absolute right-0 top-full mt-2 w-40 card py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity"
-            style={{ zIndex: 50 }}
-          >
+          <div className="absolute right-0 top-full mt-2 w-40 card py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity" style={{ zIndex: 50 }}>
             <button
               onClick={handleLogout}
               className="w-full text-left px-4 py-2 text-error text-xs hover:bg-elevated transition-colors"

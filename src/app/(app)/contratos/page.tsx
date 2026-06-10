@@ -71,8 +71,8 @@ export default async function ContratosPage() {
           <p className="text-muted text-sm">Gere um contrato a partir de um orçamento aprovado.</p>
         </div>
       ) : (
-        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div className="card" style={{ padding: 0, overflow: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 640 }}>
             <thead>
               <tr>
                 {['Código', 'Paciente', 'Orçamento', 'Status', 'Enviado em', 'Assinado em', ''].map(h => (

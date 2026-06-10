@@ -20,7 +20,7 @@ export default function DashboardPage() {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
         <KpiCard
           title="Consultas Hoje"
           value="8"
@@ -56,7 +56,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Gráfico + Agenda */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
         <div className="xl:col-span-2">
           <RevenueChart />
         </div>
@@ -66,7 +66,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Pacientes recentes */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <RecentPatients />
         <div className="card p-5">
           <h2 className="text-offwhite font-semibold text-sm mb-4">

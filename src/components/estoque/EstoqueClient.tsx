@@ -152,7 +152,7 @@ export function EstoqueClient({ itensIniciais }: Props) {
   return (
     <div className="space-y-4">
       {/* KPIs */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
           <p className="table-header mb-2">Total de Itens</p>
           <p className="heading text-3xl font-semibold text-offwhite">{itens.length}</p>
@@ -176,8 +176,8 @@ export function EstoqueClient({ itensIniciais }: Props) {
       </div>
 
       {/* Filtros */}
-      <div className="flex items-center gap-3">
-        <input className="input-field" style={{ maxWidth: 260 }} placeholder="Buscar item..." value={busca} onChange={e => setBusca(e.target.value)} />
+      <div className="flex flex-wrap items-center gap-2 lg:gap-3">
+        <input className="input-field" style={{ minWidth: 180, maxWidth: 260 }} placeholder="Buscar item..." value={busca} onChange={e => setBusca(e.target.value)} />
         <button onClick={() => setFiltro('todos')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'todos' ? 'rgba(89,57,158,0.5)' : undefined, color: filtro === 'todos' ? '#A07FD4' : undefined }}>Todos</button>
         <button onClick={() => setFiltro('baixo')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'baixo' ? 'rgba(251,191,36,0.5)' : undefined, color: filtro === 'baixo' ? '#FBBF24' : undefined }}>
           Abaixo do mínimo {abaixoMinimo.length > 0 && `(${abaixoMinimo.length})`}
@@ -187,8 +187,8 @@ export function EstoqueClient({ itensIniciais }: Props) {
       </div>
 
       {/* Tabela */}
-      <div className="card overflow-hidden">
-        <table className="w-full">
+      <div className="card overflow-auto">
+        <table className="w-full min-w-[600px]">
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               {['Item','Categoria','Estoque','Mínimo','Valor unit.','Fornecedor',''].map(h => (

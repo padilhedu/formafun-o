@@ -39,7 +39,7 @@ export function RelatoriosClient({ fluxo, pacientesPorMes, consultasPorStatus, t
   return (
     <div className="space-y-6">
       {/* KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPI label="Total de Pacientes" valor={String(totalPacientes)} accent="#B89A5A" />
         <KPI label="Recebido no Ano" valor={totalRecebidoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#4ADE80" accent="#4ADE80" />
         <KPI label="Pago no Ano" valor={totalPagoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#F87171" accent="#F87171" />

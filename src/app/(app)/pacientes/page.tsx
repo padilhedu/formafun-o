@@ -82,8 +82,8 @@ export default async function PacientesPage({ searchParams }: Props) {
       </div>
 
       {/* Tabela */}
-      <div className="card overflow-hidden">
-        <table className="w-full">
+      <div className="card overflow-hidden overflow-x-auto">
+        <table className="w-full min-w-[640px]">
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
               {['Paciente', 'CPF', 'Contato', 'Idade', 'Origem', 'Status', ''].map(col => (

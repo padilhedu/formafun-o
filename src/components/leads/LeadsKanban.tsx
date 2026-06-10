@@ -103,7 +103,7 @@ export function LeadsKanban({ leadsIniciais }: Props) {
   return (
     <div className="space-y-4">
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
           <p className="table-header mb-2">Total de Leads</p>
           <p className="heading text-3xl font-semibold text-offwhite">{leads.length}</p>

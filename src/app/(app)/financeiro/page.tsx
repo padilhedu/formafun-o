@@ -87,7 +87,7 @@ export default async function FinanceiroPage() {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
         {kpis.map(k => (
           <Link key={k.label} href={k.href} className="card block hover:border-gold transition-colors" style={{ padding: '16px 18px', borderLeft: `3px solid ${k.cor}` }}>
             <div className="text-muted mb-2" style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
@@ -101,7 +101,7 @@ export default async function FinanceiroPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_380px] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
         {/* Fluxo de caixa */}
         <div className="card" style={{ padding: 20 }}>
           <p className="text-muted mb-4" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
