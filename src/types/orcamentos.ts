@@ -2,7 +2,7 @@ export type OrcamentoStatus = 'rascunho' | 'enviado' | 'negociacao' | 'aprovado'
 export type DescontoTipo = 'percentual' | 'valor';
 export type ProcedimentoCategoria =
   | 'dentistica' | 'endo' | 'perio' | 'cirurgia'
-  | 'protese' | 'ortodontia' | 'estetica' | 'prevencao';
+  | 'protese' | 'ortodontia' | 'estetica' | 'prevencao' | 'servico';
 
 export interface ProcedimentoTabela {
   id: string;
@@ -13,6 +13,7 @@ export interface ProcedimentoTabela {
   custo_estimado: number | null;
   duracao_min: number;
   ativo: boolean;
+  servico_fixo: boolean;
   created_at: string;
 }
 
@@ -28,6 +29,8 @@ export interface OrcamentoItem {
   desconto_item: number;
   total: number;
   categoria: ProcedimentoCategoria | null;
+  selecionado: boolean;
+  fixado: boolean;
   created_at: string;
 }
 
@@ -40,6 +43,16 @@ export interface OrcamentoHistorico {
   criado_em: string;
 }
 
+export interface ModeloPagamento {
+  id: string;
+  nome: string;
+  entrada_percentual: number;
+  parcelas: number;
+  juros_percentual: number;
+  desconto_avista_percentual: number;
+  ativo: boolean;
+}
+
 export interface Orcamento {
   id: string;
   codigo: string;
@@ -47,12 +60,19 @@ export interface Orcamento {
   profissional_id: string | null;
   status: OrcamentoStatus;
   validade: string | null;
+  data_avaliacao: string | null;
   desconto_tipo: DescontoTipo | null;
   desconto_valor: number;
+  desconto_motivo: string | null;
   valor_subtotal: number;
   valor_total: number;
-  condicoes_pagamento: Record<string, unknown>;
+  convenio: string | null;
+  sessoes_previstas: number | null;
   observacoes: string | null;
+  observacao_interna: string | null;
+  clausulas_adicionais: string | null;
+  modelo_pagamento_id: string | null;
+  condicoes_pagamento: Record<string, unknown>;
   travado: boolean;
   token_publico: string;
   criado_em: string;
@@ -72,6 +92,7 @@ export const CATEGORIA_LABELS: Record<ProcedimentoCategoria, string> = {
   ortodontia:  'Ortodontia',
   estetica:    'Estética',
   prevencao:   'Prevenção',
+  servico:     'Serviços',
 };
 
 export const STATUS_CONFIG: Record<OrcamentoStatus, { label: string; color: string; bg: string; border: string }> = {

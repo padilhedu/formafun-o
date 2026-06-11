@@ -68,6 +68,8 @@ export function OrcamentoBuilder({
       desconto_item: 0,
       total: proc.valor_base,
       categoria: proc.categoria,
+      selecionado: true,
+      fixado: false,
     }]);
   }, []);
 
@@ -83,6 +85,8 @@ export function OrcamentoBuilder({
       desconto_item: 0,
       total: 0,
       categoria: null,
+      selecionado: true,
+      fixado: false,
     }]);
   };
 

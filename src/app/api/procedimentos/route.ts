@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get('q') ?? '';
   const categoria = searchParams.get('categoria') ?? '';
+  const servicoFixo = searchParams.get('servico_fixo');
 
   let query = supabase
     .from('procedimentos_tabela')
@@ -19,6 +20,8 @@ export async function GET(req: NextRequest) {
 
   if (q) query = query.ilike('nome', `%${q}%`);
   if (categoria) query = query.eq('categoria', categoria);
+  if (servicoFixo === 'true') query = query.eq('servico_fixo', true);
+  else if (servicoFixo === 'false') query = query.eq('servico_fixo', false);
 
   const { data, error } = await query;
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

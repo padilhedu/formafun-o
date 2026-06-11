@@ -10,10 +10,47 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   const body = await req.json() as {
     parcelas?: number;
-    primeiro_vencimento?: string; // YYYY-MM-DD
+    primeiro_vencimento?: string;
     forma_pagamento?: string;
-    entrada?: number; // valor de entrada opcional
+    entrada?: number;
+    // v2: parcelas pré-calculadas com datas editadas pelo usuário
+    parcelas_editadas?: { n: number; vencimento: string; valor: number }[];
+    modelo_pagamento_id?: string;
   };
+
+  // v2 path: use pre-calculated parcelas_editadas
+  if (body.parcelas_editadas && body.parcelas_editadas.length > 0) {
+    const { data: orc, error: orcErr } = await supabase
+      .from('orcamentos')
+      .select('id, codigo, paciente_id, valor_total, status')
+      .eq('id', id)
+      .single();
+    if (orcErr || !orc) return NextResponse.json({ error: 'Orçamento não encontrado' }, { status: 404 });
+    const o = orc as { id: string; codigo: string; paciente_id: string; valor_total: number; status: string };
+    if (o.status !== 'aprovado') return NextResponse.json({ error: 'Apenas orçamentos aprovados geram parcelas' }, { status: 400 });
+    const { count } = await supabase.from('contas_receber').select('id', { count: 'exact', head: true }).eq('orcamento_id', id).neq('status', 'cancelado');
+    if ((count ?? 0) > 0) return NextResponse.json({ error: 'Orçamento já possui parcelas geradas' }, { status: 400 });
+
+    const rows: Record<string, unknown>[] = [];
+    for (const p of body.parcelas_editadas) {
+      const { data: codigo } = await supabase.rpc('gerar_codigo_receber');
+      rows.push({
+        codigo,
+        paciente_id: o.paciente_id,
+        orcamento_id: o.id,
+        descricao: p.n === 0 ? `Entrada — ${o.codigo}` : `Parcela ${p.n} — ${o.codigo}`,
+        parcela_num: p.n,
+        parcela_total: body.parcelas_editadas!.filter(x => x.n > 0).length,
+        valor: p.valor,
+        vencimento: p.vencimento,
+        criado_por: user.id,
+      });
+    }
+    const { data, error } = await supabase.from('contas_receber').insert(rows).select();
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    await supabase.from('orcamento_historico').insert({ orcamento_id: o.id, evento: 'parcelas_geradas', detalhes: { lancamentos: rows.length }, usuario_id: user.id });
+    return NextResponse.json(data, { status: 201 });
+  }
 
   const numParcelas = Math.max(1, Math.min(36, body.parcelas ?? 1));
   if (!body.primeiro_vencimento) {
