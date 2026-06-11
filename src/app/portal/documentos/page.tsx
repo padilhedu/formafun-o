@@ -29,7 +29,7 @@ export default async function PortalDocumentosPage() {
 
   const { data: contratos } = await sb
     .from('contratos')
-    .select('id, codigo, status, assinado_em, pdf_url, zapsign_doc_url, created_at, categoria_documento')
+    .select('id, codigo, status, assinado_em, pdf_url, pdf_signed_url, sign_token, created_at, categoria_documento')
     .eq('paciente_id', acesso.paciente_id)
     .order('created_at', { ascending: false });
 
@@ -66,12 +66,17 @@ export default async function PortalDocumentosPage() {
           </div>
 
           <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            {c.zapsign_doc_url && c.status !== 'assinado' && (
-              <a href={c.zapsign_doc_url} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: '7px 16px', fontSize: 12, textDecoration: 'none' }}>
+            {c.sign_token && c.status !== 'assinado' && c.status !== 'recusado' && (
+              <a href={`/assinar/${c.sign_token}`} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: '7px 16px', fontSize: 12, textDecoration: 'none' }}>
                 Assinar agora →
               </a>
             )}
-            {c.pdf_url && (
+            {c.status === 'assinado' && c.sign_token && (
+              <a href={`/api/contratos/${c.id}/download-publico?token=${c.sign_token}`} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ padding: '7px 16px', fontSize: 12, textDecoration: 'none' }}>
+                ↓ Baixar PDF assinado
+              </a>
+            )}
+            {!c.sign_token && c.pdf_url && (
               <a href={c.pdf_url} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ padding: '7px 16px', fontSize: 12, textDecoration: 'none' }}>
                 ↓ Baixar PDF
               </a>

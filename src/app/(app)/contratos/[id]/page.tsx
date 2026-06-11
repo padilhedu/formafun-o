@@ -3,8 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import type { Contrato } from '@/types/contratos';
 import { CONTRATO_STATUS_CONFIG } from '@/types/contratos';
-import { ContratoTimeline } from '@/components/contratos/ContratoTimeline';
-import { ContratoAcoes } from '@/components/contratos/ContratoAcoes';
+import { PainelAssinatura } from '@/components/contratos/PainelAssinatura';
 
 export const dynamic = 'force-dynamic';
 
@@ -72,49 +71,23 @@ export default async function ContratoPage({ params }: { params: Promise<{ id: s
             )}
           </div>
         </div>
-        <ContratoAcoes contratoId={c.id} status={c.status} pdfToken={c.token_publico} />
+        <a href={`/api/contratos/${c.id}/pdf?print=1`} target="_blank" className="btn-ghost text-xs" style={{ padding: '6px 14px' }}>
+          Imprimir / PDF
+        </a>
       </div>
 
       {/* Layout: timeline + preview */}
       <div className="grid grid-cols-1 xl:grid-cols-[320px_1fr] gap-6">
-        {/* Left: timeline + info */}
+        {/* Left: painel de assinatura + info */}
         <div className="space-y-4">
-          <ContratoTimeline status={c.status} enviadoEm={c.enviado_em} assinadoEm={c.assinado_em} />
-
-          {/* ZapSign link */}
-          {c.zapsign_doc_url && c.status !== 'assinado' && (
-            <div className="card" style={{ padding: 16 }}>
-              <p className="text-muted mb-2" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Link de Assinatura
-              </p>
-              <a
-                href={c.zapsign_doc_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gold text-sm break-all"
-                style={{ fontFamily: 'var(--font-montserrat)' }}
-              >
-                Abrir no ZapSign →
-              </a>
-            </div>
-          )}
-
-          {/* PDF signed */}
-          {c.pdf_url && (
-            <div className="card" style={{ padding: 16, border: '1px solid rgba(74,222,128,0.25)' }}>
-              <p className="text-muted mb-2" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                PDF Assinado
-              </p>
-              <a href={c.pdf_url} target="_blank" rel="noopener noreferrer" className="btn-ghost text-xs block text-center">
-                Baixar PDF →
-              </a>
-            </div>
-          )}
+          <div className="card" style={{ padding: 16 }}>
+            <PainelAssinatura contrato={c as unknown as Parameters<typeof PainelAssinatura>[0]['contrato']} />
+          </div>
 
           {/* Patient info */}
           <div className="card" style={{ padding: 16 }}>
             <p className="text-muted mb-3" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Signatário
+              Paciente
             </p>
             <div className="space-y-2">
               <div>

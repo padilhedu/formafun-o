@@ -1,0 +1,78 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { renderTemplate } from '@/lib/template-render';
+import crypto from 'crypto';
+
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+  const { data: profile } = await supabase.from('usuarios').select('role').eq('id', user.id).single();
+  if (!profile || !['admin', 'recepcao'].includes(profile.role)) {
+    return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
+  }
+
+  const { data: c, error } = await supabase
+    .from('contratos')
+    .select(`
+      id, codigo, status, template_id,
+      pacientes(nome, cpf, email, telefone, endereco),
+      orcamentos(id, codigo, valor_total, validade, observacoes, clausulas_adicionais,
+        orcamento_itens(descricao, dente, face, qtde, valor_unitario, total, selecionado, categoria)),
+      contratos_templates(corpo_html, nome)
+    `)
+    .eq('id', id)
+    .single();
+
+  if (error || !c) return NextResponse.json({ error: 'Contrato não encontrado' }, { status: 404 });
+  if (c.status !== 'rascunho') return NextResponse.json({ error: 'Só é possível gerar link para contratos em rascunho' }, { status: 400 });
+
+  type Pac = { nome: string; cpf: string | null; email: string | null; telefone: string | null; endereco: Record<string, string> | null };
+  type Orc = { id: string; codigo: string; valor_total: number; validade: string | null; observacoes: string | null; clausulas_adicionais: string | null; orcamento_itens: { descricao: string; dente: string | null; face: string | null; qtde: number; valor_unitario: number; total: number; selecionado: boolean; categoria: string | null }[] };
+  type Tmpl = { corpo_html: string; nome: string };
+
+  const paciente = (c as unknown as { pacientes: Pac }).pacientes;
+  const orc = (c as unknown as { orcamentos: Orc | null }).orcamentos;
+  const tmpl = (c as unknown as { contratos_templates: Tmpl | null }).contratos_templates;
+
+  if (!tmpl) return NextResponse.json({ error: 'Template não encontrado' }, { status: 400 });
+
+  const itens = (orc?.orcamento_itens ?? []).filter(i => i.selecionado);
+
+  const htmlRendered = renderTemplate(tmpl.corpo_html, {
+    paciente: { nome: paciente.nome, cpf: paciente.cpf, email: paciente.email, telefone: paciente.telefone, endereco: paciente.endereco },
+    orcamento: orc ? { ...orc, status: 'aprovado' } as never : null,
+    itens: itens as never,
+  });
+
+  const docHash = crypto.createHash('sha256').update(htmlRendered).digest('hex');
+
+  const token = crypto.randomUUID();
+  const secret = process.env.SIGNING_HMAC_SECRET ?? '';
+  const tokenHmac = crypto.createHmac('sha256', secret).update(token).digest('hex');
+  const tokenExp = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
+  // Salvar HTML original no Storage (fonte de verdade imutável)
+  const htmlBytes = Buffer.from(htmlRendered, 'utf-8');
+  await supabase.storage.from('contratos-html').upload(`${id}/original.html`, htmlBytes, {
+    contentType: 'text/html; charset=utf-8',
+    upsert: true,
+  });
+
+  const { error: updateErr } = await supabase.from('contratos').update({
+    status: 'enviado',
+    enviado_em: new Date().toISOString(),
+    sign_token: token,
+    sign_token_hmac: tokenHmac,
+    sign_token_exp: tokenExp,
+    doc_hash: docHash,
+  }).eq('id', id);
+
+  if (updateErr) return NextResponse.json({ error: 'Erro ao salvar token' }, { status: 500 });
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';
+  return NextResponse.json({ sign_url: `${appUrl}/assinar/${token}` });
+}

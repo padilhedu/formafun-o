@@ -37,16 +37,31 @@ export interface Contrato {
   template_id: string | null;
   status: ContratoStatus;
   corpo_html_final: string | null;
-  zapsign_doc_token: string | null;
-  zapsign_doc_url: string | null;
   pdf_url: string | null;
   storage_path: string | null;
-  enviado_em: string | null;
-  assinado_em: string | null;
   token_publico: string;
   criado_por: string | null;
   created_at: string;
   updated_at: string;
+  enviado_em: string | null;
+  visualizado_em: string | null;
+  assinado_em: string | null;
+  recusado_em: string | null;
+  recusa_motivo: string | null;
+  travado: boolean;
+  // Assinatura própria
+  sign_token: string | null;
+  sign_token_exp: string | null;
+  sign_token_hmac: string | null;
+  doc_hash: string | null;
+  pdf_signed_url: string | null;
+  signer_nome: string | null;
+  signer_cpf: string | null;
+  signer_ip: string | null;
+  signer_user_agent: string | null;
+  signer_lat: number | null;
+  signer_lng: number | null;
+  signature_svg: string | null;
 }
 
 export interface ContratoComRelacoes extends Contrato {
