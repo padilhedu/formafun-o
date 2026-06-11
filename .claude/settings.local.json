@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir \"C:\\\\Users\\\\eduar\\\\OneDrive\\\\Área de Trabalho\\\\sistema crm\")"
+      "Bash(dir \"C:\\\\Users\\\\eduar\\\\OneDrive\\\\Área de Trabalho\\\\sistema crm\")",
+      "Bash(npx tsc *)"
     ]
   }
 }
