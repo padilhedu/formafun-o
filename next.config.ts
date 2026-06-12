@@ -32,7 +32,18 @@ const nextConfig: NextConfig = {
       { key: "X-DNS-Prefetch-Control",     value: "off" },
     ];
 
-    return [{ source: "/(.*)", headers: securityHeaders }];
+    // Override para rotas de PDF — permite iframe same-origin
+    const pdfHeaders = securityHeaders
+      .filter(h => h.key !== 'X-Frame-Options' && h.key !== 'Content-Security-Policy')
+      .concat([
+        { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+        { key: 'Content-Security-Policy', value: csp.replace("frame-ancestors 'none'", "frame-ancestors 'self'") },
+      ]);
+
+    return [
+      { source: "/api/contratos/(.*)/pdf", headers: pdfHeaders },
+      { source: "/(.*)", headers: securityHeaders },
+    ];
   },
 };
 

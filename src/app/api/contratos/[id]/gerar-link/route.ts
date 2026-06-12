@@ -10,8 +10,21 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
 
-  const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-  if (!profile || !['admin', 'recepcao'].includes(profile.role)) {
+  let { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+
+  // Auto-criar profile se o trigger não tiver criado (ex: usuário existente antes da migration)
+  if (!profile) {
+    const { createClient: createServiceClient } = await import('@supabase/supabase-js');
+    const admin = createServiceClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    const nome = user.user_metadata?.nome ?? user.email?.split('@')[0] ?? 'Usuário';
+    await admin.from('profiles').upsert({ id: user.id, nome, role: 'admin' });
+    profile = { role: 'admin' };
+  }
+
+  if (!['admin', 'recepcao'].includes(profile.role)) {
     return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
   }
 
