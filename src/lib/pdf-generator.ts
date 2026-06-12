@@ -5,6 +5,7 @@
 import React from 'react';
 import {
   Document, Page, Text, View, StyleSheet, pdf, Font,
+  type DocumentProps,
 } from '@react-pdf/renderer';
 import { createClient } from '@/lib/supabase/server';
 
@@ -391,6 +392,10 @@ export async function generateContractPdf(contratoId: string): Promise<Buffer> {
     contratoTitulo: template?.nome ?? 'Contrato de Prestação de Serviços Odontológicos',
   };
 
-  const stream = await pdf(React.createElement(ContractDocument, { data })).toBuffer();
-  return Buffer.from(stream);
+  const readable = await pdf(React.createElement(ContractDocument, { data }) as React.ReactElement<DocumentProps>).toBuffer();
+  const chunks: Buffer[] = [];
+  for await (const chunk of readable) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk as unknown as ArrayLike<number>));
+  }
+  return Buffer.concat(chunks);
 }

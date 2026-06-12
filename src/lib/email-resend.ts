@@ -1,6 +1,8 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 interface EmailAssinadoParams {
   pacienteEmail: string;
@@ -17,7 +19,7 @@ export async function enviarEmailContratoAssinado(p: EmailAssinadoParams) {
   const pdfBase64 = p.pdfBuffer.toString('base64');
   const nomeArquivo = `${p.contratoCodigo}-assinado.pdf`;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: `${p.clinicaNome} <noreply@${new URL(p.appUrl).hostname}>`,
     to: p.pacienteEmail,
     subject: `Seu contrato está assinado — ${p.clinicaNome}`,
@@ -36,7 +38,7 @@ export async function enviarEmailContratoAssinado(p: EmailAssinadoParams) {
     attachments: [{ filename: nomeArquivo, content: pdfBase64 }],
   });
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: `Sistema CRM <noreply@${new URL(p.appUrl).hostname}>`,
     to: p.clinicaEmail,
     subject: `Contrato assinado: ${p.pacienteNome} — ${p.contratoCodigo}`,
@@ -63,7 +65,7 @@ interface EmailRecusaParams {
 }
 
 export async function enviarEmailContratoRecusado(p: EmailRecusaParams) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: `Sistema CRM <noreply@${new URL(p.appUrl).hostname}>`,
     to: p.clinicaEmail,
     subject: `Contrato recusado: ${p.pacienteNome} — ${p.contratoCodigo}`,
@@ -85,7 +87,7 @@ export async function enviarEmailContratoRecusado(p: EmailRecusaParams) {
 
 export async function reenviarPdfPaciente(p: Omit<EmailAssinadoParams, 'clinicaEmail' | 'clinicaNome'> & { clinicaNome: string }) {
   const pdfBase64 = p.pdfBuffer.toString('base64');
-  await resend.emails.send({
+  await getResend().emails.send({
     from: `${p.clinicaNome} <noreply@${new URL(p.appUrl).hostname}>`,
     to: p.pacienteEmail,
     subject: `Seu contrato — ${p.clinicaNome}`,
