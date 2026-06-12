@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
   }).eq('id', c.id);
 
   // Notificação interna
-  const { data: staffUsers } = await supabase.from('usuarios').select('id').in('role', ['admin', 'recepcao']);
+  const { data: staffUsers } = await supabase.from('profiles').select('id').in('role', ['admin', 'recepcao']);
   if (staffUsers?.length) {
     await supabase.from('notificacoes').insert(
       staffUsers.map(u => ({
