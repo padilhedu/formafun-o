@@ -38,6 +38,7 @@ const ACOES = [
 export function Topbar({ profile, onMenuToggle }: TopbarProps) {
   const router = useRouter();
   const [acoesOpen, setAcoesOpen] = useState(false);
+  const [perfilOpen, setPerfilOpen] = useState(false);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -161,27 +162,38 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
         </button>
 
         {/* Perfil */}
-        <div className="flex items-center gap-2 group relative">
-          <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer flex-shrink-0"
-            style={{ background: "rgba(89,57,158,0.2)", border: "1px solid rgba(89,57,158,0.4)", color: "#A07FD4", fontFamily: "var(--font-montserrat)" }}
+        <div className="relative">
+          <button
+            className="flex items-center gap-2"
+            onClick={() => setPerfilOpen((v) => !v)}
+            aria-label="Menu do usuário"
           >
-            {initials}
-          </div>
-          <div className="hidden lg:block">
-            <div className="text-offwhite text-xs font-medium leading-tight">{profile?.nome ?? "Usuário"}</div>
-            <div className="text-muted" style={{ fontSize: "0.65rem" }}>{profile ? ROLE_LABELS[profile.role] ?? profile.role : ""}</div>
-          </div>
-
-          <div className="absolute right-0 top-full mt-2 w-40 card py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity" style={{ zIndex: 50 }}>
-            <button
-              onClick={handleLogout}
-              className="w-full text-left px-4 py-2 text-error text-xs hover:bg-elevated transition-colors"
-              style={{ fontFamily: "var(--font-montserrat)" }}
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+              style={{ background: "rgba(89,57,158,0.2)", border: "1px solid rgba(89,57,158,0.4)", color: "#A07FD4", fontFamily: "var(--font-montserrat)" }}
             >
-              Sair
-            </button>
-          </div>
+              {initials}
+            </div>
+            <div className="hidden lg:block text-left">
+              <div className="text-offwhite text-xs font-medium leading-tight">{profile?.nome ?? "Usuário"}</div>
+              <div className="text-muted" style={{ fontSize: "0.65rem" }}>{profile ? ROLE_LABELS[profile.role] ?? profile.role : ""}</div>
+            </div>
+          </button>
+
+          {perfilOpen && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setPerfilOpen(false)} />
+              <div className="absolute right-0 top-full mt-2 w-40 card py-1" style={{ zIndex: 50 }}>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-error text-xs hover:bg-elevated transition-colors"
+                  style={{ fontFamily: "var(--font-montserrat)" }}
+                >
+                  Sair
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </header>
