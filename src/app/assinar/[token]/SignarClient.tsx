@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 import SignaturePad from 'signature_pad';
+import DOMPurify from 'dompurify';
 
 interface Props {
   token: string;
@@ -15,7 +16,15 @@ interface Props {
 
 const STEPS = ['Leitura', 'Identificação', 'Assinatura'];
 
-export function AssinarClient({ token, contratoId, contratoHtml, pacienteNome, pacienteEmail, clinicaNome, clinicaTelefone }: Props) {
+export function AssinarClient({ token, contratoId, contratoHtml: rawHtml, pacienteNome, pacienteEmail, clinicaNome, clinicaTelefone }: Props) {
+  const contratoHtml = typeof window !== 'undefined'
+    ? DOMPurify.sanitize(rawHtml, {
+        ALLOWED_TAGS: ['p','br','strong','em','u','h1','h2','h3','h4','table','thead','tbody','tr','th','td','ul','ol','li','div','span'],
+        ALLOWED_ATTR: ['style','colspan','rowspan'],
+        FORBID_TAGS: ['script','iframe','object','embed','form','input','button'],
+        FORBID_ATTR: ['onerror','onload','onclick','onmouseover'],
+      })
+    : rawHtml;
   const [step, setStep] = useState(0);
   const [scrolledToEnd, setScrolledToEnd] = useState(false);
   const [recusaOpen, setRecusaOpen] = useState(false);

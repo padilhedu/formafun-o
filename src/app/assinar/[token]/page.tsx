@@ -1,23 +1,9 @@
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { JSDOM } from 'jsdom';
-import DOMPurify from 'dompurify';
 import { AssinarClient } from './SignarClient';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Assinar Contrato', robots: 'noindex' };
-
-function sanitizeHtml(html: string): string {
-  const { window } = new JSDOM('');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const purify = DOMPurify(window as unknown as any);
-  return purify.sanitize(html, {
-    ALLOWED_TAGS: ['p','br','strong','em','u','h1','h2','h3','h4','table','thead','tbody','tr','th','td','ul','ol','li','div','span'],
-    ALLOWED_ATTR: ['style','colspan','rowspan'],
-    FORBID_TAGS: ['script','iframe','object','embed','form','input','button'],
-    FORBID_ATTR: ['onerror','onload','onclick','onmouseover'],
-  });
-}
 
 export default async function AssinarPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
@@ -55,7 +41,7 @@ export default async function AssinarPage({ params }: { params: Promise<{ token:
     if (htmlData) rawHtml = await htmlData.text();
   } catch {}
 
-  const safeHtml = sanitizeHtml(rawHtml);
+  const safeHtml = rawHtml; // sanitização feita no client via DOMPurify (browser DOM)
 
   const { data: clinicaCfg } = await supabase.from('configuracoes').select('valor').eq('chave', 'clinica').single();
   const clinica = (clinicaCfg?.valor as { nome?: string; telefone?: string } | null) ?? {};
