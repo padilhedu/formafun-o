@@ -32,7 +32,7 @@ const th: React.CSSProperties = {
 
 export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove, onDuplicate, onToggleCategoria }: Props) {
   const [catalogo, setCatalogo] = useState<ProcedimentoTabela[]>([]);
-  const [addingCat, setAddingCat] = useState<ProcedimentoCategoria | null>(null);
+  const [addingCat, setAddingCat] = useState<ProcedimentoCategoria | null | undefined>(undefined);
   const [busca, setBusca] = useState('');
   const [menuAberto, setMenuAberto] = useState<string | null>(null);
 
@@ -66,7 +66,7 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
       selecionado: true,
       fixado: false,
     });
-    setAddingCat(null);
+    setAddingCat(undefined);
     setBusca('');
   }, [onAdd]);
 
@@ -271,20 +271,19 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
         )}
       </div>
 
-      {/* Catalog modal */}
-      {(addingCat !== undefined || busca.length > 0) && addingCat !== undefined && addingCat !== null || (busca.length > 0 && !addingCat && procItens.length === 0) ? null : null}
-      {addingCat !== null && addingCat !== undefined && (
+      {/* Catalog modal — addingCat===undefined: fechado; null: aberto sem filtro; string: filtrado por categoria */}
+      {addingCat !== undefined && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
           style={{ background: 'rgba(0,0,0,0.7)' }}
-          onClick={e => { if (e.target === e.currentTarget) setAddingCat(null); }}
+          onClick={e => { if (e.target === e.currentTarget) setAddingCat(undefined); }}
         >
           <div style={{ background: '#121214', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, width: 520, maxWidth: '95vw', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             <div style={{ padding: '18px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', gap: 12 }}>
               <span style={{ fontFamily: 'var(--font-cormorant)', fontSize: 20, color: '#F5F2EA', fontWeight: 500, flex: 1 }}>
-                {CATEGORIA_LABELS[addingCat] ?? addingCat}
+                {addingCat ? (CATEGORIA_LABELS[addingCat] ?? addingCat) : 'Todos os procedimentos'}
               </span>
-              <button onClick={() => setAddingCat(null)} style={{ background: 'none', border: 'none', color: '#8A8A93', fontSize: 20, cursor: 'pointer' }}>×</button>
+              <button onClick={() => setAddingCat(undefined)} style={{ background: 'none', border: 'none', color: '#8A8A93', fontSize: 20, cursor: 'pointer' }}>×</button>
             </div>
             <div style={{ padding: '12px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
               <input
