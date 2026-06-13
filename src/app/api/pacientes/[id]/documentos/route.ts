@@ -13,17 +13,19 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
   if (!file) return NextResponse.json({ error: 'Arquivo não enviado.' }, { status: 400 });
 
-  // Upload para Supabase Storage como fallback (Drive na Fase 2 completa)
-  const path = `pacientes/${id}/${Date.now()}_${file.name}`;
-  const { error: uploadError } = await supabase.storage
+  // Upload via service role (bypassa RLS no storage.objects)
+  const { createClient: createServiceClient } = await import('@supabase/supabase-js');
+  const admin = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+  const storagePath = `pacientes/${id}/${Date.now()}_${file.name}`;
+  const { error: uploadError } = await admin.storage
     .from('documentos')
-    .upload(path, file, { contentType: file.type, upsert: false });
+    .upload(storagePath, file, { contentType: file.type, upsert: false });
 
-  let publicUrl: string | null = null;
-  if (!uploadError) {
-    const { data: urlData } = supabase.storage.from('documentos').getPublicUrl(path);
-    publicUrl = urlData.publicUrl;
-  }
+  // Salva o path (não a URL pública) — signed URL gerada server-side ao carregar
+  const pathToStore = uploadError ? null : storagePath;
 
   const { data, error } = await supabase
     .from('documentos_paciente')
@@ -31,7 +33,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       paciente_id: id,
       tipo,
       nome: file.name,
-      drive_link: publicUrl,
+      drive_link: pathToStore,
       mime_type: file.type,
       criado_por: user.id,
     })
