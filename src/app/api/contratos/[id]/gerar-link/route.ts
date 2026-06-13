@@ -75,21 +75,25 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const tokenExp = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
   // Salvar HTML original no Storage via service role (bypassa RLS)
-  const { createClient: createServiceClient } = await import('@supabase/supabase-js');
-  const adminStorage = createServiceClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-  const htmlBytes = Buffer.from(htmlRendered, 'utf-8');
-  const { error: uploadErr } = await adminStorage.storage.from('contratos-html').upload(`${id}/original.html`, htmlBytes, {
-    contentType: 'text/html; charset=utf-8',
-    upsert: true,
-  });
-  if (uploadErr) {
-    console.error('[gerar-link] Falha no upload do HTML para Storage:', uploadErr.message);
-    return NextResponse.json({
-      error: 'Bucket "contratos-html" não encontrado ou sem permissão. Crie-o no painel Supabase (privado) e rode scripts/setup-storage-buckets.ts.',
-    }, { status: 500 });
+  // URL server-side: prefere SUPABASE_URL (server-only), cai em NEXT_PUBLIC_SUPABASE_URL
+  const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (supabaseUrl && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    try {
+      const { createClient: createServiceClient } = await import('@supabase/supabase-js');
+      const adminStorage = createServiceClient(supabaseUrl, process.env.SUPABASE_SERVICE_ROLE_KEY);
+      const htmlBytes = Buffer.from(htmlRendered, 'utf-8');
+      const { error: uploadErr } = await adminStorage.storage.from('contratos-html').upload(`${id}/original.html`, htmlBytes, {
+        contentType: 'text/html; charset=utf-8',
+        upsert: true,
+      });
+      if (uploadErr) {
+        console.error('[gerar-link] Falha no upload do HTML para Storage (não bloqueante):', uploadErr.message);
+      }
+    } catch (e) {
+      console.error('[gerar-link] Exceção no upload Storage:', e);
+    }
+  } else {
+    console.warn('[gerar-link] SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY ausentes — upload Storage ignorado.');
   }
 
   const { error: updateErr } = await supabase.from('contratos').update({
