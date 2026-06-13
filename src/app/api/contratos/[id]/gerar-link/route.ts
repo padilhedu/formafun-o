@@ -74,9 +74,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const tokenHmac = crypto.createHmac('sha256', process.env.SIGNING_HMAC_SECRET!).update(token).digest('hex');
   const tokenExp = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
-  // Salvar HTML original no Storage (fonte de verdade imutável)
+  // Salvar HTML original no Storage via service role (bypassa RLS)
+  const { createClient: createServiceClient } = await import('@supabase/supabase-js');
+  const adminStorage = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
   const htmlBytes = Buffer.from(htmlRendered, 'utf-8');
-  const { error: uploadErr } = await supabase.storage.from('contratos-html').upload(`${id}/original.html`, htmlBytes, {
+  const { error: uploadErr } = await adminStorage.storage.from('contratos-html').upload(`${id}/original.html`, htmlBytes, {
     contentType: 'text/html; charset=utf-8',
     upsert: true,
   });

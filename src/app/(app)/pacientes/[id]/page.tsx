@@ -56,7 +56,24 @@ export default async function PacientePage({ params, searchParams }: Props) {
 
   if (aba === 'documentos') {
     const { data } = await supabase.from('documentos_paciente').select('*').eq('paciente_id', id).order('criado_em', { ascending: false });
-    documentos = (data as DocumentoPaciente[]) ?? [];
+    const raw = (data as DocumentoPaciente[]) ?? [];
+    // Gerar URLs assinadas (1h) via service role para bucket privado
+    if (raw.length > 0) {
+      const { createClient: svc } = await import('@supabase/supabase-js');
+      const admin = svc(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+      documentos = await Promise.all(raw.map(async (doc) => {
+        if (!doc.drive_link) return doc;
+        // Suporta tanto path puro quanto URL pública legada
+        const marker = '/object/public/documentos/';
+        const storagePath = doc.drive_link.includes(marker)
+          ? doc.drive_link.split(marker)[1]
+          : doc.drive_link;
+        const { data: signed } = await admin.storage.from('documentos').createSignedUrl(storagePath, 3600);
+        return { ...doc, drive_link: signed?.signedUrl ?? doc.drive_link };
+      }));
+    } else {
+      documentos = raw;
+    }
   }
 
   if (aba === 'odontograma') {
