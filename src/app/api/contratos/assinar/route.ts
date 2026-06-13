@@ -117,12 +117,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Erro ao gerar PDF' }, { status: 500 });
   }
 
-  // Salvar PDF no Storage
+  // Salvar PDF no Storage via service role (chamada pública não tem sessão de usuário)
   const pdfPath = `${c.paciente_id}/${c.codigo}-assinado.pdf`;
-  await supabase.storage.from('contratos-assinados').upload(pdfPath, pdfBuffer, {
-    contentType: 'application/pdf',
-    upsert: true,
-  });
+  const supabaseUrl = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (supabaseUrl && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    try {
+      const { createClient: createServiceClient } = await import('@supabase/supabase-js');
+      const adminStorage = createServiceClient(supabaseUrl, process.env.SUPABASE_SERVICE_ROLE_KEY);
+      const { error: pdfUploadErr } = await adminStorage.storage
+        .from('contratos-assinados')
+        .upload(pdfPath, pdfBuffer, { contentType: 'application/pdf', upsert: true });
+      if (pdfUploadErr) console.error('[assinar] Falha no upload do PDF:', pdfUploadErr.message);
+    } catch (e) {
+      console.error('[assinar] Exceção no upload PDF:', e);
+    }
+  }
 
   // Atualizar contrato no banco
   await supabase.from('contratos').update({
