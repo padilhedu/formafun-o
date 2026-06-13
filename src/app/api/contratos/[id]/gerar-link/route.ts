@@ -70,8 +70,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const docHash = crypto.createHash('sha256').update(htmlRendered).digest('hex');
 
   const token = crypto.randomUUID();
-  const secret = process.env.SIGNING_HMAC_SECRET ?? '';
-  const tokenHmac = crypto.createHmac('sha256', secret).update(token).digest('hex');
+  // SIGNING_HMAC_SECRET já foi verificada no guard acima — nunca é undefined aqui
+  const tokenHmac = crypto.createHmac('sha256', process.env.SIGNING_HMAC_SECRET!).update(token).digest('hex');
   const tokenExp = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
   // Salvar HTML original no Storage (fonte de verdade imutável)
@@ -94,6 +94,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     sign_token_hmac: tokenHmac,
     sign_token_exp: tokenExp,
     doc_hash: docHash,
+    // Regravar corpo_html_final com o HTML renderizado neste momento,
+    // garantindo que preview PDF e documento assinado sejam idênticos.
+    corpo_html_final: htmlRendered,
   }).eq('id', id);
 
   if (updateErr) return NextResponse.json({ error: 'Erro ao salvar token' }, { status: 500 });
