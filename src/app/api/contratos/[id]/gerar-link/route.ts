@@ -4,6 +4,12 @@ import { renderTemplate } from '@/lib/template-render';
 import crypto from 'crypto';
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  // Falhar explicitamente se o segredo HMAC não estiver configurado
+  if (!process.env.SIGNING_HMAC_SECRET) {
+    console.error('[gerar-link] SIGNING_HMAC_SECRET não definida. Configure a variável de ambiente.');
+    return NextResponse.json({ error: 'Configuração de assinatura ausente no servidor (SIGNING_HMAC_SECRET).' }, { status: 500 });
+  }
+
   const { id } = await params;
   const supabase = await createClient();
 
@@ -70,10 +76,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   // Salvar HTML original no Storage (fonte de verdade imutável)
   const htmlBytes = Buffer.from(htmlRendered, 'utf-8');
-  await supabase.storage.from('contratos-html').upload(`${id}/original.html`, htmlBytes, {
+  const { error: uploadErr } = await supabase.storage.from('contratos-html').upload(`${id}/original.html`, htmlBytes, {
     contentType: 'text/html; charset=utf-8',
     upsert: true,
   });
+  if (uploadErr) {
+    console.error('[gerar-link] Falha no upload do HTML para Storage:', uploadErr.message);
+    return NextResponse.json({
+      error: 'Bucket "contratos-html" não encontrado ou sem permissão. Crie-o no painel Supabase (privado) e rode scripts/setup-storage-buckets.ts.',
+    }, { status: 500 });
+  }
 
   const { error: updateErr } = await supabase.from('contratos').update({
     status: 'enviado',

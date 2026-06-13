@@ -40,9 +40,11 @@ const nextConfig: NextConfig = {
         { key: 'Content-Security-Policy', value: csp.replace("frame-ancestors 'none'", "frame-ancestors 'self'") },
       ]);
 
+    // Wildcard primeiro; regra específica do PDF por ÚLTIMO para sobrescrever
+    // X-Frame-Options e frame-ancestors, permitindo iframe same-origin no admin.
     return [
-      { source: "/api/contratos/(.*)/pdf", headers: pdfHeaders },
       { source: "/(.*)", headers: securityHeaders },
+      { source: "/api/contratos/(.*)/pdf", headers: pdfHeaders },
     ];
   },
 };

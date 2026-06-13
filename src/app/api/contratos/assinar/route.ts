@@ -66,7 +66,11 @@ export async function POST(req: NextRequest) {
   }
 
   // Verificar HMAC
-  const secret = process.env.SIGNING_HMAC_SECRET ?? '';
+  const secret = process.env.SIGNING_HMAC_SECRET;
+  if (!secret) {
+    console.error('[assinar] SIGNING_HMAC_SECRET não definida.');
+    return NextResponse.json({ error: 'Configuração de assinatura ausente no servidor.' }, { status: 500 });
+  }
   const expectedHmac = crypto.createHmac('sha256', secret).update(token).digest('hex');
   const hmacOk = crypto.timingSafeEqual(Buffer.from(expectedHmac, 'hex'), Buffer.from(c.sign_token_hmac ?? '', 'hex'));
   if (!hmacOk) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
