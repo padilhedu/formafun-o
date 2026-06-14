@@ -28,10 +28,38 @@ export async function POST(
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+  // Gerar parcelas automaticamente (padrão: 1 parcela no total, 30 dias)
+  const orc_full = data as { id: string; codigo: string; paciente_id: string; valor_total: number };
+  const venc30 = new Date();
+  venc30.setDate(venc30.getDate() + 30);
+  const vencStr = venc30.toISOString().split('T')[0];
+
+  // Checar se já tem parcelas (edge case)
+  const { count: existingCount } = await supabase
+    .from('contas_receber')
+    .select('id', { count: 'exact', head: true })
+    .eq('orcamento_id', id)
+    .neq('status', 'cancelado');
+
+  if (!existingCount) {
+    const { data: codigoReceber } = await supabase.rpc('gerar_codigo_receber');
+    await supabase.from('contas_receber').insert({
+      codigo: codigoReceber,
+      paciente_id: orc_full.paciente_id,
+      orcamento_id: orc_full.id,
+      descricao: `Pagamento — ${orc_full.codigo}`,
+      parcela_num: 1,
+      parcela_total: 1,
+      valor: orc_full.valor_total,
+      vencimento: vencStr,
+      criado_por: user.id,
+    });
+  }
+
   await supabase.from('orcamento_historico').insert({
     orcamento_id: id,
     evento: 'aprovado',
-    detalhes: { status_anterior: orc.status },
+    detalhes: { status_anterior: orc.status, parcelas_auto_geradas: !existingCount },
     usuario_id: user.id,
   });
 

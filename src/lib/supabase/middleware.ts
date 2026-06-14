@@ -59,7 +59,9 @@ export async function updateSession(request: NextRequest) {
     "/api/webhooks",
     "/portal/login",
     "/api/portal/magic-link", "/api/portal/primeiro-acesso",
-    "/assinar",   // página pública de assinatura de contrato — paciente sem login
+    // Fluxo de assinatura externa: o signatário acessa sem login (validação por token+HMAC)
+    "/assinar",
+    "/api/contratos/assinar", "/api/contratos/recusar",
   ];
   const isPublic = publicRoutes.some(r => pathname.startsWith(r));
 

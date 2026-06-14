@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { renderTemplate } from '@/lib/template-render';
+import { getSigningSecret } from '@/lib/signing-secret';
 import crypto from 'crypto';
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -70,8 +71,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const docHash = crypto.createHash('sha256').update(htmlRendered).digest('hex');
 
   const token = crypto.randomUUID();
-  // SIGNING_HMAC_SECRET já foi verificada no guard acima — nunca é undefined aqui
-  const tokenHmac = crypto.createHmac('sha256', process.env.SIGNING_HMAC_SECRET!).update(token).digest('hex');
+  const secret = getSigningSecret();
+  const tokenHmac = crypto.createHmac('sha256', secret).update(token).digest('hex');
   const tokenExp = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
   // Salvar HTML original no Storage via service role (bypassa RLS)

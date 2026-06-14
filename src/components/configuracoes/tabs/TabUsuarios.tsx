@@ -75,7 +75,7 @@ export function TabUsuarios({ usuarios }: Props) {
               return (
                 <tr key={u.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                   <td style={{ padding: '12px 16px' }}>
-                    <span className="text-offwhite text-sm">{u.email ?? u.id}</span>
+                    <span className="text-offwhite text-sm">{u.nome ?? u.id}</span>
                   </td>
                   <td style={{ padding: '12px 16px' }}>
                     <span className="badge" style={{ background: badge.bg, color: badge.color, border: `1px solid ${badge.border}`, fontSize: 10 }}>
@@ -84,7 +84,7 @@ export function TabUsuarios({ usuarios }: Props) {
                   </td>
                   <td style={{ padding: '12px 16px' }}>
                     <span className="text-muted text-xs">
-                      {u.ultimo_login ? new Date(u.ultimo_login).toLocaleDateString('pt-BR') : '—'}
+                      {u.created_at ? new Date(u.created_at).toLocaleDateString('pt-BR') : '—'}
                     </span>
                   </td>
                   <td style={{ padding: '12px 16px', textAlign: 'right' }}>

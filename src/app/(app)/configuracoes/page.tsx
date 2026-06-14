@@ -27,8 +27,8 @@ export default async function ConfiguracoesPage() {
   const [configRes, profRes, procRes, usersRes, auditRes] = await Promise.all([
     sb.from('configuracoes').select('*'),
     sb.from('profissionais').select('*').order('nome'),
-    sb.from('procedimentos_catalogo').select('*').order('nome'),
-    sb.from('profiles').select('id, role, email:id, ultimo_login:updated_at').order('role'),
+    sb.from('procedimentos_tabela').select('*').order('nome'),
+    sb.from('profiles').select('id, role, nome, created_at').order('role'),
     sb.from('audit_log').select('*').order('criado_em', { ascending: false }).limit(100),
   ]);
 

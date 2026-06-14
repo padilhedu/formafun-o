@@ -15,8 +15,7 @@ function Modal({ item, onFechar, onSalvo }: {
   const [nome, setNome] = useState(item?.nome ?? '');
   const [codigo, setCodigo] = useState(item?.codigo ?? '');
   const [cat, setCat] = useState(item?.categoria ?? '');
-  const [valor, setValor] = useState(item?.valor_padrao ? String(item.valor_padrao) : '');
-  const [desc, setDesc] = useState(item?.descricao ?? '');
+  const [valor, setValor] = useState(item?.valor_base ? String(item.valor_base) : '');
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
 
@@ -24,7 +23,7 @@ function Modal({ item, onFechar, onSalvo }: {
     e.preventDefault();
     if (!nome) { setErro('Nome obrigatório'); return; }
     setLoading(true); setErro('');
-    const payload = { nome, codigo: codigo || null, categoria: cat || null, valor_padrao: valor ? Number(valor) : null, descricao: desc || null };
+    const payload = { nome, codigo: codigo || null, categoria: cat || null, valor_base: valor ? Number(valor) : null };
     const url = item ? `/api/configuracoes/procedimentos/${item.id}` : '/api/configuracoes/procedimentos';
     const method = item ? 'PATCH' : 'POST';
     const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -65,10 +64,6 @@ function Modal({ item, onFechar, onSalvo }: {
               <label className="table-header block mb-1">Valor Padrão (R$)</label>
               <input type="number" min="0" step="0.01" className="input-field" value={valor} onChange={e => setValor(e.target.value)} />
             </div>
-          </div>
-          <div>
-            <label className="table-header block mb-1">Descrição</label>
-            <textarea className="input-field w-full" rows={2} style={{ resize: 'none', fontSize: 12 }} value={desc} onChange={e => setDesc(e.target.value)} />
           </div>
           {erro && <p className="text-error text-xs">{erro}</p>}
           <div className="flex gap-2 pt-1">
@@ -148,13 +143,13 @@ export function TabProcedimentos({ procedimentos: initial }: Props) {
                 </td>
                 <td style={{ padding: '11px 16px' }}>
                   <div className="text-offwhite text-sm font-medium">{p.nome}</div>
-                  {p.descricao && <div className="text-muted text-xs mt-0.5">{p.descricao.slice(0, 60)}{p.descricao.length > 60 ? '…' : ''}</div>}
+                  {p.duracao_min && <div className="text-muted text-xs mt-0.5">{p.duracao_min} min</div>}
                 </td>
                 <td style={{ padding: '11px 16px' }}>
                   <span className="text-muted text-xs">{p.categoria ?? '—'}</span>
                 </td>
                 <td style={{ padding: '11px 16px' }}>
-                  <span className="text-offwhite text-sm">{p.valor_padrao ? `R$ ${Number(p.valor_padrao).toFixed(2)}` : '—'}</span>
+                  <span className="text-offwhite text-sm">{p.valor_base ? `R$ ${Number(p.valor_base).toFixed(2)}` : '—'}</span>
                 </td>
                 <td style={{ padding: '11px 16px' }}>
                   <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>

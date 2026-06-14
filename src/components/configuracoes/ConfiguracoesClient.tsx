@@ -83,10 +83,10 @@ export interface ProfissionalRow {
 }
 export interface ProcedimentoRow {
   id: string; codigo?: string; nome: string; categoria?: string;
-  valor_padrao?: number; descricao?: string; ativo: boolean;
+  valor_base?: number; duracao_min?: number; ativo: boolean;
 }
 export interface UsuarioRow {
-  id: string; role: string; email?: string; ultimo_login?: string;
+  id: string; role: string; nome?: string; created_at?: string;
 }
 export interface AuditRow {
   id: string; usuario_email?: string; acao: string; tabela?: string;

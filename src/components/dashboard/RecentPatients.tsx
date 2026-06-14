@@ -31,28 +31,51 @@ function Avatar({ name }: { name: string }) {
 
 export function RecentPatients() {
   return (
-    <div className="card p-5">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-offwhite font-semibold text-sm">Últimos Atendimentos</h2>
-        <a href="/pacientes" className="text-gold text-xs font-medium hover:text-champagne transition-colors">
-          Ver todos
+    <div
+      className="rounded-2xl p-5"
+      style={{
+        background: "linear-gradient(145deg, #141416 0%, #111113 100%)",
+        border: "1px solid rgba(255,255,255,0.07)",
+      }}
+    >
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <h2 className="text-sm font-semibold" style={{ color: "#F5F2EA", fontFamily: "var(--font-montserrat)" }}>
+            Últimos Atendimentos
+          </h2>
+          <p className="text-xs mt-0.5" style={{ color: "#8A8A93" }}>5 mais recentes</p>
+        </div>
+        <a
+          href="/pacientes"
+          className="text-xs font-semibold transition-colors duration-150 hover:opacity-80"
+          style={{ color: "#B89A5A", fontFamily: "var(--font-montserrat)" }}
+        >
+          Ver todos →
         </a>
       </div>
-      <div className="space-y-0.5">
+      <div className="space-y-0">
         {PATIENTS.map((p, i) => (
           <div
             key={i}
-            className="flex items-center gap-3 py-2.5 table-row-hover rounded-lg px-2 -mx-2"
+            className="flex items-center gap-3 py-3 transition-colors duration-150 hover:bg-white/[0.025] rounded-lg px-2 -mx-2 cursor-pointer"
+            style={{
+              borderBottom: i < PATIENTS.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
+            }}
           >
             <Avatar name={p.name} />
             <div className="flex-1 min-w-0">
-              <div className="text-offwhite text-xs font-medium truncate">{p.name}</div>
-              <div className="text-muted truncate" style={{ fontSize: "0.65rem" }}>{p.proc}</div>
+              <div
+                className="text-sm font-medium truncate"
+                style={{ color: "#F5F2EA", fontFamily: "var(--font-montserrat)" }}
+              >
+                {p.name}
+              </div>
+              <div className="text-xs mt-0.5 truncate" style={{ color: "#8A8A93" }}>{p.proc}</div>
             </div>
             <div className="text-right flex-shrink-0">
-              <div className="text-muted" style={{ fontSize: "0.65rem" }}>{p.last}</div>
+              <div className="text-xs" style={{ color: "#8A8A93" }}>{p.last}</div>
               <div
-                className="text-xs font-medium mt-0.5"
+                className="text-xs font-semibold mt-0.5"
                 style={{ color: p.status === "ativo" ? "#4ADE80" : "#8A8A93" }}
               >
                 {p.status}
