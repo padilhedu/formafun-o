@@ -1,20 +1,17 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 import { AgendaClient } from '@/components/agenda/AgendaClient';
 
 export const dynamic = 'force-dynamic';
 
-async function supabase() {
-  const cookieStore = await cookies();
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} } }
-  );
-}
-
 export default async function AgendaPage() {
-  const sb = await supabase();
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return <div className="text-muted p-8">Configure o Supabase para usar este módulo.</div>;
+  }
+
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/login');
 
   const hoje = new Date();
   const dow = hoje.getDay();
@@ -23,23 +20,28 @@ export default async function AgendaPage() {
   const dom = new Date(seg); dom.setDate(seg.getDate() + 6); dom.setHours(23,59,59);
 
   const [{ data: eventos }, { data: pacientes }] = await Promise.all([
-    sb.from('agenda_eventos')
+    supabase.from('agenda_eventos')
       .select('*, pacientes(nome, telefone)')
       .gte('inicio', seg.toISOString())
       .lte('inicio', dom.toISOString())
       .order('inicio'),
-    sb.from('pacientes')
+    supabase.from('pacientes')
       .select('id, nome, telefone')
-      .eq('ativo', true)
+      .is('deleted_at', null)
       .order('nome'),
   ]);
 
   return (
-    <div className="flex flex-col gap-4" style={{ height: '100%' }}>
-      <div className="flex items-start justify-between mb-2">
+    <div style={{ height: '100%' }}>
+      {/* Header */}
+      <div className="flex items-start justify-between mb-4">
         <div>
-          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>Agenda</h1>
-          <p className="text-muted text-sm">Visualize e gerencie consultas. Clique em um horário para criar evento.</p>
+          <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+            OPERACIONAL
+          </div>
+          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1 }}>
+            Agenda
+          </h1>
         </div>
       </div>
       <AgendaClient
