@@ -35,7 +35,8 @@ export default async function PacientePage({ params, searchParams }: Props) {
 
   if (!paciente) notFound();
 
-  await registrarAudit('leitura', 'pacientes', id, { aba });
+  // Audit da leitura do prontuário — sempre registra, incluindo aba específica
+  await registrarAudit('leitura_prontuario', 'pacientes', id, { aba });
 
   // Carregar dados conforme a aba
   let anamnese: Anamnese | null = null;
@@ -47,11 +48,19 @@ export default async function PacientePage({ params, searchParams }: Props) {
   if (aba === 'anamnese' || aba === 'visao-geral') {
     const { data } = await supabase.from('anamneses').select('*').eq('paciente_id', id).order('created_at', { ascending: false }).limit(1);
     anamnese = (data?.[0] as unknown as Anamnese) ?? null;
+    // Audit específico: anamnese contém dados de saúde sensíveis (LGPD art. 11)
+    if (aba === 'anamnese') {
+      await registrarAudit('leitura_anamnese', 'anamneses', id, { paciente_id: id });
+    }
   }
 
   if (aba === 'evolucoes' || aba === 'visao-geral') {
     const { data } = await supabase.from('evolucoes').select('*').eq('paciente_id', id).order('data', { ascending: false }).limit(10);
     evolucoes = (data as Evolucao[]) ?? [];
+    // Audit específico: evoluções clínicas são dado sensível de saúde (CFO/LGPD)
+    if (aba === 'evolucoes') {
+      await registrarAudit('leitura_evolucoes', 'evolucoes', id, { paciente_id: id, qtd: evolucoes.length });
+    }
   }
 
   if (aba === 'documentos') {
