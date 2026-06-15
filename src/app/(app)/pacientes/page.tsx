@@ -43,12 +43,15 @@ export default async function PacientesPage({ searchParams }: Props) {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+          <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+            CLÍNICO
+          </div>
+          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
             Pacientes
           </h1>
-          <p className="text-muted text-sm">{total} paciente{total !== 1 ? 's' : ''} encontrado{total !== 1 ? 's' : ''}</p>
+          <p style={{ fontSize: 13, color: '#8A8A93' }}>{total} paciente{total !== 1 ? 's' : ''} encontrado{total !== 1 ? 's' : ''}</p>
         </div>
         <Link href="/pacientes/novo" className="btn-primary">
           + Novo Paciente
@@ -59,7 +62,7 @@ export default async function PacientesPage({ searchParams }: Props) {
       <div className="flex items-center gap-3 mb-5">
         <form className="flex-1 flex gap-3" method="GET">
           <div className="flex-1 relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" width="14" height="14" viewBox="0 0 15 15" fill="none">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="14" height="14" viewBox="0 0 15 15" fill="none" style={{ color: '#8A8A93' }}>
               <circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.3" />
               <path d="M9.5 9.5l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
             </svg>
@@ -82,7 +85,7 @@ export default async function PacientesPage({ searchParams }: Props) {
       </div>
 
       {/* Tabela */}
-      <div className="card overflow-hidden overflow-x-auto">
+      <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', overflow: 'hidden' }}>
         <table className="w-full min-w-[640px]">
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>

@@ -80,39 +80,50 @@ export default async function FinanceiroPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+        <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+          FINANCEIRO
+        </div>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
           Financeiro
         </h1>
-        <p className="text-muted text-sm">Visão geral — fluxo de caixa e inadimplência</p>
+        <p style={{ fontSize: 13, color: '#8A8A93' }}>Visão geral — fluxo de caixa e inadimplência</p>
       </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-8">
         {kpis.map(k => (
-          <Link key={k.label} href={k.href} className="card block hover:border-gold transition-colors" style={{ padding: '16px 18px', borderLeft: `3px solid ${k.cor}` }}>
-            <div className="text-muted mb-2" style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          <Link key={k.label} href={k.href} className="block" style={{
+            textDecoration: 'none',
+            padding: '16px',
+            borderRadius: 14,
+            background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderTop: `2px solid ${k.cor}40`,
+            transition: 'border-color 0.15s, transform 0.15s',
+          }}>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8A8A93', marginBottom: 8 }}>
               {k.label}
             </div>
-            <div className="heading" style={{ color: k.cor, fontFamily: 'var(--font-cormorant)', fontSize: '1.7rem', fontWeight: 600 }}>
+            <div style={{ color: k.cor, fontFamily: 'var(--font-cormorant)', fontSize: 26, fontWeight: 600, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
               {formatBRL(k.valor)}
             </div>
-            {k.sub && <div className="text-muted mt-1" style={{ fontSize: 10 }}>{k.sub}</div>}
+            {k.sub && <div style={{ color: '#8A8A93', marginTop: 4, fontSize: 10 }}>{k.sub}</div>}
           </Link>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
         {/* Fluxo de caixa */}
-        <div className="card" style={{ padding: 20 }}>
-          <p className="text-muted mb-4" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 20 }}>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#8A8A93', marginBottom: 16 }}>
             Fluxo de Caixa — Últimos 6 Meses
           </p>
           <FluxoCaixaChart data={fluxo} />
         </div>
 
         {/* Próximos vencimentos */}
-        <div className="card" style={{ padding: 20 }}>
-          <p className="text-muted mb-4" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 20 }}>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#8A8A93', marginBottom: 16 }}>
             Próximos Vencimentos
           </p>
           {proximos.length === 0 ? (
