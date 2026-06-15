@@ -99,6 +99,9 @@ export default async function OrcamentoPage({ params }: { params: Promise<{ id: 
           <Link href="/orcamentos" className="text-muted hover:text-offwhite transition-colors mb-2 block" style={{ fontSize: 12 }}>
             ← Orçamentos
           </Link>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+            COMERCIAL
+          </p>
           <div className="flex items-center gap-3 flex-wrap">
             <h1 className="heading" style={{ fontFamily: 'var(--font-cormorant)', fontSize: 28, color: '#F5F2EA', fontWeight: 600 }}>
               {orc.codigo}

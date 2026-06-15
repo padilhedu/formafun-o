@@ -182,7 +182,9 @@ export function AssinarClient({ token, contratoId, contratoHtml: rawHtml, pacien
           <div key={i} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 60 }}>
               <div style={{ width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-montserrat,sans-serif)', background: i <= step ? '#B89A5A' : 'rgba(138,138,147,0.2)', color: i <= step ? '#0A0A0B' : '#8A8A93', border: i === step ? '2px solid #D9C9A3' : 'none', transition: 'all .3s' }}>
-                {i < step ? '✓' : i + 1}
+                {i < step
+                  ? <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#0A0A0B" strokeWidth="2"><path d="M2 6.5l3 3 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  : i + 1}
               </div>
               <span style={{ fontSize: 10, marginTop: 4, color: i === step ? '#D9C9A3' : '#8A8A93', fontFamily: 'var(--font-montserrat,sans-serif)', textAlign: 'center' }}>{label}</span>
             </div>

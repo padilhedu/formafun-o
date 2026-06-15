@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
     .eq('whatsapp_enviado', false);
 
   for (const ev of (eventosD1 ?? [])) {
-    const pac = (ev as { pacientes?: { nome: string; telefone: string | null; whatsapp: string | null } }).pacientes;
+    const pac = (ev as unknown as { pacientes?: { nome: string; telefone: string | null; whatsapp: string | null } }).pacientes;
     const telefone = pac?.whatsapp ?? pac?.telefone;
     if (!telefone) continue;
     try {
@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
     .eq('whatsapp_confirmado', false);
 
   for (const ev of (eventosD0 ?? [])) {
-    const pac = (ev as { pacientes?: { nome: string; telefone: string | null; whatsapp: string | null } }).pacientes;
+    const pac = (ev as unknown as { pacientes?: { nome: string; telefone: string | null; whatsapp: string | null } }).pacientes;
     const telefone = pac?.whatsapp ?? pac?.telefone;
     if (!telefone) continue;
     try {

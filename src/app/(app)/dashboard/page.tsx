@@ -103,7 +103,7 @@ export default async function DashboardPage() {
       ]);
 
       if (cfgRes.data?.valor) clinicaCfg = cfgRes.data.valor as typeof clinicaCfg;
-      if (eventosRes.data) eventosHoje = eventosRes.data as typeof eventosHoje;
+      if (eventosRes.data) eventosHoje = eventosRes.data as unknown as typeof eventosHoje;
       if (pacRes.data) pacientesRecentes = pacRes.data;
       if (pacAtivoRes.count) kpiPacientesAtivos = pacAtivoRes.count;
       kpiConsultasHoje = eventosHoje.length;

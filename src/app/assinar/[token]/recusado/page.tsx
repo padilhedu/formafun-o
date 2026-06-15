@@ -15,8 +15,8 @@ export default async function RecusadoPage() {
       </div>
 
       <div style={{ width: '100%', maxWidth: 440, background: '#121214', borderRadius: 20, padding: 36, border: '1px solid rgba(248,113,113,0.25)', marginTop: 60, textAlign: 'center' }}>
-        <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(248,113,113,0.1)', border: '2px solid rgba(248,113,113,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: 28 }}>
-          ✕
+        <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(248,113,113,0.1)', border: '2px solid rgba(248,113,113,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#F87171" strokeWidth="2.5"><path d="M7 7l14 14M21 7L7 21" strokeLinecap="round"/></svg>
         </div>
         <h1 style={{ fontFamily: 'var(--font-cormorant,serif)', fontSize: 26, color: '#F87171', margin: '0 0 12px', fontWeight: 600 }}>
           Contrato recusado

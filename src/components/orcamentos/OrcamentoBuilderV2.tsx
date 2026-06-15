@@ -269,14 +269,19 @@ export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionai
 
         {/* Ações */}
         <div className="flex items-center gap-2 flex-wrap">
-          <button onClick={() => setShowHistorico(true)} className="btn-ghost" style={{ padding: '6px 12px', fontSize: 11 }} title="Histórico">
-            📋 Histórico
+          <button onClick={() => setShowHistorico(true)} className="btn-ghost" style={{ padding: '6px 12px', fontSize: 11, display: 'inline-flex', alignItems: 'center', gap: 5 }} title="Histórico">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h4" strokeLinecap="round"/></svg>
+            Histórico
           </button>
-          <button onClick={copiarLink} className="btn-ghost" style={{ padding: '6px 12px', fontSize: 11 }}>
-            {linkCopiado ? '✓ Copiado' : '🔗 Link público'}
+          <button onClick={copiarLink} className="btn-ghost" style={{ padding: '6px 12px', fontSize: 11, display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+            {linkCopiado
+              ? <><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#4ADE80" strokeWidth="2"><path d="M3 8l4 4 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg> Copiado</>
+              : <><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M6 4H4a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1v-2" strokeLinecap="round"/><rect x="6" y="2" width="8" height="8" rx="1.5"/></svg> Link público</>
+            }
           </button>
-          <a href={`/orcamentos/${orc.id}/imprimir`} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ padding: '6px 12px', fontSize: 11, textDecoration: 'none' }}>
-            📄 PDF
+          <a href={`/orcamentos/${orc.id}/imprimir`} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ padding: '6px 12px', fontSize: 11, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 2H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6L9 2z" strokeLinecap="round" strokeLinejoin="round"/><path d="M9 2v4h4M5 9h6M5 12h4" strokeLinecap="round"/></svg>
+            PDF
           </a>
           {!travado && (
             <button

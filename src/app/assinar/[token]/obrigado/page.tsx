@@ -28,8 +28,8 @@ export default async function ObrigadoPage({ params, searchParams }: { params: P
 
       <div style={{ width: '100%', maxWidth: 440, background: '#121214', borderRadius: 20, padding: 36, border: '1px solid rgba(74,222,128,0.25)', marginTop: 60, textAlign: 'center' }}>
         {/* Check icon */}
-        <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(74,222,128,0.12)', border: '2px solid rgba(74,222,128,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: 28 }}>
-          ✓
+        <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(74,222,128,0.12)', border: '2px solid rgba(74,222,128,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#4ADE80" strokeWidth="2.5"><path d="M5 14l6 6L23 8" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </div>
 
         <h1 style={{ fontFamily: 'var(--font-cormorant,serif)', fontSize: 26, color: '#4ADE80', margin: '0 0 8px', fontWeight: 600 }}>
