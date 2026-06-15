@@ -221,6 +221,12 @@
   .table-row-hover:hover {
     background: rgba(255, 255, 255, 0.03);
   }
+
+  .kanban-card:hover {
+    border-color: rgba(184, 154, 90, 0.25) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 12px rgba(184,154,90,0.08);
+  }
 }
 
 /* ===== Animações dos componentes ui/sign-in ===== */

@@ -32,7 +32,7 @@ export function AbaVisaoGeral({ paciente, anamnese, evolucoes }: Props) {
         </InfoCard>
 
         {/* Últimas evoluções */}
-        <div className="card p-5">
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: '20px' }}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-offwhite font-semibold text-sm">Últimas Evoluções</h3>
             <a href="?aba=evolucoes" className="text-gold text-xs hover:text-champagne transition-colors">Ver todas →</a>
@@ -78,7 +78,7 @@ export function AbaVisaoGeral({ paciente, anamnese, evolucoes }: Props) {
         </InfoCard>
 
         {anamnese && anamnese.alertas.length > 0 && (
-          <div className="card p-4" style={{ borderColor: 'rgba(248,113,113,0.2)', borderLeftWidth: 3, borderLeftColor: '#F87171' }}>
+          <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, rgba(248,113,113,0.05) 0%, #111113 100%)', border: '1px solid rgba(248,113,113,0.18)', borderLeft: '3px solid #F87171', padding: '16px' }}>
             <h3 className="text-error text-xs font-semibold uppercase tracking-wider mb-3">Alertas Clínicos</h3>
             <div className="space-y-1.5">
               {anamnese.alertas.map(a => (
@@ -102,9 +102,17 @@ export function AbaVisaoGeral({ paciente, anamnese, evolucoes }: Props) {
 
 function InfoCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="card p-5">
-      <h3 className="text-offwhite font-semibold text-sm mb-4"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '0.75rem' }}>
+    <div style={{
+      borderRadius: 14,
+      background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
+      border: '1px solid rgba(255,255,255,0.07)',
+      padding: '20px',
+    }}>
+      <h3 style={{
+        fontFamily: 'var(--font-montserrat)', fontSize: 11, fontWeight: 700,
+        letterSpacing: '0.07em', textTransform: 'uppercase', color: '#8A8A93',
+        borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.75rem', marginBottom: '1rem',
+      }}>
         {title}
       </h3>
       {children}

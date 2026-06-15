@@ -40,7 +40,7 @@ export function AbaEvolucoes({ pacienteId, evolucoes: iniciais }: Props) {
 
       {/* Formulário nova evolução */}
       {showForm && (
-        <div className="card p-5 mb-5">
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(184,154,90,0.2)', padding: '20px', marginBottom: 20 }}>
           <h4 className="text-offwhite text-sm font-semibold mb-4">Registrar Evolução</h4>
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
@@ -86,27 +86,32 @@ export function AbaEvolucoes({ pacienteId, evolucoes: iniciais }: Props) {
                     background: ev.travada ? '#1A1A1E' : '#4ADE80',
                     borderColor: ev.travada ? '#8A8A93' : '#4ADE80',
                   }} />
-                <div className="card p-4">
+                <div style={{
+                  borderRadius: 12,
+                  background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
+                  border: `1px solid ${ev.travada ? 'rgba(255,255,255,0.06)' : 'rgba(74,222,128,0.12)'}`,
+                  padding: '16px',
+                }}>
                   <div className="flex items-start justify-between gap-3 mb-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-offwhite text-sm font-semibold">{ev.procedimento}</span>
+                      <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: 13, fontWeight: 600, color: '#F5F2EA' }}>{ev.procedimento}</span>
                       {ev.dente && (
-                        <span className="badge" style={{ background: 'rgba(96,165,250,0.1)', color: '#60A5FA', border: '1px solid rgba(96,165,250,0.2)' }}>
+                        <span className="badge" style={{ background: 'rgba(96,165,250,0.1)', color: '#60A5FA', border: '1px solid rgba(96,165,250,0.2)', fontSize: 10 }}>
                           Dente {ev.dente}
                         </span>
                       )}
                       {ev.travada && (
-                        <span className="badge" style={{ background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.2)' }}>
-                          ✓ Travado
+                        <span className="badge" style={{ background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.2)', fontSize: 10 }}>
+                          ✓ CFO
                         </span>
                       )}
                     </div>
-                    <span className="text-muted text-xs flex-shrink-0">{formatDate(ev.data)}</span>
+                    <span style={{ fontSize: 11, color: '#8A8A93', flexShrink: 0, fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>{formatDate(ev.data)}</span>
                   </div>
-                  {ev.descricao && <p className="text-muted text-sm mt-1 leading-relaxed">{ev.descricao}</p>}
+                  {ev.descricao && <p style={{ color: '#8A8A93', fontSize: 13, marginTop: 6, lineHeight: 1.6 }}>{ev.descricao}</p>}
                   {ev.travada && (
-                    <p className="text-muted text-xs mt-2 italic" style={{ color: '#4ADE80', opacity: 0.7 }}>
-                      Registro travado — imutável conforme normas do CFO
+                    <p style={{ fontSize: 11, marginTop: 8, color: '#4ADE80', opacity: 0.6, fontStyle: 'italic' }}>
+                      Registro imutável · CFO
                     </p>
                   )}
                 </div>

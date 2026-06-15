@@ -40,10 +40,15 @@ export default async function OrcamentosPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+          <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 6 }}>
+            COMERCIAL
+          </div>
+          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
             Orçamentos
           </h1>
-          <p className="text-muted text-sm">Pipeline de orçamentos por status</p>
+          <p className="text-muted text-sm">
+            {orcamentos.length} orçamentos · pipeline {formatBRL(orcamentos.reduce((s, o) => s + o.valor_total, 0))}
+          </p>
         </div>
         <Link href="/orcamentos/novo" className="btn-primary text-sm" style={{ padding: '8px 20px' }}>
           + Novo Orçamento
@@ -57,17 +62,25 @@ export default async function OrcamentosPage() {
           const total = lista.reduce((s, o) => s + o.valor_total, 0);
           const cfg = STATUS_CONFIG[status];
           return (
-            <div key={status} className="card" style={{ padding: '14px 16px' }}>
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: cfg.color }} />
-                <span className="text-muted" style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            <div key={status} style={{
+              padding: '16px',
+              borderRadius: 14,
+              background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
+              border: '1px solid rgba(255,255,255,0.07)',
+              borderTop: `2px solid ${cfg.color}40`,
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: cfg.color, boxShadow: `0 0 6px ${cfg.color}80` }} />
+                <span style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8A8A93' }}>
                   {cfg.label}
                 </span>
               </div>
-              <div className="text-offwhite font-bold" style={{ fontSize: 20, fontFamily: 'var(--font-montserrat)' }}>
+              <div style={{ fontSize: 28, fontFamily: 'var(--font-cormorant)', fontWeight: 600, color: '#F5F2EA', lineHeight: 1 }}>
                 {lista.length}
               </div>
-              <div style={{ color: cfg.color, fontSize: 11, fontFamily: 'var(--font-montserrat)', marginTop: 2 }}>
+              <div style={{ color: cfg.color, fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, marginTop: 4 }}>
                 {formatBRL(total)}
               </div>
             </div>
@@ -83,38 +96,45 @@ export default async function OrcamentosPage() {
           return (
             <div key={status} style={{ minWidth: 260, width: 260, flexShrink: 0 }}>
               <div className="flex items-center gap-2 mb-3 px-1">
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: cfg.color }} />
-                <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', color: cfg.color, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
+                <div className="w-2 h-2 rounded-full" style={{ background: cfg.color, boxShadow: `0 0 5px ${cfg.color}70` }} />
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', color: cfg.color, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
                   {cfg.label}
                 </span>
-                <span className="ml-auto text-muted" style={{ fontSize: 11 }}>{lista.length}</span>
+                <span className="ml-auto" style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 600, background: 'rgba(255,255,255,0.06)', color: '#8A8A93', borderRadius: 20, padding: '1px 7px' }}>
+                  {lista.length}
+                </span>
               </div>
               <div className="space-y-2">
                 {lista.length === 0 && (
-                  <div style={{ padding: '20px 16px', borderRadius: 12, border: '1px dashed rgba(255,255,255,0.07)', textAlign: 'center' }}>
+                  <div style={{ padding: '24px 16px', borderRadius: 12, border: '1px dashed rgba(255,255,255,0.07)', textAlign: 'center' }}>
                     <span className="text-muted" style={{ fontSize: 12 }}>Sem orçamentos</span>
                   </div>
                 )}
                 {lista.map(orc => (
-                  <Link key={orc.id} href={`/orcamentos/${orc.id}`} className="block card" style={{ padding: '14px 16px', textDecoration: 'none' }}>
+                  <Link key={orc.id} href={`/orcamentos/${orc.id}`} className="block kanban-card" style={{ textDecoration: 'none',
+                    display: 'block', padding: '14px 16px', borderRadius: 12,
+                    background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
+                    border: '1px solid rgba(255,255,255,0.07)',
+                    transition: 'all 0.18s ease',
+                  }}>
                     <div className="flex items-start justify-between mb-2">
-                      <span className="text-gold" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>
+                      <span style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#B89A5A', letterSpacing: '0.04em' }}>
                         {orc.codigo}
                       </span>
                       {orc.travado && (
-                        <span style={{ fontSize: 9, background: 'rgba(74,222,128,0.1)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.25)', borderRadius: 4, padding: '1px 6px', fontFamily: 'var(--font-montserrat)' }}>
+                        <span style={{ fontSize: 9, background: 'rgba(74,222,128,0.1)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.25)', borderRadius: 4, padding: '1px 6px', fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.04em' }}>
                           TRAVADO
                         </span>
                       )}
                     </div>
-                    <div className="text-offwhite mb-2" style={{ fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 500 }}>
+                    <div style={{ fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 500, color: '#F5F2EA', marginBottom: 8 }}>
                       {orc.pacientes?.nome ?? '—'}
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-muted" style={{ fontSize: 11 }}>
+                      <span style={{ fontSize: 11, color: '#8A8A93' }}>
                         {new Date(orc.criado_em).toLocaleDateString('pt-BR')}
                       </span>
-                      <span className="text-offwhite font-semibold" style={{ fontSize: 13, fontFamily: 'var(--font-montserrat)' }}>
+                      <span style={{ fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 600, color: '#D9C9A3', fontVariantNumeric: 'tabular-nums' }}>
                         {formatBRL(orc.valor_total)}
                       </span>
                     </div>
