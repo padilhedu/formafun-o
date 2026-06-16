@@ -10,6 +10,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: 'Configuração de assinatura ausente no servidor (SIGNING_HMAC_SECRET).' }, { status: 500 });
   }
 
+  // CA-01: garantir URL de produção válida antes de gerar o link
+  if (!process.env.NEXT_PUBLIC_APP_URL) {
+    console.error('[gerar-link] NEXT_PUBLIC_APP_URL não definida.');
+    return NextResponse.json({ error: 'URL da aplicação não configurada no servidor.' }, { status: 500 });
+  }
+
   const { id } = await params;
   const supabase = await createClient();
 
