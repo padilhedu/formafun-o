@@ -8,11 +8,11 @@ interface KpiCardProps {
 }
 
 const COLOR_MAP = {
-  gold: { accent: "#B89A5A", bg: "rgba(184,154,90,0.08)", border: "rgba(184,154,90,0.2)" },
-  success: { accent: "#4ADE80", bg: "rgba(74,222,128,0.08)", border: "rgba(74,222,128,0.2)" },
-  warning: { accent: "#FBBF24", bg: "rgba(251,191,36,0.08)", border: "rgba(251,191,36,0.2)" },
-  info: { accent: "#60A5FA", bg: "rgba(96,165,250,0.08)", border: "rgba(96,165,250,0.2)" },
-  error: { accent: "#F87171", bg: "rgba(248,113,113,0.08)", border: "rgba(248,113,113,0.2)" },
+  gold: { accent: "#59399E", bg: "rgba(89,57,158,0.06)", border: "rgba(89,57,158,0.25)" },
+  success: { accent: "#16A34A", bg: "rgba(22,163,74,0.06)", border: "rgba(22,163,74,0.2)" },
+  warning: { accent: "#D97706", bg: "rgba(217,119,6,0.06)", border: "rgba(217,119,6,0.2)" },
+  info: { accent: "#2563EB", bg: "rgba(37,99,235,0.06)", border: "rgba(37,99,235,0.2)" },
+  error: { accent: "#DC2626", bg: "rgba(220,38,38,0.06)", border: "rgba(220,38,38,0.2)" },
 };
 
 export function KpiCard({ title, value, sub, trend, trendUp, color }: KpiCardProps) {
@@ -28,7 +28,7 @@ export function KpiCard({ title, value, sub, trend, trendUp, color }: KpiCardPro
       </div>
       <div
         className="heading text-3xl font-semibold mb-1"
-        style={{ color: "#F5F2EA", fontFamily: "var(--font-cormorant)" }}
+        style={{ color: "#1A1A1A", fontFamily: "var(--font-cormorant)" }}
       >
         {value}
       </div>

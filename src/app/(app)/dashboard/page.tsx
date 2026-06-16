@@ -69,7 +69,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <RecentPatients />
         <div className="card p-5">
-          <h2 className="text-offwhite font-semibold text-sm mb-4">
+          <h2 className="font-semibold text-sm mb-4" style={{ color: "#1A1A1A" }}>
             Orçamentos Recentes
           </h2>
           <div className="space-y-3">
@@ -77,7 +77,7 @@ export default function DashboardPage() {
               <div
                 key={b.id}
                 className="flex items-center justify-between py-2.5 table-row-hover"
-                style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+                style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}
               >
                 <div>
                   <div className="text-offwhite text-xs font-medium">{b.patient}</div>

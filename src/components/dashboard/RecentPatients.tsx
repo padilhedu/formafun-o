@@ -18,9 +18,9 @@ function Avatar({ name }: { name: string }) {
     <div
       className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
       style={{
-        background: "rgba(184,154,90,0.12)",
-        border: "1px solid rgba(184,154,90,0.2)",
-        color: "#B89A5A",
+        background: "rgba(89,57,158,0.10)",
+        border: "1px solid rgba(89,57,158,0.2)",
+        color: "#59399E",
         fontFamily: "var(--font-montserrat)",
       }}
     >
@@ -53,7 +53,7 @@ export function RecentPatients() {
               <div className="text-muted" style={{ fontSize: "0.65rem" }}>{p.last}</div>
               <div
                 className="text-xs font-medium mt-0.5"
-                style={{ color: p.status === "ativo" ? "#4ADE80" : "#8A8A93" }}
+                style={{ color: p.status === "ativo" ? "#16A34A" : "#9B9BA0" }}
               >
                 {p.status}
               </div>

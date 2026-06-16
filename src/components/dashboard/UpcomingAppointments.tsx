@@ -9,9 +9,9 @@ const APPOINTMENTS = [
 ];
 
 const STATUS_STYLE: Record<string, { color: string; label: string }> = {
-  confirmado: { color: "#4ADE80", label: "Confirmado" },
-  agendado: { color: "#FBBF24", label: "Agendado" },
-  faltou: { color: "#F87171", label: "Faltou" },
+  confirmado: { color: "#16A34A", label: "Confirmado" },
+  agendado: { color: "#D97706", label: "Agendado" },
+  faltou: { color: "#DC2626", label: "Faltou" },
 };
 
 export function UpcomingAppointments() {
@@ -29,7 +29,7 @@ export function UpcomingAppointments() {
           >
             <div
               className="text-xs font-semibold w-10 flex-shrink-0 text-right"
-              style={{ color: "#8A8A93", fontFamily: "var(--font-montserrat)" }}
+              style={{ color: "#9B9BA0", fontFamily: "var(--font-montserrat)" }}
             >
               {a.time}
             </div>
