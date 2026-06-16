@@ -118,8 +118,8 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     <aside
       className="sidebar-panel fixed left-0 top-0 h-screen w-56 flex flex-col z-50 transition-transform duration-300"
       style={{
-        background: "#42414B",
-        borderRight: "1px solid rgba(255,255,255,0.08)",
+        background: "#1A1A1A",
+        borderRight: "1px solid rgba(255,255,255,0.06)",
         // Desktop: sempre visível. Mobile: slide in/out
         transform: isOpen ? "translateX(0)" : undefined,
       }}

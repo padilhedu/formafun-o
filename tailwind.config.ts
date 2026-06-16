@@ -9,19 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        base: "#0A0A0B",
-        surface: "#121214",
-        elevated: "#1A1A1E",
-        gold: "#B89A5A",
-        champagne: "#D9C9A3",
-        offwhite: "#F5F2EA",
-        // sidebar Capim
-        "sidebar-dark": "#42414B",
+        base: "#F5F5F0",
+        surface: "#FFFFFF",
+        elevated: "#F0EDE8",
+        "sidebar-dark": "#1A1A1A",
         "brand-purple": "#59399E",
         "brand-purple-light": "#7B5DC0",
-        "brand-purple-dim": "rgba(89,57,158,0.15)",
-        // "muted" do app (texto cinza) — manter; o token shadcn equivalente é "muted-shad"
-        muted: "#8A8A93",
+        "brand-purple-dim": "rgba(89,57,158,0.10)",
+        muted: "#6B6B70",
+        offwhite: "#1A1A1A",
+        gold: "#59399E",
+        champagne: "#7B5DC0",
         success: "#4ADE80",
         warning: "#FBBF24",
         error: "#F87171",
@@ -75,7 +73,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       borderColor: {
-        DEFAULT: "rgba(255,255,255,0.07)",
+        DEFAULT: "rgba(0,0,0,0.08)",
       },
     },
   },

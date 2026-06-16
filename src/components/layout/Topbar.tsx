@@ -58,9 +58,9 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
         left: 0,
         paddingLeft: "var(--topbar-pl, 1rem)",
         paddingRight: "1.5rem",
-        background: "rgba(10,10,11,0.92)",
+        background: "rgba(245,245,240,0.95)",
         backdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        borderBottom: "1px solid rgba(0,0,0,0.07)",
       }}
     >
       <style>{`@media(min-width:1024px){:root{--topbar-pl:calc(224px + 1.5rem)}}`}</style>
@@ -69,15 +69,18 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
       <div className="flex items-center gap-3">
         {/* Hambúrguer — só mobile */}
         <button
-          className="lg:hidden flex items-center justify-center w-8 h-8 text-muted hover:text-offwhite transition-colors"
+          className="lg:hidden flex items-center justify-center w-8 h-8 transition-colors"
+          style={{ color: "#6B6B70" }}
           onClick={onMenuToggle}
           aria-label="Abrir menu"
+          onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#1A1A1A")}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#6B6B70")}
         >
           <IconMenu />
         </button>
 
         {/* Logo compacto — mobile only */}
-        <span className="lg:hidden heading text-offwhite" style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem" }}>
+        <span className="lg:hidden heading" style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem", color: "#1A1A1A" }}>
           Forma & Função
         </span>
 
@@ -85,21 +88,21 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
         <button
           className="hidden lg:flex items-center gap-2 transition-colors"
           style={{
-            background: "#1A1A1E",
-            border: "1px solid rgba(255,255,255,0.07)",
+            background: "#FFFFFF",
+            border: "1px solid rgba(0,0,0,0.1)",
             borderRadius: "8px",
             padding: "0.4rem 0.875rem",
             fontSize: "0.75rem",
             fontFamily: "var(--font-montserrat)",
-            color: "#8A8A93",
+            color: "#9B9BA0",
             minWidth: "220px",
           }}
-          onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#F5F2EA")}
-          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#8A8A93")}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#1A1A1A")}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#9B9BA0")}
         >
           <IconSearch />
           <span>Buscar paciente, orçamento...</span>
-          <span className="ml-auto" style={{ background: "rgba(255,255,255,0.06)", borderRadius: "4px", padding: "0.1rem 0.35rem", fontSize: "0.65rem" }}>
+          <span className="ml-auto" style={{ background: "rgba(0,0,0,0.05)", borderRadius: "4px", padding: "0.1rem 0.35rem", fontSize: "0.65rem" }}>
             Ctrl K
           </span>
         </button>
@@ -140,8 +143,8 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
                     key={a.href}
                     onClick={() => { router.push(a.href); setAcoesOpen(false); }}
                     className="w-full text-left px-4 py-2.5 text-xs transition-colors"
-                    style={{ fontFamily: "var(--font-montserrat)", color: "#F5F2EA" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(184,154,90,0.08)")}
+                    style={{ fontFamily: "var(--font-montserrat)", color: "#1A1A1A" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(89,57,158,0.06)")}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
                   >
                     {a.label}
@@ -154,11 +157,13 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
 
         {/* Notificações */}
         <button
-          className="relative text-muted hover:text-offwhite transition-colors w-8 h-8 flex items-center justify-center rounded-lg hover:bg-elevated"
-          style={{ border: "1px solid rgba(255,255,255,0.07)" }}
+          className="relative w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
+          style={{ color: "#6B6B70", border: "1px solid rgba(0,0,0,0.1)" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1A1A1A"; (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.04)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#6B6B70"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
         >
           <IconBell />
-          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full" style={{ background: "#B89A5A" }} />
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full" style={{ background: "#59399E" }} />
         </button>
 
         {/* Perfil */}
@@ -170,13 +175,13 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
           >
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-              style={{ background: "rgba(184,154,90,0.12)", border: "1px solid rgba(184,154,90,0.3)", color: "#B89A5A", fontFamily: "var(--font-montserrat)" }}
+              style={{ background: "rgba(89,57,158,0.10)", border: "1px solid rgba(89,57,158,0.25)", color: "#59399E", fontFamily: "var(--font-montserrat)" }}
             >
               {initials}
             </div>
             <div className="hidden lg:block text-left">
-              <div className="text-offwhite text-xs font-medium leading-tight">{profile?.nome ?? "Usuário"}</div>
-              <div className="text-muted" style={{ fontSize: "0.65rem" }}>{profile ? ROLE_LABELS[profile.role] ?? profile.role : ""}</div>
+              <div className="text-xs font-medium leading-tight" style={{ color: "#1A1A1A" }}>{profile?.nome ?? "Usuário"}</div>
+              <div style={{ fontSize: "0.65rem", color: "#6B6B70" }}>{profile ? ROLE_LABELS[profile.role] ?? profile.role : ""}</div>
             </div>
           </button>
 
@@ -186,8 +191,10 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
               <div className="absolute right-0 top-full mt-2 w-40 card py-1" style={{ zIndex: 50 }}>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-error text-xs hover:bg-elevated transition-colors"
+                  className="w-full text-left px-4 py-2 text-error text-xs transition-colors"
                   style={{ fontFamily: "var(--font-montserrat)" }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.04)")}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
                 >
                   Sair
                 </button>

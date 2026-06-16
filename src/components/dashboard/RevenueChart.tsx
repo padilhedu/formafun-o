@@ -36,7 +36,7 @@ function CustomTooltip({ active, payload, label }: any) {
   return (
     <div
       className="card-elevated p-3"
-      style={{ border: "1px solid rgba(255,255,255,0.1)", minWidth: 140 }}
+      style={{ border: "1px solid rgba(0,0,0,0.08)", minWidth: 140 }}
     >
       <div className="text-muted text-xs mb-2">{label}</div>
       {payload.map((p: { name: string; value: number; color: string }, i: number) => (
@@ -61,7 +61,7 @@ export function RevenueChart() {
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 rounded-full bg-gold" />
+            <div className="w-3 h-0.5 rounded-full" style={{ background: "#59399E" }} />
             <span className="text-muted text-xs">Receita</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -74,24 +74,24 @@ export function RevenueChart() {
         <AreaChart data={data} margin={{ top: 4, right: 4, left: -10, bottom: 0 }}>
           <defs>
             <linearGradient id="gradReceita" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#B89A5A" stopOpacity={0.25} />
-              <stop offset="95%" stopColor="#B89A5A" stopOpacity={0} />
+              <stop offset="5%" stopColor="#59399E" stopOpacity={0.2} />
+              <stop offset="95%" stopColor="#59399E" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="gradDespesa" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#F87171" stopOpacity={0.15} />
-              <stop offset="95%" stopColor="#F87171" stopOpacity={0} />
+              <stop offset="5%" stopColor="#DC2626" stopOpacity={0.12} />
+              <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke="rgba(255,255,255,0.04)" vertical={false} />
+          <CartesianGrid stroke="rgba(0,0,0,0.06)" vertical={false} />
           <XAxis
             dataKey="mes"
-            tick={{ fill: "#8A8A93", fontSize: 10 }}
+            tick={{ fill: "#9B9BA0", fontSize: 10 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
             tickFormatter={formatBRL}
-            tick={{ fill: "#8A8A93", fontSize: 10 }}
+            tick={{ fill: "#9B9BA0", fontSize: 10 }}
             axisLine={false}
             tickLine={false}
           />
@@ -99,20 +99,20 @@ export function RevenueChart() {
           <Area
             type="monotone"
             dataKey="receita"
-            stroke="#B89A5A"
+            stroke="#59399E"
             strokeWidth={2}
             fill="url(#gradReceita)"
             dot={false}
-            activeDot={{ r: 4, fill: "#B89A5A" }}
+            activeDot={{ r: 4, fill: "#59399E" }}
           />
           <Area
             type="monotone"
             dataKey="despesa"
-            stroke="#F87171"
+            stroke="#DC2626"
             strokeWidth={1.5}
             fill="url(#gradDespesa)"
             dot={false}
-            activeDot={{ r: 4, fill: "#F87171" }}
+            activeDot={{ r: 4, fill: "#DC2626" }}
           />
         </AreaChart>
       </ResponsiveContainer>
