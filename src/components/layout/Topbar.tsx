@@ -113,8 +113,8 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
             onClick={() => setAcoesOpen((v) => !v)}
             className="flex items-center gap-1.5 lg:gap-2 font-semibold transition-all"
             style={{
-              background: "#59399E",
-              color: "#ffffff",
+              background: "#B89A5A",
+              color: "#0A0A0B",
               fontFamily: "var(--font-montserrat)",
               fontSize: "0.75rem",
               letterSpacing: "0.02em",
@@ -123,8 +123,8 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
               border: "none",
               cursor: "pointer",
             }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#7B5DC0")}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#59399E")}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "#D9C9A3")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "#B89A5A")}
           >
             <IconPlus />
             <span className="hidden sm:inline">Ações</span>
@@ -141,7 +141,7 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
                     onClick={() => { router.push(a.href); setAcoesOpen(false); }}
                     className="w-full text-left px-4 py-2.5 text-xs transition-colors"
                     style={{ fontFamily: "var(--font-montserrat)", color: "#F5F2EA" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(89,57,158,0.15)")}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(184,154,90,0.08)")}
                     onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
                   >
                     {a.label}
@@ -158,7 +158,7 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
           style={{ border: "1px solid rgba(255,255,255,0.07)" }}
         >
           <IconBell />
-          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-brand-purple" />
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full" style={{ background: "#B89A5A" }} />
         </button>
 
         {/* Perfil */}
@@ -170,7 +170,7 @@ export function Topbar({ profile, onMenuToggle }: TopbarProps) {
           >
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-              style={{ background: "rgba(89,57,158,0.2)", border: "1px solid rgba(89,57,158,0.4)", color: "#A07FD4", fontFamily: "var(--font-montserrat)" }}
+              style={{ background: "rgba(184,154,90,0.12)", border: "1px solid rgba(184,154,90,0.3)", color: "#B89A5A", fontFamily: "var(--font-montserrat)" }}
             >
               {initials}
             </div>
