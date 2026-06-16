@@ -7,7 +7,7 @@ import type { Profile } from "@/types/database";
 
 interface TopbarProps {
   profile: Profile | null;
-  onMenuToggle: () => void;
+  onMenuToggle?: () => void;
 }
 
 function IconBell() {

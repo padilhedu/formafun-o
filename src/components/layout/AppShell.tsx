@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Sidebar } from "./Sidebar";
+import { SidebarMinimal } from "./SidebarMinimal";
 import { Topbar } from "./Topbar";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 import type { Profile } from "@/types/database";
 
 interface Props {
@@ -11,27 +13,23 @@ interface Props {
 }
 
 export function AppShell({ profile, children }: Props) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const router = useRouter();
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/login");
+  }
 
   return (
-    <div className="min-h-screen bg-base">
-      {/* Overlay mobile */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 lg:hidden"
-          style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(2px)" }}
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <Topbar profile={profile} onMenuToggle={() => setSidebarOpen((v) => !v)} />
+    <div className="min-h-screen" style={{ background: "var(--color-bg-base)" }}>
+      <SidebarMinimal onLogout={handleLogout} />
+      <Topbar profile={profile} />
 
       <main
         className="min-h-screen pt-14 transition-all"
-        style={{ marginLeft: "var(--sidebar-w, 0px)" }}
+        style={{ marginLeft: "3.5rem" }} /* 56px (w-14) */
       >
-        <style>{`@media(min-width:1024px){:root{--sidebar-w:224px}}`}</style>
         <div className="p-4 lg:p-6">{children}</div>
       </main>
     </div>
