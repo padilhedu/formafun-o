@@ -112,5 +112,5 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   if (updateErr) return NextResponse.json({ error: 'Erro ao salvar token' }, { status: 500 });
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';
-  return NextResponse.json({ sign_url: `${appUrl}/assinar/${token}` });
+  return NextResponse.json({ sign_url: `${appUrl}/assinar/${token}`, sign_token_exp: tokenExp });
 }
