@@ -79,11 +79,12 @@ export default function TemplatesPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
           Templates de Contrato
         </h1>
-        <p className="text-muted text-sm">Editor de modelos HTML com placeholders dinâmicos</p>
+        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Editor de modelos HTML com placeholders dinâmicos</p>
       </div>
 
       <div className="grid grid-cols-[220px_1fr] gap-6" style={{ minHeight: 600 }}>
@@ -122,7 +123,7 @@ export default function TemplatesPage() {
         {selected ? (
           <div className="space-y-4">
             {/* Meta fields */}
-            <div className="card" style={{ padding: 16 }}>
+            <div style={{ borderRadius: 12, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 16 }}>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-muted block mb-1" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nome</label>
@@ -140,7 +141,7 @@ export default function TemplatesPage() {
             </div>
 
             {/* Placeholders */}
-            <div className="card" style={{ padding: 14 }}>
+            <div style={{ borderRadius: 12, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 14 }}>
               <p className="text-muted mb-2" style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Placeholders — clique para inserir no editor
               </p>
@@ -191,7 +192,7 @@ export default function TemplatesPage() {
             </div>
 
             {preview ? (
-              <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+              <div style={{ borderRadius: 12, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 0, overflow: 'hidden' }}>
                 <iframe
                   srcDoc={editHtml}
                   style={{ width: '100%', height: 600, border: 'none', background: '#fff' }}
@@ -211,7 +212,7 @@ export default function TemplatesPage() {
             )}
           </div>
         ) : (
-          <div className="card flex items-center justify-center" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+          <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px dashed rgba(184,154,90,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <p className="text-muted text-sm">Selecione um template para editar</p>
           </div>
         )}

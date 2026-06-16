@@ -2,46 +2,50 @@ interface PlaceholderPageProps {
   title: string;
   description: string;
   phase?: string;
+  section?: string;
 }
 
-export function PlaceholderPage({ title, description, phase }: PlaceholderPageProps) {
+export function PlaceholderPage({ title, description, phase, section = 'OPERACIONAL' }: PlaceholderPageProps) {
   return (
     <div>
-      <div className="mb-8">
-        <h1
-          className="heading text-3xl text-offwhite mb-1"
-          style={{ fontFamily: "var(--font-cormorant)" }}
-        >
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+          {section}
+        </p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
           {title}
         </h1>
-        <p className="text-muted text-sm">{description}</p>
+        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>{description}</p>
       </div>
 
-      <div
-        className="card p-12 text-center"
-        style={{ borderStyle: "dashed", borderColor: "rgba(184,154,90,0.2)" }}
-      >
-        <div
-          className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
-          style={{ background: "rgba(184,154,90,0.08)", border: "1px solid rgba(184,154,90,0.2)" }}
-        >
+      <div style={{
+        borderRadius: 14,
+        background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
+        border: '1px dashed rgba(184,154,90,0.2)',
+        padding: '64px 24px',
+        textAlign: 'center',
+      }}>
+        <div style={{
+          width: 56, height: 56, borderRadius: '50%',
+          background: 'rgba(184,154,90,0.08)', border: '1px solid rgba(184,154,90,0.2)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 16px',
+        }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#B89A5A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <div
-          className="heading text-xl text-offwhite mb-2"
-          style={{ fontFamily: "var(--font-cormorant)" }}
-        >
+        <div style={{ fontFamily: 'var(--font-cormorant)', fontSize: 22, fontWeight: 600, color: '#F5F2EA', marginBottom: 8 }}>
           {title}
         </div>
-        <p className="text-muted text-sm max-w-md mx-auto">{description}</p>
+        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', maxWidth: 400, margin: '0 auto' }}>{description}</p>
         {phase && (
-          <div
-            className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full"
-            style={{ background: "rgba(184,154,90,0.08)", border: "1px solid rgba(184,154,90,0.2)" }}
-          >
-            <span className="text-gold text-xs font-semibold uppercase tracking-wider">{phase}</span>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 16,
+            padding: '6px 16px', borderRadius: 20,
+            background: 'rgba(184,154,90,0.08)', border: '1px solid rgba(184,154,90,0.2)',
+          }}>
+            <span style={{ color: '#B89A5A', fontSize: 11, fontWeight: 700, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{phase}</span>
           </div>
         )}
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { SignInPage, Testimonial } from "@/components/ui/sign-in";
@@ -31,6 +31,14 @@ export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Detectar erro de callback OAuth (e.g. ?error=oauth após falha no Google)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'oauth') {
+      setError('Falha no login com Google. Verifique se o Google OAuth está ativado no Supabase e tente novamente.');
+    }
+  }, []);
 
   async function handleSignIn(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

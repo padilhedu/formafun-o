@@ -33,12 +33,13 @@ export default async function ContratosPage() {
 
   return (
     <div>
-      <div className="flex items-start justify-between mb-8">
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
+          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
             Contratos
           </h1>
-          <p className="text-muted text-sm">Assinatura digital via ZapSign</p>
+          <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Assinatura digital via ZapSign</p>
         </div>
         <Link href="/configuracoes/templates" className="btn-ghost text-xs" style={{ padding: '7px 14px' }}>
           Gerenciar Templates
@@ -46,12 +47,12 @@ export default async function ContratosPage() {
       </div>
 
       {/* Status summary */}
-      <div className="flex gap-3 mb-8 flex-wrap">
+      <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
         {(Object.keys(CONTRATO_STATUS_CONFIG) as ContratoStatus[]).map(status => {
           const cfg = CONTRATO_STATUS_CONFIG[status];
           const count = byStatus[status] ?? 0;
           return (
-            <div key={status} className="card flex items-center gap-3" style={{ padding: '12px 18px', minWidth: 120 }}>
+            <div key={status} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 18px', minWidth: 120, borderRadius: 12, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)' }}>
               <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: cfg.color }} />
               <div>
                 <div style={{ fontSize: 11, color: cfg.color, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
@@ -66,12 +67,12 @@ export default async function ContratosPage() {
 
       {/* List */}
       {contratos.length === 0 ? (
-        <div className="card text-center py-16" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px dashed rgba(184,154,90,0.2)', textAlign: 'center', padding: '64px 24px' }}>
           <div className="text-3xl mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#8A8A93' }}>Sem contratos</div>
           <p className="text-muted text-sm">Gere um contrato a partir de um orçamento aprovado.</p>
         </div>
       ) : (
-        <div className="card" style={{ padding: 0, overflow: 'auto' }}>
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 0, overflow: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 640 }}>
             <thead>
               <tr>

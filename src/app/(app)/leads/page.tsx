@@ -14,11 +14,10 @@ export default async function LeadsPage() {
   const { data: leads } = await client.from('leads').select('*').order('criado_em', { ascending: false });
   return (
     <div className="space-y-4">
-      <div className="flex items-start justify-between mb-2">
-        <div>
-          <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>CRM / Leads</h1>
-          <p className="text-muted text-sm">Pipeline de captação. Avance os cards com as setas ou clique para editar.</p>
-        </div>
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>CRM / Leads</h1>
+        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Pipeline de captação. Avance os cards com as setas ou clique para editar.</p>
       </div>
       <LeadsKanban leadsIniciais={leads ?? []} />
     </div>

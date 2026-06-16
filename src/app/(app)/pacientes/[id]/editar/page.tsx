@@ -13,11 +13,12 @@ export default async function EditarPacientePage({ params }: { params: Promise<{
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>CLÍNICO</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
           Editar Paciente
         </h1>
-        <p className="text-muted text-sm">{(data as Paciente).nome}</p>
+        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>{(data as Paciente).nome}</p>
       </div>
       <FormPaciente paciente={data as Paciente} />
     </div>

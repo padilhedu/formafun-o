@@ -41,14 +41,15 @@ export default function NovoOrcamentoPage() {
 
   return (
     <div style={{ maxWidth: 520 }}>
-      <div className="mb-8">
-        <h1 className="heading text-3xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
           Novo Orçamento
         </h1>
-        <p className="text-muted text-sm">Selecione o paciente para iniciar</p>
+        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Selecione o paciente para iniciar</p>
       </div>
 
-      <div className="card" style={{ padding: 24 }}>
+      <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 24 }}>
         <label className="text-muted block mb-1" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Paciente
         </label>

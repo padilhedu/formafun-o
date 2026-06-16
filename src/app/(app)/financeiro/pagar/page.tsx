@@ -23,11 +23,12 @@ export default async function ContasPagarPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="heading text-4xl text-offwhite mb-1" style={{ fontFamily: 'var(--font-cormorant)' }}>
+      <div style={{ marginBottom: 24 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>FINANCEIRO</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
           Contas a Pagar
         </h1>
-        <p className="text-muted text-sm">Despesas, fornecedores e custos fixos da clínica</p>
+        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Despesas, fornecedores e custos fixos da clínica</p>
       </div>
       <PagarClient contas={contas} />
     </div>

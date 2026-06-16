@@ -5,7 +5,8 @@ export default function MarketingPage() {
     <PlaceholderPage
       title="Marketing"
       description="Campanhas segmentadas: pacientes sem retorno, orçamentos não aprovados, aniversariantes. Disparos em massa via WhatsApp."
-      phase="Fase 8 — Em desenvolvimento"
+      phase="Em desenvolvimento"
+      section="COMERCIAL"
     />
   );
 }
