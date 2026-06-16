@@ -9,23 +9,41 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        base: "#F5F5F0",
-        surface: "#FFFFFF",
-        elevated: "#F0EDE8",
-        "sidebar-dark": "#1A1A1A",
-        "brand-purple": "#59399E",
-        "brand-purple-light": "#7B5DC0",
-        "brand-purple-dim": "rgba(89,57,158,0.10)",
-        muted: "#6B6B70",
-        offwhite: "#1A1A1A",
-        gold: "#59399E",
-        champagne: "#7B5DC0",
-        success: "#4ADE80",
-        warning: "#FBBF24",
-        error: "#F87171",
-        info: "#60A5FA",
+        /* ===== NOVO DESIGN SYSTEM — TOKENS CLARO ===== */
+        
+        /* Fundos */
+        "bg-base": "var(--color-bg-base)",
+        "bg-surface": "var(--color-bg-surface)",
+        "bg-muted": "var(--color-bg-muted)",
+        "bg-sidebar": "var(--color-bg-sidebar)",
 
-        // ===== Tokens shadcn (vars em globals.css, suportam /opacity) =====
+        /* Acento (roxo) */
+        "accent-primary": "var(--color-accent)",
+        "accent-hover": "var(--color-accent-hover)",
+        "accent-soft": "var(--color-accent-soft)",
+        "accent-text": "var(--color-accent-text)",
+
+        /* Card Hero */
+        "card-hero-bg": "var(--color-card-hero-bg)",
+        "card-hero-text": "var(--color-card-hero-text)",
+
+        /* Texto */
+        "text-primary": "var(--color-text-primary)",
+        "text-secondary": "var(--color-text-secondary)",
+        "text-muted": "var(--color-text-muted)",
+        "text-sidebar": "var(--color-text-on-sidebar)",
+
+        /* Estados */
+        "success": "var(--color-success)",
+        "success-soft": "var(--color-success-soft)",
+        "warning": "var(--color-warning)",
+        "warning-soft": "var(--color-warning-soft)",
+        "error": "var(--color-error)",
+        "error-soft": "var(--color-error-soft)",
+        "info": "var(--color-info)",
+        "info-soft": "var(--color-info-soft)",
+
+        /* ===== COMPATIBILIDADE SHADCN (RGB vars mapeados) ===== */
         border: "rgb(var(--border-shad) / <alpha-value>)",
         input: "rgb(var(--input) / <alpha-value>)",
         ring: "rgb(var(--ring) / <alpha-value>)",
@@ -66,14 +84,14 @@ const config: Config = {
         sans: ["var(--font-montserrat)", "system-ui", "sans-serif"],
       },
       borderRadius: {
-        card: "12px",
-        modal: "16px",
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        card: "var(--radius-md)",
+        modal: "var(--radius-lg)",
+        lg: "var(--radius-lg)",
+        md: "var(--radius-md)",
+        sm: "var(--radius-sm)",
       },
       borderColor: {
-        DEFAULT: "rgba(0,0,0,0.08)",
+        DEFAULT: "var(--color-border)",
       },
     },
   },
