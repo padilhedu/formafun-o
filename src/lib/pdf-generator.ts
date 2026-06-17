@@ -325,10 +325,23 @@ function ContractDocument({ data }: { data: ContractData }) {
   );
 }
 
+/**
+ * Gera PDF a partir de dados estruturados já resolvidos.
+ * Reutilizado pelo preview de upload (dados de exemplo) e pela geração real.
+ */
+export async function generateContractPdfFromData(data: ContractData): Promise<Buffer> {
+  const readable = await pdf(React.createElement(ContractDocument, { data }) as React.ReactElement<DocumentProps>).toBuffer();
+  const chunks: Buffer[] = [];
+  for await (const chunk of readable) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk as unknown as ArrayLike<number>));
+  }
+  return Buffer.concat(chunks);
+}
+
 export async function generateContractPdf(contratoId: string): Promise<Buffer> {
   const supabase = await createClient();
 
-  // Load contract + related data
+  // Load contract + related data (inclui campos de upload do template)
   const { data: c, error } = await supabase
     .from('contratos')
     .select(`
@@ -338,7 +351,7 @@ export async function generateContractPdf(contratoId: string): Promise<Buffer> {
         codigo, valor_total, validade, clausulas_adicionais, condicoes_pagamento,
         orcamento_itens(descricao, dente, face, qtde, valor_unitario, total, selecionado)
       ),
-      contratos_templates(nome, corpo_html)
+      contratos_templates(nome, corpo_html, arquivo_original_url, arquivo_tipo, arquivo_estatico)
     `)
     .eq('id', contratoId)
     .single();
@@ -347,7 +360,7 @@ export async function generateContractPdf(contratoId: string): Promise<Buffer> {
 
   type Pac = { nome: string; cpf: string | null; email: string | null; telefone: string | null; endereco: string | null };
   type Orc = { codigo: string; valor_total: number; validade: string | null; clausulas_adicionais: string | null; condicoes_pagamento: Record<string, unknown> | null; orcamento_itens: { descricao: string; dente: string | null; face: string | null; qtde: number; valor_unitario: number; total: number; selecionado: boolean }[] };
-  type Tmpl = { nome: string; corpo_html: string };
+  type Tmpl = { nome: string; corpo_html: string | null; arquivo_original_url: string | null; arquivo_tipo: string | null; arquivo_estatico: boolean };
 
   const paciente = (c as unknown as { pacientes: Pac }).pacientes;
   const orc = (c as unknown as { orcamentos: Orc | null }).orcamentos;
@@ -358,8 +371,54 @@ export async function generateContractPdf(contratoId: string): Promise<Buffer> {
   const clinica = (cfgData?.valor as { nome?: string; cnpj?: string; endereco?: string; cidade?: string; dentista?: { nome?: string; cro?: string } } | null) ?? {};
 
   const hoje = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+  const itensBrutos = (orc?.orcamento_itens ?? []).filter(i => i.selecionado);
 
-  const itens = (orc?.orcamento_itens ?? []).filter(i => i.selecionado);
+  const fmtBRL = (v: number) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+  // Se o template é .docx, preencher via docxtemplater e extrair texto via mammoth
+  let corpoHtml = template?.corpo_html ?? (c as { corpo_html_final?: string }).corpo_html_final ?? '';
+
+  if (template?.arquivo_tipo === 'docx' && template.arquivo_original_url) {
+    try {
+      const { fillDocxTemplate, docxToText } = await import('@/lib/docx-generator');
+      const docxRes = await fetch(template.arquivo_original_url);
+      if (docxRes.ok) {
+        const docxBuf = Buffer.from(await docxRes.arrayBuffer());
+        const docxData = {
+          paciente_nome: paciente?.nome ?? '',
+          paciente_cpf: paciente?.cpf ?? '',
+          paciente_email: paciente?.email ?? '',
+          paciente_telefone: paciente?.telefone ?? '',
+          paciente_endereco: paciente?.endereco ?? '',
+          dentista_nome: clinica.dentista?.nome ?? '',
+          dentista_cro: clinica.dentista?.cro ?? '',
+          clinica_nome: clinica.nome ?? '',
+          clinica_cnpj: clinica.cnpj ?? '',
+          clinica_endereco: clinica.endereco ?? '',
+          cidade: clinica.cidade ?? 'Balneário Camboriú',
+          orcamento_codigo: orc?.codigo ?? '',
+          data_orcamento: hoje,
+          validade_orcamento: orc?.validade ? new Date(orc.validade).toLocaleDateString('pt-BR') : '',
+          valor_total: fmtBRL(Number(orc?.valor_total ?? 0)),
+          condicoes_pagamento: typeof orc?.condicoes_pagamento === 'string' ? orc.condicoes_pagamento : (orc?.clausulas_adicionais ?? ''),
+          clausulas_adicionais: orc?.clausulas_adicionais ?? '',
+          data_geracao: hoje,
+          itens: itensBrutos.map(i => ({
+            descricao: i.descricao,
+            dente: i.dente ?? '—',
+            qtd: String(i.qtde),
+            valor: fmtBRL(i.valor_unitario),
+            total: fmtBRL(i.total),
+          })),
+        };
+        const filledDocx = fillDocxTemplate(docxBuf, docxData);
+        const texto = await docxToText(filledDocx);
+        if (texto) corpoHtml = texto;
+      }
+    } catch {
+      // Falha silenciosa — usa corpo_html legado se disponível
+    }
+  }
 
   const data: ContractData = {
     clinicaNome: clinica.nome ?? 'Clínica Odontológica',
@@ -376,11 +435,11 @@ export async function generateContractPdf(contratoId: string): Promise<Buffer> {
     orcamentoCodigo: orc?.codigo ?? '',
     dataOrcamento: hoje,
     validadeOrcamento: orc?.validade ? new Date(orc.validade).toLocaleDateString('pt-BR') : '',
-    valorTotal: Number(orc?.valor_total ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-    condicoesPagamento: JSON.stringify(orc?.condicoes_pagamento ?? ''),
+    valorTotal: fmtBRL(Number(orc?.valor_total ?? 0)),
+    condicoesPagamento: typeof orc?.condicoes_pagamento === 'string' ? orc.condicoes_pagamento : (orc?.clausulas_adicionais ?? ''),
     clausulasAdicionais: orc?.clausulas_adicionais ?? '',
     dataGeracao: hoje,
-    itens: itens.map(i => ({
+    itens: itensBrutos.map(i => ({
       descricao: i.descricao,
       dente: i.dente,
       face: i.face,
@@ -388,14 +447,9 @@ export async function generateContractPdf(contratoId: string): Promise<Buffer> {
       valor: i.valor_unitario,
       total: i.total,
     })),
-    corpoHtml: template?.corpo_html ?? (c as { corpo_html_final?: string }).corpo_html_final ?? '',
+    corpoHtml,
     contratoTitulo: template?.nome ?? 'Contrato de Prestação de Serviços Odontológicos',
   };
 
-  const readable = await pdf(React.createElement(ContractDocument, { data }) as React.ReactElement<DocumentProps>).toBuffer();
-  const chunks: Buffer[] = [];
-  for await (const chunk of readable) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk as unknown as ArrayLike<number>));
-  }
-  return Buffer.concat(chunks);
+  return generateContractPdfFromData(data);
 }

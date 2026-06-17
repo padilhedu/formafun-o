@@ -22,6 +22,10 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   if (!body.nome) return NextResponse.json({ error: 'Nome obrigatório' }, { status: 400 });
+  // corpo_html é opcional: templates baseados em arquivo (.docx) não têm HTML
+  if (!body.corpo_html && !body.arquivo_original_url) {
+    return NextResponse.json({ error: 'Forneça corpo_html ou arquivo_original_url' }, { status: 400 });
+  }
 
   const { data, error } = await sb.from('contratos_templates').insert({
     ...body,
@@ -29,6 +33,7 @@ export async function POST(req: NextRequest) {
     vigente: true,
     origem: body.origem ?? 'sistema',
     categoria_documento: body.categoria_documento ?? 'contrato',
+    arquivo_tipo: body.arquivo_tipo ?? (body.corpo_html ? 'html' : null),
   }).select().single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

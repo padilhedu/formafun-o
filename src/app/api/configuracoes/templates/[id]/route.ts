@@ -16,7 +16,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   // Archive old version
   await sb.from('contratos_templates').update({ vigente: false }).eq('id', id);
 
-  // Create new version
+  // Create new version — preserva campos de arquivo se não fornecidos
   const { data: novo, error } = await sb.from('contratos_templates').insert({
     nome: body.nome ?? old.nome,
     tipo: body.tipo ?? old.tipo,
@@ -25,6 +25,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     versao: (old.versao ?? 1) + 1,
     vigente: true,
     corpo_html: body.corpo_html ?? old.corpo_html,
+    arquivo_original_url: body.arquivo_original_url ?? old.arquivo_original_url,
+    arquivo_tipo: body.arquivo_tipo ?? old.arquivo_tipo,
+    placeholders_detectados: body.placeholders_detectados ?? old.placeholders_detectados,
+    preview_pdf_url: body.preview_pdf_url ?? old.preview_pdf_url,
+    arquivo_estatico: body.arquivo_estatico ?? old.arquivo_estatico ?? false,
     ativo: true,
   }).select().single();
 

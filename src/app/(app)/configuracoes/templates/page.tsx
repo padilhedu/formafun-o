@@ -26,7 +26,7 @@ export default function TemplatesPage() {
     setSelected(t);
     setEditNome(t.nome);
     setEditTipo(t.tipo);
-    setEditHtml(t.corpo_html);
+    setEditHtml(t.corpo_html ?? '');
     setPreview(false);
   };
 
