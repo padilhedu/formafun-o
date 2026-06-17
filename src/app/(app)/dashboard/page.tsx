@@ -1,133 +1,267 @@
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 import { KpiCard } from "@/components/dashboard/KpiCard";
 import { RevenueChart } from "@/components/dashboard/RevenueChart";
-import { UpcomingAppointments } from "@/components/dashboard/UpcomingAppointments";
+import { MiniCalDash } from "@/components/dashboard/MiniCalDash";
+import { CardClinica } from "@/components/dashboard/CardClinica";
+import { AgendaHoje } from "@/components/dashboard/AgendaHoje";
 import { RecentPatients } from "@/components/dashboard/RecentPatients";
 
-export default function DashboardPage() {
+export const dynamic = "force-dynamic";
+
+function saudacao() {
+  const h = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", hour: "numeric", hour12: false });
+  const n = parseInt(h);
+  if (n < 12) return "Bom dia";
+  if (n < 18) return "Boa tarde";
+  return "Boa noite";
+}
+
+function dataExtenso() {
+  return new Date().toLocaleDateString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function isoHoje() {
+  const d = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" });
+  return d;
+}
+
+function fmtBRL(v: number) {
+  return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+export default async function DashboardPage() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return <div className="text-muted p-8">Configure o Supabase.</div>;
+  }
+
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const hoje = isoHoje();
+  const inicioMes = `${hoje.slice(0, 7)}-01`;
+
+  const [profileRes, eventosRes, orcamentosRes, pacientesRes, profissionaisRes, configRes] = await Promise.all([
+    supabase.from("profiles").select("nome, role").eq("id", user.id).single(),
+    supabase
+      .from("agenda_eventos")
+      .select("id, titulo, inicio, fim, status, pacientes(nome)")
+      .gte("inicio", `${hoje}T00:00:00`)
+      .lte("inicio", `${hoje}T23:59:59`)
+      .order("inicio"),
+    supabase
+      .from("orcamentos")
+      .select("status, valor_total, criado_em")
+      .gte("criado_em", `${inicioMes}T00:00:00`),
+    supabase.from("pacientes").select("id", { count: "exact", head: true }).eq("ativo", true),
+    supabase.from("profissionais").select("id", { count: "exact", head: true }).eq("ativo", true),
+    supabase.from("configuracoes_clinica").select("nome_clinica, especialidade, cro, cidade").limit(1).maybeSingle(),
+  ]);
+
+  const profile = profileRes.data as { nome: string; role: string } | null;
+  const eventos = (eventosRes.data ?? []) as unknown as {
+    id: string; titulo: string; inicio: string; fim: string; status: string;
+    pacientes?: { nome: string } | null;
+  }[];
+  const orcamentos = orcamentosRes.data ?? [];
+  const totalPacientes = pacientesRes.count ?? 0;
+  const totalProfissionais = profissionaisRes.count ?? 0;
+  const clinica = configRes.data as { nome_clinica: string; especialidade?: string; cro?: string; cidade?: string } | null;
+
+  // KPIs
+  const faturamentoMes = orcamentos
+    .filter(o => o.status === "aprovado")
+    .reduce((s, o) => s + (o.valor_total ?? 0), 0);
+
+  const orcamentosAbertos = orcamentos.filter(o => ["enviado", "negociacao"].includes(o.status)).length;
+  const consultasHoje = eventos.length;
+  const confirmados = eventos.filter(e => ["confirmado", "em_atendimento", "realizado"].includes(e.status)).length;
+
+  // Dias com evento para o mini-calendário (mês atual)
+  const diasComEvento: string[] = [];
+  {
+    const { data: eventosCalendario } = await supabase
+      .from("agenda_eventos")
+      .select("inicio")
+      .gte("inicio", `${inicioMes}T00:00:00`);
+    eventosCalendario?.forEach(e => {
+      const d = new Date(e.inicio).toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" });
+      if (!diasComEvento.includes(d)) diasComEvento.push(d);
+    });
+  }
+
+  const nomeUsuario = profile?.nome?.split(" ")[0] ?? "Doutor(a)";
+  const isAdmin = profile?.role === "admin";
+
+  // Sparkline mock — em produção puxar últimas 6 semanas de faturamento
+  const sparklineFaturamento = [32, 41, 28, 55, 48, 62, 48];
+
   return (
-    <div>
+    <div style={{ maxWidth: 1400, margin: "0 auto" }}>
       {/* Header */}
-      <div className="mb-8">
-        <h1
-          className="heading text-3xl text-offwhite mb-1"
-          style={{ fontFamily: "var(--font-cormorant)" }}
-        >
-          Dashboard
-        </h1>
-        <p className="text-muted text-sm">
-          Segunda-feira, 9 de junho de 2026 · Forma & Função
-        </p>
+      <div className="flex items-start justify-between mb-8 flex-wrap gap-4">
+        <div>
+          <h1
+            className="heading"
+            style={{ fontFamily: "var(--font-cormorant)", fontSize: 30, fontWeight: 600, color: "#1C1C1C", lineHeight: 1.15, marginBottom: 4 }}
+          >
+            {saudacao()}{isAdmin ? `, Dr(a). ${nomeUsuario}` : `, ${nomeUsuario}`}
+          </h1>
+          <p style={{ fontSize: 13, color: "#9B9BA0", fontFamily: "var(--font-montserrat)" }}>
+            {dataExtenso()} · {consultasHoje} atendimento{consultasHoje !== 1 ? "s" : ""} hoje
+          </p>
+        </div>
+        <a href="/agenda" className="btn-primary">
+          + Novo agendamento
+        </a>
       </div>
 
-      {/* KPIs */}
+      {/* KPIs — 4 colunas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
         <KpiCard
-          title="Consultas Hoje"
-          value="8"
-          sub="3 confirmadas · 2 a confirmar"
-          trend="+2 vs ontem"
-          trendUp
-          color="gold"
-        />
-        <KpiCard
           title="Faturamento do Mês"
-          value="R$ 48.700"
-          sub="Meta: R$ 60.000"
-          trend="+12% vs jun/25"
+          value={fmtBRL(faturamentoMes)}
+          sub="Orçamentos aprovados"
+          trend="+12% vs mês anterior"
           trendUp
-          color="success"
+          color="green"
+          sparkline={sparklineFaturamento}
         />
         <KpiCard
-          title="Orçamentos Pendentes"
-          value="14"
-          sub="R$ 32.450 em aberto"
-          trend="5 vencendo em 7 dias"
+          title="Consultas Hoje"
+          value={String(consultasHoje)}
+          sub={`${confirmados} confirmadas`}
+          trend={consultasHoje > 0 ? `${confirmados} de ${consultasHoje}` : "Nenhuma"}
+          trendUp={confirmados > 0}
+          color="blue"
+        />
+        <KpiCard
+          title="Taxa de Comparecimento"
+          value={consultasHoje > 0 ? `${Math.round((confirmados / consultasHoje) * 100)}%` : "—"}
+          sub="Confirmados vs agendados"
+          color="green"
+        />
+        <KpiCard
+          title="Orçamentos Abertos"
+          value={String(orcamentosAbertos)}
+          sub="Enviados + Negociação"
+          trend={orcamentosAbertos > 5 ? "Atenção: alta demanda" : undefined}
           trendUp={false}
-          color="warning"
-        />
-        <KpiCard
-          title="Pacientes Ativos"
-          value="347"
-          sub="28 novos este mês"
-          trend="+8% vs mai/26"
-          trendUp
-          color="info"
+          color="amber"
         />
       </div>
 
-      {/* Gráfico + Agenda */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
-        <div className="xl:col-span-2">
-          <RevenueChart />
+      {/* Bento principal: CardClinica + MiniCalendário + Status do dia */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4">
+        {/* Card Clínica — 5 cols */}
+        <div className="lg:col-span-5">
+          <CardClinica
+            nome={clinica?.nome_clinica ?? "Forma & Função"}
+            especialidade={clinica?.especialidade ?? "Odontologia Integrada"}
+            cro={clinica?.cro ?? undefined}
+            cidade={clinica?.cidade ?? "Balneário Camboriú, SC"}
+            pacientesAtivos={totalPacientes}
+            profissionais={totalProfissionais}
+            cadeiras={3}
+          />
         </div>
-        <div>
-          <UpcomingAppointments />
-        </div>
-      </div>
 
-      {/* Pacientes recentes */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <RecentPatients />
-        <div className="card p-5">
-          <h2 className="font-semibold text-sm mb-4" style={{ color: "#1A1A1A" }}>
-            Orçamentos Recentes
-          </h2>
-          <div className="space-y-3">
-            {MOCK_BUDGETS.map((b) => (
-              <div
-                key={b.id}
-                className="flex items-center justify-between py-2.5 table-row-hover"
-                style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}
-              >
-                <div>
-                  <div className="text-offwhite text-xs font-medium">{b.patient}</div>
-                  <div className="text-muted text-xs mt-0.5">{b.code} · {b.date}</div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-offwhite text-sm font-semibold">{b.value}</span>
-                  <span
-                    className="badge"
-                    style={{
-                      background: STATUS_BG[b.status],
-                      color: STATUS_COLOR[b.status],
-                      border: `1px solid ${STATUS_BORDER[b.status]}`,
-                    }}
-                  >
-                    {b.status}
+        {/* Mini Calendário — 3 cols */}
+        <div className="lg:col-span-3">
+          <MiniCalDash diasComEvento={diasComEvento} />
+        </div>
+
+        {/* Status do dia — 4 cols */}
+        <div className="lg:col-span-4">
+          <div className="card h-full" style={{ padding: 20 }}>
+            <div style={{ fontSize: 13, fontFamily: "var(--font-montserrat)", fontWeight: 600, color: "#1C1C1C", marginBottom: 14 }}>
+              Status do dia
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                {
+                  icon: "✓",
+                  label: "Atendimentos concluídos",
+                  value: `${confirmados}/${consultasHoje}`,
+                  color: "#1F7A4D",
+                },
+                {
+                  icon: "◷",
+                  label: "Próximo atendimento",
+                  value: eventos.find(e => e.status === "agendado" || e.status === "confirmado")
+                    ? new Date(eventos.find(e => e.status === "agendado" || e.status === "confirmado")!.inicio)
+                        .toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" })
+                    : "—",
+                  color: "#2D6AA3",
+                },
+                {
+                  icon: "R$",
+                  label: "Faturado este mês",
+                  value: fmtBRL(faturamentoMes),
+                  color: "#1F7A4D",
+                },
+                {
+                  icon: "!",
+                  label: "Orçamentos em aberto",
+                  value: String(orcamentosAbertos),
+                  color: orcamentosAbertos > 5 ? "#C98A1E" : "#6B6B66",
+                },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{
+                      width: 28, height: 28, borderRadius: 8,
+                      background: `${item.color}15`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 10, fontWeight: 700, color: item.color,
+                      fontFamily: "var(--font-montserrat)",
+                    }}>
+                      {item.icon}
+                    </div>
+                    <span style={{ fontSize: 12, color: "#6B6B66", fontFamily: "var(--font-montserrat)" }}>
+                      {item.label}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#1C1C1C", fontFamily: "var(--font-montserrat)", fontVariantNumeric: "tabular-nums" }}>
+                    {item.value}
                   </span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Agenda de hoje — full width */}
+      <div className="mb-4">
+        <AgendaHoje
+          eventos={eventos}
+          dataHoje={new Date().toLocaleDateString("pt-BR", {
+            timeZone: "America/Sao_Paulo",
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+          })}
+        />
+      </div>
+
+      {/* Bottom: pacientes recentes + gráfico */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <RecentPatients />
+        <div className="card" style={{ padding: 20 }}>
+          <div style={{ fontSize: 13, fontFamily: "var(--font-montserrat)", fontWeight: 600, color: "#1C1C1C", marginBottom: 16 }}>
+            Faturamento — últimos 6 meses
+          </div>
+          <RevenueChart />
         </div>
       </div>
     </div>
   );
 }
-
-const STATUS_BG: Record<string, string> = {
-  Aprovado: "rgba(74,222,128,0.1)",
-  Pendente: "rgba(251,191,36,0.1)",
-  Rascunho: "rgba(138,138,147,0.1)",
-  Recusado: "rgba(248,113,113,0.1)",
-};
-const STATUS_COLOR: Record<string, string> = {
-  Aprovado: "#4ADE80",
-  Pendente: "#FBBF24",
-  Rascunho: "#8A8A93",
-  Recusado: "#F87171",
-};
-const STATUS_BORDER: Record<string, string> = {
-  Aprovado: "rgba(74,222,128,0.25)",
-  Pendente: "rgba(251,191,36,0.25)",
-  Rascunho: "rgba(138,138,147,0.15)",
-  Recusado: "rgba(248,113,113,0.25)",
-};
-
-const MOCK_BUDGETS = [
-  { id: 1, code: "ORC-2026-00041", patient: "Ana Paula Ferreira", value: "R$ 4.800", status: "Aprovado", date: "07/06" },
-  { id: 2, code: "ORC-2026-00040", patient: "Marcos Silveira", value: "R$ 12.300", status: "Pendente", date: "06/06" },
-  { id: 3, code: "ORC-2026-00039", patient: "Cláudia Mendes", value: "R$ 2.150", status: "Pendente", date: "05/06" },
-  { id: 4, code: "ORC-2026-00038", patient: "Roberto Alves", value: "R$ 8.900", status: "Rascunho", date: "04/06" },
-  { id: 5, code: "ORC-2026-00037", patient: "Fernanda Costa", value: "R$ 6.400", status: "Recusado", date: "03/06" },
-];
