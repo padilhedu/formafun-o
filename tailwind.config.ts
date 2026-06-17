@@ -9,73 +9,94 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        base: "#0A0A0B",
-        surface: "#121214",
-        elevated: "#1A1A1E",
-        gold: "#B89A5A",
-        champagne: "#D9C9A3",
-        offwhite: "#F5F2EA",
-        // sidebar Capim
-        "sidebar-dark": "#42414B",
-        "brand-purple": "#59399E",
-        "brand-purple-light": "#7B5DC0",
-        "brand-purple-dim": "rgba(89,57,158,0.15)",
-        // "muted" do app (texto cinza) — manter; o token shadcn equivalente é "muted-shad"
-        muted: "#8A8A93",
-        success: "#4ADE80",
-        warning: "#FBBF24",
-        error: "#F87171",
-        info: "#60A5FA",
+        // ── Paleta Lovable — verde (identidade aprovada) ──────────────────
+        base:        "#F5F3EF",   // fundo geral quente
+        surface:     "#FAF8F4",   // tabela headers, superfícies
+        elevated:    "#EFEDE7",   // fundos sutis, hover, chips
 
-        // ===== Tokens shadcn (vars em globals.css, suportam /opacity) =====
-        border: "rgb(var(--border-shad) / <alpha-value>)",
-        input: "rgb(var(--input) / <alpha-value>)",
-        ring: "rgb(var(--ring) / <alpha-value>)",
-        background: "rgb(var(--background) / <alpha-value>)",
-        foreground: "rgb(var(--foreground) / <alpha-value>)",
+        // Primária verde
         primary: {
-          DEFAULT: "rgb(var(--primary) / <alpha-value>)",
-          foreground: "rgb(var(--primary-foreground) / <alpha-value>)",
+          DEFAULT:    "#1F7A4D",
+          hover:      "#1A6A43",
+          foreground: "#FFFFFF",
+        },
+
+        // Sidebar preta
+        "sidebar-bg": "#1C1C1C",
+
+        // Areia / bege clínica
+        sand:        "#E8E0D0",
+        "sand-fg":   "#3A352B",
+
+        // Texto
+        foreground:  "#1C1C1C",
+        muted:       "#6B6B66",   // texto secundário
+
+        // ── Aliases legados — redireciona para paleta verde ───────────────
+        offwhite:    "#1C1C1C",                      // era text claro; agora texto escuro
+        gold:        "#1F7A4D",                      // acento → verde
+        champagne:   "#E8E0D0",                      // → areia
+        "brand-purple":       "#1F7A4D",
+        "brand-purple-light": "#27A262",
+        "brand-purple-dim":   "rgba(31,122,77,0.15)",
+        "sidebar-dark":       "#1C1C1C",
+
+        // Estados semânticos
+        success:     "#1F7A4D",
+        warning:     "#C98A1E",
+        error:       "#C0392B",
+        info:        "#2D6AA3",
+
+        // ── Tokens shadcn (vars em globals.css, suportam /opacity) ────────
+        background:      "rgb(var(--background) / <alpha-value>)",
+        card: {
+          DEFAULT:     "rgb(var(--card) / <alpha-value>)",
+          foreground:  "rgb(var(--card-foreground) / <alpha-value>)",
+        },
+        popover: {
+          DEFAULT:     "rgb(var(--popover) / <alpha-value>)",
+          foreground:  "rgb(var(--popover-foreground) / <alpha-value>)",
         },
         secondary: {
-          DEFAULT: "rgb(var(--secondary) / <alpha-value>)",
-          foreground: "rgb(var(--secondary-foreground) / <alpha-value>)",
-        },
-        destructive: {
-          DEFAULT: "rgb(var(--destructive) / <alpha-value>)",
-          foreground: "rgb(var(--destructive-foreground) / <alpha-value>)",
+          DEFAULT:     "rgb(var(--secondary) / <alpha-value>)",
+          foreground:  "rgb(var(--secondary-foreground) / <alpha-value>)",
         },
         "muted-shad": {
-          DEFAULT: "rgb(var(--muted-shad) / <alpha-value>)",
-          foreground: "rgb(var(--muted-foreground) / <alpha-value>)",
+          DEFAULT:     "rgb(var(--muted-shad) / <alpha-value>)",
+          foreground:  "rgb(var(--muted-foreground) / <alpha-value>)",
         },
         "muted-foreground": "rgb(var(--muted-foreground) / <alpha-value>)",
         accent: {
-          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
-          foreground: "rgb(var(--accent-foreground) / <alpha-value>)",
+          DEFAULT:     "rgb(var(--accent) / <alpha-value>)",
+          foreground:  "rgb(var(--accent-foreground) / <alpha-value>)",
         },
-        popover: {
-          DEFAULT: "rgb(var(--popover) / <alpha-value>)",
-          foreground: "rgb(var(--popover-foreground) / <alpha-value>)",
+        destructive: {
+          DEFAULT:     "rgb(var(--destructive) / <alpha-value>)",
+          foreground:  "rgb(var(--destructive-foreground) / <alpha-value>)",
         },
-        card: {
-          DEFAULT: "rgb(var(--card) / <alpha-value>)",
-          foreground: "rgb(var(--card-foreground) / <alpha-value>)",
-        },
+        border:  "rgba(0,0,0,0.08)",
+        input:   "rgba(0,0,0,0.12)",
+        ring:    "#1F7A4D",
       },
       fontFamily: {
-        serif: ["var(--font-cormorant)", "Georgia", "serif"],
-        sans: ["var(--font-montserrat)", "system-ui", "sans-serif"],
+        serif: ["var(--font-display)", "Georgia", "serif"],
+        sans:  ["var(--font-body)", "system-ui", "sans-serif"],
       },
       borderRadius: {
-        card: "12px",
+        card:  "14px",
         modal: "16px",
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        full:  "9999px",
+        lg:    "10px",
+        md:    "8px",
+        sm:    "6px",
+      },
+      boxShadow: {
+        card:  "0 1px 2px rgba(0,0,0,0.04)",
+        soft:  "0 4px 12px rgba(0,0,0,0.06)",
+        focus: "0 0 0 3px rgba(31,122,77,0.15)",
       },
       borderColor: {
-        DEFAULT: "rgba(255,255,255,0.07)",
+        DEFAULT: "rgba(0,0,0,0.08)",
       },
     },
   },

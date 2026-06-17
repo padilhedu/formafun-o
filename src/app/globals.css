@@ -4,85 +4,58 @@
 
 @layer base {
   :root {
-    --font-cormorant: "Cormorant Garamond", Georgia, serif;
-    --font-montserrat: "Montserrat", system-ui, sans-serif;
+    /* ─── Tipografia ──────────────────────────────────────────────────────────── */
+    --font-display:   "Cormorant Garamond", Georgia, serif;
+    --font-body:      "Montserrat", system-ui, sans-serif;
+    /* aliases legados */
+    --font-cormorant: var(--font-display);
+    --font-montserrat: var(--font-body);
 
-    /* ===== Tema shadcn (creme/roxo Capim) — triplets RGB p/ alpha no Tailwind 3 ===== */
-    --background: 248 245 240;          /* #f8f5f0 */
-    --foreground: 30 20 50;             /* #1e1432 */
-    --card: 248 245 240;                /* #f8f5f0 */
-    --card-foreground: 30 20 50;
-    --popover: 248 245 240;
-    --popover-foreground: 30 20 50;
-    --primary: 89 57 158;               /* #59399E */
+    /* ─── Tokens de cor (triplets RGB para Tailwind rgb(var(--x)/<alpha>)) ────── */
+    --background:        245 243 239;   /* #F5F3EF — fundo geral quente */
+    --surface:           250 248 244;   /* #FAF8F4 — header tabela, rodapés */
+    --card:              255 255 255;   /* #FFFFFF */
+    --card-foreground:   28 28 28;      /* #1C1C1C */
+    --popover:           255 255 255;
+    --popover-foreground: 28 28 28;
+
+    --foreground:        28 28 28;      /* #1C1C1C */
+    --muted-shad:        239 237 231;   /* #EFEDE7 */
+    --muted-foreground:  107 107 102;   /* #6B6B66 */
+
+    /* Primária — VERDE */
+    --primary:           31 122 77;     /* #1F7A4D */
     --primary-foreground: 255 255 255;
-    --secondary: 237 232 250;           /* #ede8fa */
-    --secondary-foreground: 66 39 120;  /* #422778 */
-    --muted-shad: 240 233 224;          /* #f0e9e0 */
-    --muted-foreground: 109 100 130;    /* #6d6482 */
-    --accent: 220 210 245;              /* #dcd2f5 */
-    --accent-foreground: 66 39 120;
-    --destructive: 198 40 40;
+
+    /* Areia */
+    --sand:              232 224 208;   /* #E8E0D0 */
+    --sand-foreground:   58 53 43;      /* #3A352B */
+
+    --secondary:         239 237 231;
+    --secondary-foreground: 28 28 28;
+    --accent:            239 237 231;
+    --accent-foreground: 28 28 28;
+
+    --destructive:       192 57 43;     /* #C0392B */
     --destructive-foreground: 255 255 255;
-    --border-shad: 224 218 240;         /* #e0daf0 */
-    --input: 224 218 240;
-    --ring: 89 57 158;
-    --radius: 0.5rem;
-    --chart-1: #7B5DC0;
-    --chart-2: #59399E;
-    --chart-3: #422778;
-    --chart-4: #B89A5A;
-    --chart-5: #D9C9A3;
-    --sidebar: #f0eafa;
-    --sidebar-foreground: #1e1432;
-    --sidebar-primary: #59399E;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #dcd2f5;
-    --sidebar-accent-foreground: #422778;
-    --sidebar-border: #e0daf0;
-    --sidebar-ring: #59399E;
+
+    --border-shad:       0 0 0;         /* rgba(0,0,0,0.08) via <alpha> */
+    --input:             0 0 0;
+    --ring:              31 122 77;
+
+    /* Radius */
+    --radius: 10px;
+
+    /* ─── Sidebar (preta) — usadas em Sidebar.tsx ──────────────────────────── */
+    --sidebar-bg:        #1C1C1C;
+    --sidebar-fg:        #FFFFFF;
+    --sidebar-active-bg: rgba(255,255,255,0.08);
+    --sidebar-hover-bg:  rgba(255,255,255,0.05);
+    --sidebar-primary:   #1F7A4D;
+    --sidebar-muted:     rgba(255,255,255,0.40);
   }
 
-  .dark {
-    --background: 10 10 11;             /* #0a0a0b */
-    --foreground: 245 242 234;          /* #f5f2ea */
-    --card: 18 18 20;                   /* #121214 */
-    --card-foreground: 245 242 234;
-    --popover: 26 26 30;
-    --popover-foreground: 245 242 234;
-    --primary: 123 93 192;              /* #7B5DC0 — roxo mais claro no dark */
-    --primary-foreground: 255 255 255;
-    --secondary: 50 40 75;
-    --secondary-foreground: 220 210 245;
-    --muted-shad: 26 26 30;
-    --muted-foreground: 138 138 147;    /* #8a8a93 */
-    --accent: 89 57 158;
-    --accent-foreground: 245 242 234;
-    --destructive: 248 113 113;
-    --destructive-foreground: 10 10 11;
-    --border-shad: 50 45 70;
-    --input: 50 45 70;
-    --ring: 123 93 192;
-    --chart-1: #B89A5A;
-    --chart-2: #7B5DC0;
-    --chart-3: #59399E;
-    --chart-4: #D9C9A3;
-    --chart-5: #422778;
-    --sidebar: #42414B;
-    --sidebar-foreground: #f5f2ea;
-    --sidebar-primary: #59399E;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: rgba(89,57,158,0.2);
-    --sidebar-accent-foreground: #f5f2ea;
-    --sidebar-border: rgba(255,255,255,0.07);
-    --sidebar-ring: #7B5DC0;
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html {
     font-size: 14px;
@@ -91,272 +64,192 @@
   }
 
   body {
-    background-color: #0A0A0B;
-    color: #F5F2EA;
-    font-family: var(--font-montserrat);
+    background-color: #F5F3EF;
+    color: #1C1C1C;
+    font-family: var(--font-body);
   }
 
   /* Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #121214;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #F5F3EF; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.14); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.24); }
 
   /* Seleção */
-  ::selection {
-    background: rgba(89, 57, 158, 0.35);
-    color: #F5F2EA;
-  }
+  ::selection { background: rgba(31,122,77,0.18); color: #1C1C1C; }
 }
 
 @layer components {
-  .heading {
-    font-family: var(--font-cormorant);
-    font-weight: 600;
-  }
+  /* ─── Tipografia ────────────────────────────────────────────────────────── */
+  .heading { font-family: var(--font-display); font-weight: 600; }
 
+  /* ─── Superfícies ───────────────────────────────────────────────────────── */
   .card {
-    background: #121214;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 12px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-
   .card-elevated {
-    background: #1A1A1E;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 12px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .card-sand {
+    background: #E8E0D0;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  /* alias legado */
+  .gradient-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
 
+  /* ─── Botões ────────────────────────────────────────────────────────────── */
   .btn-primary {
-    background: #59399E;
-    color: #ffffff;
-    font-family: var(--font-montserrat);
+    background: #1F7A4D;
+    color: #FFFFFF;
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     padding: 0.55rem 1.25rem;
-    border-radius: 8px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
     transition: background 0.15s, opacity 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    text-decoration: none;
   }
-  .btn-primary:hover {
-    background: #7B5DC0;
-  }
-  .btn-primary:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .btn-primary:hover { background: #1A6A43; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .btn-ghost {
     background: transparent;
-    color: #8A8A93;
-    font-family: var(--font-montserrat);
+    color: #6B6B66;
+    font-family: var(--font-body);
     font-size: 0.8rem;
     padding: 0.55rem 1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.10);
     cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    text-decoration: none;
   }
   .btn-ghost:hover {
-    color: #F5F2EA;
-    border-color: rgba(255, 255, 255, 0.15);
+    color: #1C1C1C;
+    border-color: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.03);
   }
 
+  /* ─── Inputs ────────────────────────────────────────────────────────────── */
   .input-field {
-    background: #1A1A1E;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 8px;
-    color: #F5F2EA;
-    font-family: var(--font-montserrat);
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 10px;
+    color: #1C1C1C;
+    font-family: var(--font-body);
     font-size: 0.875rem;
     padding: 0.625rem 0.875rem;
     width: 100%;
     outline: none;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .input-field::placeholder {
-    color: #8A8A93;
-  }
+  .input-field::placeholder { color: #6B6B66; }
   .input-field:focus {
-    border-color: #B89A5A;
+    border-color: #1F7A4D;
+    box-shadow: 0 0 0 3px rgba(31,122,77,0.12);
   }
 
+  /* ─── Badges ────────────────────────────────────────────────────────────── */
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.68rem;
     font-weight: 600;
-    font-family: var(--font-montserrat);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font-family: var(--font-body);
+    letter-spacing: 0.03em;
   }
+  .badge-success  { background: rgba(31,122,77,0.10);  color: #1F7A4D; border: 1px solid rgba(31,122,77,0.20); }
+  .badge-warning  { background: rgba(201,138,30,0.10); color: #C98A1E; border: 1px solid rgba(201,138,30,0.20); }
+  .badge-error    { background: rgba(192,57,43,0.10);  color: #C0392B; border: 1px solid rgba(192,57,43,0.20); }
+  .badge-info     { background: rgba(45,106,163,0.10); color: #2D6AA3; border: 1px solid rgba(45,106,163,0.20); }
+  .badge-neutral  { background: rgba(107,107,102,0.10);color: #6B6B66; border: 1px solid rgba(107,107,102,0.15); }
+  .badge-gold     { background: rgba(232,224,208,0.60);color: #3A352B; border: 1px solid rgba(232,224,208,0.80); }
 
+  /* ─── Tabelas ───────────────────────────────────────────────────────────── */
   .table-header {
     font-size: 0.65rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #8A8A93;
+    color: #6B6B66;
+    background: #FAF8F4;
   }
+  .table-row-hover { transition: background 0.1s; }
+  .table-row-hover:hover { background: rgba(0,0,0,0.025); }
 
-  .table-row-hover {
-    transition: background 0.1s;
-  }
-  .table-row-hover:hover {
-    background: rgba(255, 255, 255, 0.03);
-  }
-
+  /* ─── Kanban ────────────────────────────────────────────────────────────── */
   .kanban-card:hover {
-    border-color: rgba(184, 154, 90, 0.25) !important;
+    border-color: rgba(31,122,77,0.25) !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 12px rgba(184,154,90,0.08);
-  }
-
-  /* Gradiente padrão de card escuro — evita repetição inline */
-  .gradient-card {
-    background: linear-gradient(145deg, #141416 0%, #111113 100%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 12px;
-  }
-
-  /* Badge variantes semânticas */
-  .badge-success {
-    background: rgba(74, 222, 128, 0.12);
-    color: #4ADE80;
-    border: 1px solid rgba(74, 222, 128, 0.25);
-  }
-  .badge-warning {
-    background: rgba(251, 191, 36, 0.12);
-    color: #FBBF24;
-    border: 1px solid rgba(251, 191, 36, 0.25);
-  }
-  .badge-error {
-    background: rgba(248, 113, 113, 0.12);
-    color: #F87171;
-    border: 1px solid rgba(248, 113, 113, 0.25);
-  }
-  .badge-info {
-    background: rgba(96, 165, 250, 0.12);
-    color: #60A5FA;
-    border: 1px solid rgba(96, 165, 250, 0.25);
-  }
-  .badge-neutral {
-    background: rgba(138, 138, 147, 0.12);
-    color: #8A8A93;
-    border: 1px solid rgba(138, 138, 147, 0.2);
-  }
-  .badge-gold {
-    background: rgba(184, 154, 90, 0.12);
-    color: #B89A5A;
-    border: 1px solid rgba(184, 154, 90, 0.25);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   }
 }
 
-/* ===== Animações dos componentes ui/sign-in ===== */
-
-@keyframes fadeSlideIn {
-  to {
-    opacity: 1;
-    filter: blur(0px);
-    transform: translateY(0px);
-  }
-}
-
-@keyframes slideRightIn {
-  to {
-    opacity: 1;
-    filter: blur(0px);
-    transform: translateX(0px);
-  }
-}
-
-@keyframes testimonialIn {
-  to {
-    opacity: 1;
-    filter: blur(0px);
-    transform: translateY(0px) scale(1);
-  }
-}
+/* ─── Animações ─────────────────────────────────────────────────────────────── */
+@keyframes fadeSlideIn  { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+@keyframes slideRightIn { to { opacity: 1; filter: blur(0); transform: translateX(0); } }
 
 @layer utilities {
-  .animate-element {
-    opacity: 0;
-    filter: blur(4px);
-    transform: translateY(14px);
-    animation: fadeSlideIn 0.6s ease forwards;
-  }
-
-  .animate-slide-right {
-    opacity: 0;
-    filter: blur(6px);
-    transform: translateX(40px);
-    animation: slideRightIn 0.8s ease forwards;
-  }
-
-  .animate-testimonial {
-    opacity: 0;
-    filter: blur(4px);
-    transform: translateY(20px) scale(0.96);
-    animation: testimonialIn 0.7s ease forwards;
-  }
-
-  .animate-delay-100 { animation-delay: 0.1s; }
-  .animate-delay-200 { animation-delay: 0.2s; }
-  .animate-delay-300 { animation-delay: 0.3s; }
-  .animate-delay-400 { animation-delay: 0.4s; }
-  .animate-delay-500 { animation-delay: 0.5s; }
-  .animate-delay-600 { animation-delay: 0.6s; }
-  .animate-delay-700 { animation-delay: 0.7s; }
-  .animate-delay-800 { animation-delay: 0.8s; }
-  .animate-delay-900 { animation-delay: 0.9s; }
-  .animate-delay-1000 { animation-delay: 1s; }
+  .animate-element      { opacity: 0; filter: blur(4px); transform: translateY(14px); animation: fadeSlideIn 0.6s ease forwards; }
+  .animate-slide-right  { opacity: 0; filter: blur(6px); transform: translateX(40px); animation: slideRightIn 0.8s ease forwards; }
+  .animate-delay-100  { animation-delay: 0.1s; }
+  .animate-delay-200  { animation-delay: 0.2s; }
+  .animate-delay-300  { animation-delay: 0.3s; }
+  .animate-delay-400  { animation-delay: 0.4s; }
+  .animate-delay-500  { animation-delay: 0.5s; }
+  .animate-delay-600  { animation-delay: 0.6s; }
+  .animate-delay-700  { animation-delay: 0.7s; }
+  .animate-delay-800  { animation-delay: 0.8s; }
+  .animate-delay-900  { animation-delay: 0.9s; }
+  .animate-delay-1000 { animation-delay: 1.0s; }
   .animate-delay-1200 { animation-delay: 1.2s; }
   .animate-delay-1400 { animation-delay: 1.4s; }
-
-  .font-geist {
-    font-family: var(--font-montserrat);
-  }
+  .tabular { font-variant-numeric: tabular-nums; }
 }
 
+/* ─── Checkbox customizado ──────────────────────────────────────────────────── */
 .custom-checkbox {
   appearance: none;
-  width: 1.05rem;
-  height: 1.05rem;
+  width: 1.05rem; height: 1.05rem;
   border-radius: 0.3rem;
-  border: 1px solid rgb(var(--border-shad));
-  background: rgb(var(--background));
+  border: 1px solid rgba(0,0,0,0.2);
+  background: #FFFFFF;
   cursor: pointer;
   position: relative;
   transition: background 0.15s, border-color 0.15s;
 }
-.custom-checkbox:checked {
-  background: rgb(var(--primary));
-  border-color: rgb(var(--primary));
-}
+.custom-checkbox:checked { background: #1F7A4D; border-color: #1F7A4D; }
 .custom-checkbox:checked::after {
   content: "";
   position: absolute;
-  left: 0.32rem;
-  top: 0.12rem;
-  width: 0.3rem;
-  height: 0.55rem;
-  border: solid rgb(var(--primary-foreground));
+  left: 0.32rem; top: 0.12rem;
+  width: 0.3rem; height: 0.55rem;
+  border: solid #FFFFFF;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }

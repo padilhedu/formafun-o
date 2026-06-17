@@ -14,25 +14,20 @@ export function AppShell({ profile, children }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-base">
-      {/* Overlay mobile */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 lg:hidden"
-          style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(2px)" }}
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
+    <div className="min-h-screen" style={{ background: "#F5F3EF" }}>
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <Topbar profile={profile} onMenuToggle={() => setSidebarOpen((v) => !v)} />
+      <Topbar profile={profile} onMenuToggle={() => setSidebarOpen(v => !v)} />
 
       <main
-        className="min-h-screen pt-14 transition-all"
-        style={{ marginLeft: "var(--sidebar-w, 0px)" }}
+        className="min-h-screen transition-all"
+        style={{
+          marginLeft: "var(--sidebar-w, 0px)",
+          paddingTop: 56, /* topbar height */
+        }}
       >
-        <style>{`@media(min-width:1024px){:root{--sidebar-w:224px}}`}</style>
-        <div className="p-4 lg:p-6">{children}</div>
+        {/* Sidebar width injected via CSS variable */}
+        <style>{`@media(min-width:1024px){:root{--sidebar-w:248px}}`}</style>
+        <div className="p-4 lg:p-6 xl:p-8">{children}</div>
       </main>
     </div>
   );

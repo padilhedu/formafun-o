@@ -13,20 +13,61 @@ Idioma de toda a interface: português brasileiro. Moeda: BRL. Fuso: America/Sao
 - Estilo: Tailwind CSS + componentes próprios (sem biblioteca de UI pesada)
 - Gráficos: Recharts
 
-## Identidade visual (obrigatória)
-Tema dark premium, mesmo estilo do dashboard Indaiá Eventos:
-- Fundo: #0A0A0B (base), #121214 (cards/superfícies), #1A1A1E (superfícies elevadas)
-- Bordas: rgba(255,255,255,0.07), radius 12-16px
-- Acento principal: dourado #B89A5A (botões primários, links ativos, destaques)
-- Tons de apoio: champanhe #D9C9A3, off-white #F5F2EA para texto principal
-- Texto secundário: #8A8A93
-- Estados: sucesso #4ADE80, alerta #FBBF24, erro #F87171, info #60A5FA
-- Tipografia: Cormorant Garamond (títulos/headings, peso 500-600) + Montserrat (UI/corpo, 400-600)
-- Sidebar fixa à esquerda com grupos colapsáveis (COMERCIAL, CLÍNICO, FINANCEIRO, OPERACIONAL)
-- Topbar: toggle de tema, notificações, avatar do usuário com role badge
-- Banners de status coloridos com borda (verde = travado/assinado, roxo = informativo)
-- Tabelas com header em caps pequeno, linhas com hover sutil
-- Evitar estética genérica de IA: nada de gradientes roxo/azul, nada de emojis na UI
+## Identidade visual (obrigatória) — Paleta Lovable / Verde
+Tema LIGHT premium (portado da Forma & Função Vision na Lovable):
+
+### Fundos
+- Geral:    #F5F3EF (off-white quente)
+- Superfície: #FAF8F4 (cabeçalhos de tabela, rodapés)
+- Card:     #FFFFFF
+- Muted:    #EFEDE7 (chips neutros, hover)
+- Areia:    #E8E0D0 (card clínica)
+
+### Sidebar (preta — separada do tema claro)
+- Fundo: #1C1C1C  |  texto: #FFFFFF
+- Item ativo: rgba(255,255,255,0.08) bg + barra esquerda #1F7A4D (verde)
+- Hover: rgba(255,255,255,0.05)
+- Largura: 248px; navegação PLANA (sem grupos colapsáveis)
+
+### Acento principal — VERDE (substituiu roxo/dourado)
+- Primary:  #1F7A4D  (botões, links ativos, indicadores)
+- Hover:    #1A6A43
+- Foreground: #FFFFFF (sobre primary)
+
+### Texto
+- Principal:  #1C1C1C
+- Secundário: #6B6B66
+- Muted:      #6B6B66
+
+### Bordas & forma
+- Borda: rgba(0,0,0,0.08)  |  radius card: 14px  |  radius btn/input: 10px
+- Sombra card: 0 1px 2px rgba(0,0,0,0.04)
+- Sombra hover: 0 4px 12px rgba(0,0,0,0.06)
+
+### Estados
+- Sucesso:  #1F7A4D  |  bg: rgba(31,122,77,0.10)
+- Alerta:   #C98A1E  |  bg: rgba(201,138,30,0.10)
+- Erro:     #C0392B  |  bg: rgba(192,57,43,0.10)
+- Info:     #2D6AA3  |  bg: rgba(45,106,163,0.10)
+
+### Tipografia
+- Display (títulos): Cormorant Garamond (var(--font-display)), 500-700
+  → números grandes em tabular-nums
+- Corpo/UI:    Montserrat (var(--font-body)), 400-600
+
+### Componentes-chave
+- StatusChip: chip com dot + label — centralizado em src/lib/status.ts
+- KpiCard: label caps-small + valor display serif + chip delta + sparkline opcional
+- DataTable: header surface (#FAF8F4), caps-small muted, hover rgba(0,0,0,0.025)
+- MiniCalendar: hoje = círculo verde; evento = ponto verde; fuso BRT
+- ClinicaCard: fundo areia (#E8E0D0), contadores reais
+- StatusTimeline: checks verdes preenchidos (concluído) / círculos vazios (pendente)
+
+### Regras
+- ZERO emojis na UI
+- ZERO gradientes roxo/azul
+- ZERO hardcoded hex fora dos tokens — usar CSS vars ou Tailwind tokens
+- SEM toggle dark/light (identidade light definida)
 
 ## Integrações externas
 - Vindi (pagamentos): API v1, chave em VINDI_API_KEY
