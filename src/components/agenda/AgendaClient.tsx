@@ -1,8 +1,14 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
+import {
+  DndContext, DragEndEvent, DragOverlay, DragStartEvent,
+  useDraggable, useDroppable,
+  PointerSensor, useSensor, useSensors,
+} from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 import { AgendaEvento, STATUS_COR, STATUS_LABEL, TIPO_LABEL, TIPO_COR } from '@/types/agenda';
-import { dataBRT, hojeBRT, formatarHoraBRT, minutosNoDiaBRT } from '@/lib/datas';
+import { dataBRT, hojeBRT, formatarHoraBRT, minutosNoDiaBRT, localInputParaUTC } from '@/lib/datas';
 import { NovoEventoModal } from './NovoEventoModal';
 
 interface Paciente { id: string; nome: string; telefone: string | null; }
@@ -242,6 +248,98 @@ function EventoPopup({ evento, pos, onEditar, onFechar, onStatusChange }: {
   );
 }
 
+// ─── Slot de hora droppable ────────────────────────────────────────────────────
+function DroppableSlot({ dia, horaIndex, onClickSlot }: {
+  dia: Date;
+  horaIndex: number;
+  onClickSlot: (dia: Date, hora: number) => void;
+}) {
+  const slotId = `${dataBRT(dia)}-${HORA_INICIO + horaIndex}`;
+  const { isOver, setNodeRef } = useDroppable({ id: slotId, data: { dia, hora: HORA_INICIO + horaIndex } });
+
+  return (
+    <div
+      ref={setNodeRef}
+      onClick={() => onClickSlot(dia, HORA_INICIO + horaIndex)}
+      style={{
+        position: 'absolute', top: horaIndex * HORA_PX, left: 0, right: 0, height: HORA_PX,
+        borderBottom: '1px solid rgba(255,255,255,0.03)', cursor: 'pointer',
+        background: isOver ? 'rgba(184,154,90,0.08)' : 'transparent',
+        transition: 'background 0.1s ease',
+      }}
+    />
+  );
+}
+
+// ─── Evento arrastável ─────────────────────────────────────────────────────────
+function DraggableEvento({ ev, onClickEvento }: {
+  ev: AgendaEvento;
+  onClickEvento: (ev: AgendaEvento, e: React.MouseEvent) => void;
+}) {
+  const h = eventHeight(ev.inicio, ev.fim);
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: ev.id,
+    data: { ev },
+  });
+
+  return (
+    <button
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      onClick={(e) => { if (!isDragging) onClickEvento(ev, e); }}
+      style={{
+        position: 'absolute',
+        top: eventTop(ev.inicio), height: h, left: 3, right: 3,
+        background: TIPO_COR[ev.tipo],
+        opacity: isDragging ? 0.35 : ev.status === 'cancelado' ? 0.35 : ev.status === 'realizado' ? 0.65 : 0.9,
+        borderRadius: 6, padding: '3px 6px',
+        textAlign: 'left', border: 'none',
+        cursor: isDragging ? 'grabbing' : 'grab',
+        overflow: 'hidden', zIndex: 2,
+        boxShadow: ev.status === 'confirmado' ? `0 0 0 2px rgba(74,222,128,0.6)` : 'none',
+        transform: CSS.Transform.toString(transform),
+        touchAction: 'none',
+      }}
+    >
+      <div style={{ fontSize: 10, fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.3, fontFamily: 'var(--font-montserrat)' }}>
+        {ev.titulo}
+      </div>
+      {h > 28 && (
+        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>
+          {fmtHora(ev.inicio)}
+        </div>
+      )}
+      {ev.pacientes && h > 46 && (
+        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: 'var(--font-montserrat)' }}>
+          {ev.pacientes.nome}
+        </div>
+      )}
+      {ev.status === 'confirmado' && h > 28 && (
+        <div style={{ fontSize: 8, color: '#4ADE80', fontWeight: 700, marginTop: 1 }}>✓ CONF</div>
+      )}
+    </button>
+  );
+}
+
+// ─── Ghost do evento para DragOverlay ─────────────────────────────────────────
+function EventoGhost({ ev }: { ev: AgendaEvento }) {
+  const h = Math.min(eventHeight(ev.inicio, ev.fim), 80);
+  return (
+    <div style={{
+      width: 120, height: h,
+      background: TIPO_COR[ev.tipo],
+      borderRadius: 6, padding: '3px 6px',
+      opacity: 0.85, boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+      pointerEvents: 'none',
+    }}>
+      <div style={{ fontSize: 10, fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-montserrat)' }}>
+        {ev.titulo}
+      </div>
+    </div>
+  );
+}
+
 // ─── Coluna de um dia ──────────────────────────────────────────────────────────
 function DiaColuna({ dia, eventos, isHoje, onClickSlot, onClickEvento }: {
   dia: Date;
@@ -255,52 +353,11 @@ function DiaColuna({ dia, eventos, isHoje, onClickSlot, onClickEvento }: {
   return (
     <div style={{ position: 'relative', height: GRID_H, borderLeft: '1px solid rgba(255,255,255,0.04)', background: isHoje ? 'rgba(184,154,90,0.015)' : 'transparent' }}>
       {horas.map(i => (
-        <div
-          key={i}
-          onClick={() => onClickSlot(dia, HORA_INICIO + i)}
-          style={{
-            position: 'absolute', top: i * HORA_PX, left: 0, right: 0, height: HORA_PX,
-            borderBottom: '1px solid rgba(255,255,255,0.03)', cursor: 'pointer',
-          }}
-        />
+        <DroppableSlot key={i} dia={dia} horaIndex={i} onClickSlot={onClickSlot} />
       ))}
-
-      {eventos.map(ev => {
-        const h = eventHeight(ev.inicio, ev.fim);
-        return (
-          <button
-            key={ev.id}
-            onClick={(e) => onClickEvento(ev, e)}
-            style={{
-              position: 'absolute',
-              top: eventTop(ev.inicio), height: h, left: 3, right: 3,
-              background: TIPO_COR[ev.tipo],
-              opacity: ev.status === 'cancelado' ? 0.35 : ev.status === 'realizado' ? 0.65 : 0.9,
-              borderRadius: 6, padding: '3px 6px',
-              textAlign: 'left', border: 'none', cursor: 'pointer',
-              overflow: 'hidden', zIndex: 2,
-              boxShadow: ev.status === 'confirmado' ? `0 0 0 2px rgba(74,222,128,0.6)` : 'none',
-            }}
-          >
-            <div style={{ fontSize: 10, fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.3, fontFamily: 'var(--font-montserrat)' }}>
-              {ev.titulo}
-            </div>
-            {h > 28 && (
-              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>
-                {fmtHora(ev.inicio)}
-              </div>
-            )}
-            {ev.pacientes && h > 46 && (
-              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: 'var(--font-montserrat)' }}>
-                {ev.pacientes.nome}
-              </div>
-            )}
-            {ev.status === 'confirmado' && h > 28 && (
-              <div style={{ fontSize: 8, color: '#4ADE80', fontWeight: 700, marginTop: 1 }}>✓ CONF</div>
-            )}
-          </button>
-        );
-      })}
+      {eventos.map(ev => (
+        <DraggableEvento key={ev.id} ev={ev} onClickEvento={onClickEvento} />
+      ))}
     </div>
   );
 }
@@ -315,6 +372,11 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
   const [slotInicio, setSlotInicio] = useState('');
   const [slotFim, setSlotFim] = useState('');
   const [carregando, setCarregando] = useState(false);
+  const [draggingEvento, setDraggingEvento] = useState<AgendaEvento | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
+  );
 
   const dias = semanaAtual(referencia);
   const inicioSemana = dataBRT(dias[0]) + 'T00:00:00-03:00';
@@ -372,6 +434,38 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
     setEventos(prev => prev.map(e => e.id === id ? { ...e, status } : e));
   }
 
+  function onDragStart(event: DragStartEvent) {
+    const { ev } = event.active.data.current as { ev: AgendaEvento };
+    setDraggingEvento(ev);
+    setPopup(null);
+  }
+
+  async function onDragEnd(event: DragEndEvent) {
+    setDraggingEvento(null);
+    const { active, over } = event;
+    if (!over) return;
+    const ev = (active.data.current as { ev: AgendaEvento }).ev;
+    const { dia, hora } = over.data.current as { dia: Date; hora: number };
+
+    const durMs = new Date(ev.fim).getTime() - new Date(ev.inicio).getTime();
+    const novoInicioISO = localInputParaUTC(`${dataBRT(dia)}T${String(hora).padStart(2, '0')}:00`);
+    const novoFimISO = new Date(new Date(novoInicioISO).getTime() + durMs).toISOString();
+
+    if (novoInicioISO === ev.inicio) return; // sem mudança
+
+    // Optimistic update
+    const prevEventos = eventos;
+    setEventos(prev => prev.map(e => e.id === ev.id ? { ...e, inicio: novoInicioISO, fim: novoFimISO } : e));
+
+    const res = await fetch(`/api/agenda/${ev.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ inicio: novoInicioISO, fim: novoFimISO }),
+    });
+
+    if (!res.ok) setEventos(prevEventos); // revert on error
+  }
+
   const eventosHoje = eventos.filter(ev => dataBRT(ev.inicio) === hoje);
   const horas = Array.from({ length: HORA_FIM - HORA_INICIO }, (_, i) => HORA_INICIO + i);
 
@@ -381,6 +475,7 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
   const realizados = eventos.filter(e => e.status === 'realizado').length;
 
   return (
+    <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
     <div className="flex gap-4" style={{ height: 'calc(100vh - 130px)' }}>
       {/* ── Grade semanal ── */}
       <div className="flex-1 flex flex-col min-w-0" style={{
@@ -564,5 +659,9 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
         onExcluido={onExcluido}
       />
     </div>
+    <DragOverlay>
+      {draggingEvento && <EventoGhost ev={draggingEvento} />}
+    </DragOverlay>
+    </DndContext>
   );
 }
