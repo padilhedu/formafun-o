@@ -49,7 +49,7 @@ interface Props {
   profissionais: { id: string; nome: string }[];
   modelos: ModeloPagamento[];
   parcelas: { id: string; codigo: string; descricao: string; valor: number; vencimento: string; status: string }[];
-  contrato: { id: string; codigo: string; status: string } | null;
+  contratos: { id: string; codigo: string; status: string }[];
   atendenteNome: string;
   isAdmin: boolean;
 }
@@ -58,7 +58,7 @@ function formatBRL(v: number) {
   return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionais, modelos, parcelas, contrato, atendenteNome, isAdmin }: Props) {
+export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionais, modelos, parcelas, contratos, atendenteNome, isAdmin }: Props) {
   const router = useRouter();
   const [abaAtiva, setAbaAtiva] = useState<'orcamento' | 'contrato'>('orcamento');
   const [showHistorico, setShowHistorico] = useState(false);
@@ -262,7 +262,7 @@ export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionai
                 transition: 'all 0.15s',
               }}
             >
-              {aba === 'orcamento' ? 'Orçamento' : `Contrato${contrato ? ` · ${contrato.status}` : ''}`}
+              {aba === 'orcamento' ? 'Orçamento' : `Contrato${contratos.length > 0 ? ` · ${contratos.length}` : ''}`}
             </button>
           ))}
         </div>
@@ -362,7 +362,7 @@ export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionai
             orcamentoId={orc.id}
             pacienteId={pacienteId}
             status={status}
-            contratoExistente={contrato as { id: string; codigo: string; status: import('@/types/contratos').ContratoStatus } | null}
+            contratos={contratos as { id: string; codigo: string; status: import('@/types/contratos').ContratoStatus }[]}
           />
         </div>
       )}

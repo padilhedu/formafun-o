@@ -45,8 +45,8 @@ export function GerarContratoModal({ orcamentoId, pacienteId, onClose }: Props) 
         setError(data.error ?? 'Erro ao gerar contrato');
         return;
       }
-      router.push(`/contratos/${data.id}`);
       onClose();
+      router.push(`/contratos/${data.id}`);
     } catch {
       setError('Erro de rede');
     } finally {

@@ -42,9 +42,7 @@ export default async function OrcamentoPage({ params }: { params: Promise<{ id: 
       .from('contratos')
       .select('id, codigo, status')
       .eq('orcamento_id', id)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle(),
+      .order('created_at', { ascending: false }),
   ]);
 
   if (orcRes.error || !orcRes.data) notFound();
@@ -53,7 +51,7 @@ export default async function OrcamentoPage({ params }: { params: Promise<{ id: 
   const profissionais = (profRes.data ?? []) as { id: string; nome: string }[];
   const modelos = (modelosRes.data ?? []) as ModeloPagamento[];
   const parcelas = (parcelasRes.data ?? []).map(p => ({ ...p, valor: Number(p.valor) }));
-  const contrato = contratoRes.data ?? null;
+  const contratos = (contratoRes.data ?? []) as { id: string; codigo: string; status: string }[];
 
   const itensOrdenados = [...(orc.orcamento_itens ?? [])].sort((a, b) =>
     (a.categoria ?? '').localeCompare(b.categoria ?? '')
@@ -159,7 +157,7 @@ export default async function OrcamentoPage({ params }: { params: Promise<{ id: 
         profissionais={profissionais}
         modelos={modelos}
         parcelas={parcelas}
-        contrato={contrato}
+        contratos={contratos}
         atendenteNome={atendenteNome}
         isAdmin={isAdmin}
       />
