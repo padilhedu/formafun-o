@@ -61,11 +61,11 @@ export function RevenueChart() {
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 rounded-full" style={{ background: "#59399E" }} />
+            <div className="w-3 h-0.5 rounded-full" style={{ background: "#1F7A4D" }} />
             <span className="text-muted text-xs">Receita</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-0.5 rounded-full bg-error" />
+            <div className="w-3 h-0.5 rounded-full" style={{ background: "#C0392B" }} />
             <span className="text-muted text-xs">Despesa</span>
           </div>
         </div>
@@ -74,12 +74,12 @@ export function RevenueChart() {
         <AreaChart data={data} margin={{ top: 4, right: 4, left: -10, bottom: 0 }}>
           <defs>
             <linearGradient id="gradReceita" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#59399E" stopOpacity={0.2} />
-              <stop offset="95%" stopColor="#59399E" stopOpacity={0} />
+              <stop offset="5%" stopColor="#1F7A4D" stopOpacity={0.2} />
+              <stop offset="95%" stopColor="#1F7A4D" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="gradDespesa" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#DC2626" stopOpacity={0.12} />
-              <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
+              <stop offset="5%" stopColor="#C0392B" stopOpacity={0.12} />
+              <stop offset="95%" stopColor="#C0392B" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid stroke="rgba(0,0,0,0.06)" vertical={false} />
@@ -99,20 +99,20 @@ export function RevenueChart() {
           <Area
             type="monotone"
             dataKey="receita"
-            stroke="#59399E"
+            stroke="#1F7A4D"
             strokeWidth={2}
             fill="url(#gradReceita)"
             dot={false}
-            activeDot={{ r: 4, fill: "#59399E" }}
+            activeDot={{ r: 4, fill: "#1F7A4D" }}
           />
           <Area
             type="monotone"
             dataKey="despesa"
-            stroke="#DC2626"
+            stroke="#C0392B"
             strokeWidth={1.5}
             fill="url(#gradDespesa)"
             dot={false}
-            activeDot={{ r: 4, fill: "#DC2626" }}
+            activeDot={{ r: 4, fill: "#C0392B" }}
           />
         </AreaChart>
       </ResponsiveContainer>
