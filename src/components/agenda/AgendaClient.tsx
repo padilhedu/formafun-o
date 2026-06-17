@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { AgendaEvento, STATUS_COR, STATUS_LABEL, TIPO_LABEL, TIPO_COR } from '@/types/agenda';
+import { dataBRT, hojeBRT, formatarHoraBRT, minutosNoDiaBRT } from '@/lib/datas';
 import { NovoEventoModal } from './NovoEventoModal';
 
 interface Paciente { id: string; nome: string; telefone: string | null; }
@@ -20,21 +21,25 @@ const GRID_H = (HORA_FIM - HORA_INICIO) * HORA_PX;
 const MESES_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const DIAS_PT_CURTO = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
-function isoDate(d: Date) { return d.toISOString().slice(0, 10); }
-
+// Cria array de 7 dias (segunda→domingo) para a semana BRT que contém ref.
+// Os objetos Date ficam em meia-noite BRT (03:00 UTC) para evitar deslizamento de data.
 function semanaAtual(ref: Date): Date[] {
   const days: Date[] = [];
-  const d = new Date(ref);
-  const dow = d.getDay();
-  const diff = dow === 0 ? -6 : 1 - dow;
-  d.setDate(d.getDate() + diff);
-  for (let i = 0; i < 7; i++) { days.push(new Date(d)); d.setDate(d.getDate() + 1); }
+  const brtStr = dataBRT(ref);
+  const refMidnight = new Date(`${brtStr}T00:00:00-03:00`);
+  const dow = refMidnight.getUTCDay(); // 0=Dom
+  const diffParaSeg = dow === 0 ? -6 : 1 - dow;
+  const seg = new Date(refMidnight);
+  seg.setUTCDate(seg.getUTCDate() + diffParaSeg);
+  for (let i = 0; i < 7; i++) {
+    days.push(new Date(seg));
+    seg.setUTCDate(seg.getUTCDate() + 1);
+  }
   return days;
 }
 
 function eventTop(iso: string) {
-  const d = new Date(iso);
-  const min = d.getHours() * 60 + d.getMinutes() - HORA_INICIO * 60;
+  const min = minutosNoDiaBRT(iso) - HORA_INICIO * 60;
   return Math.max(0, (min / TOTAL_MIN) * GRID_H);
 }
 
@@ -43,9 +48,7 @@ function eventHeight(inicio: string, fim: string) {
   return Math.max(20, (dur / TOTAL_MIN) * GRID_H);
 }
 
-function fmtHora(iso: string) {
-  return new Date(iso).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-}
+const fmtHora = formatarHoraBRT;
 
 // ─── Mini calendário ──────────────────────────────────────────────────────────
 function MiniCalendario({ referencia, onSelect }: { referencia: Date; onSelect: (d: Date) => void }) {
@@ -53,7 +56,7 @@ function MiniCalendario({ referencia, onSelect }: { referencia: Date; onSelect: 
   const diasNoMes = new Date(mes.getFullYear(), mes.getMonth() + 1, 0).getDate();
   const primeiroDow = new Date(mes.getFullYear(), mes.getMonth(), 1).getDay();
   const offset = primeiroDow === 0 ? 6 : primeiroDow - 1;
-  const hoje = isoDate(new Date());
+  const hoje = hojeBRT();
   const cells: (Date | null)[] = Array(offset).fill(null);
   for (let d = 1; d <= diasNoMes; d++) cells.push(new Date(mes.getFullYear(), mes.getMonth(), d));
 
@@ -80,9 +83,9 @@ function MiniCalendario({ referencia, onSelect }: { referencia: Date; onSelect: 
       <div className="grid grid-cols-7 gap-y-0.5">
         {cells.map((d, i) => {
           if (!d) return <div key={i} />;
-          const iso = isoDate(d);
+          const iso = dataBRT(d);
           const isHoje = iso === hoje;
-          const isRef = iso === isoDate(referencia);
+          const isRef = iso === dataBRT(referencia);
           return (
             <button key={i} onClick={() => onSelect(d)} style={{
               width: 24, height: 24, borderRadius: '50%', fontSize: 10, margin: '0 auto',
@@ -314,13 +317,13 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
   const [carregando, setCarregando] = useState(false);
 
   const dias = semanaAtual(referencia);
-  const inicioSemana = isoDate(dias[0]);
-  const fimSemana = isoDate(dias[6]) + 'T23:59:59';
-  const hoje = isoDate(new Date());
+  const inicioSemana = dataBRT(dias[0]) + 'T00:00:00-03:00';
+  const fimSemana = dataBRT(dias[6]) + 'T23:59:59-03:00';
+  const hoje = hojeBRT();
 
   const carregar = useCallback(async () => {
     setCarregando(true);
-    const res = await fetch(`/api/agenda?inicio=${inicioSemana}&fim=${fimSemana}`);
+    const res = await fetch(`/api/agenda?inicio=${encodeURIComponent(inicioSemana)}&fim=${encodeURIComponent(fimSemana)}`);
     if (res.ok) setEventos(await res.json());
     setCarregando(false);
   }, [inicioSemana, fimSemana]);
@@ -328,7 +331,8 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
   useEffect(() => { carregar(); }, [carregar]);
 
   function eventosDoDia(dia: Date) {
-    return eventos.filter(ev => ev.inicio.slice(0, 10) === isoDate(dia));
+    const diaBRT = dataBRT(dia);
+    return eventos.filter(ev => dataBRT(ev.inicio) === diaBRT);
   }
 
   function abrirSlot(dia: Date, hora: number) {
@@ -368,7 +372,7 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
     setEventos(prev => prev.map(e => e.id === id ? { ...e, status } : e));
   }
 
-  const eventosHoje = eventos.filter(ev => ev.inicio.slice(0, 10) === hoje);
+  const eventosHoje = eventos.filter(ev => dataBRT(ev.inicio) === hoje);
   const horas = Array.from({ length: HORA_FIM - HORA_INICIO }, (_, i) => HORA_INICIO + i);
 
   // Resumo da semana
@@ -416,10 +420,10 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
         <div style={{ display: 'grid', gridTemplateColumns: '44px repeat(7, 1fr)', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div />
           {dias.map(dia => {
-            const isHoje = isoDate(dia) === hoje;
+            const isHoje = dataBRT(dia) === hoje;
             const qtd = eventosDoDia(dia).filter(e => e.status !== 'cancelado').length;
             return (
-              <div key={isoDate(dia)} style={{ textAlign: 'center', padding: '8px 4px 6px' }}>
+              <div key={dataBRT(dia)} style={{ textAlign: 'center', padding: '8px 4px 6px' }}>
                 <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', fontFamily: 'var(--font-montserrat)', color: isHoje ? '#B89A5A' : '#8A8A93' }}>
                   {DIAS_PT_CURTO[dia.getDay()]}
                 </div>
@@ -455,9 +459,9 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
             </div>
             {dias.map(dia => (
               <DiaColuna
-                key={isoDate(dia)}
+                key={dataBRT(dia)}
                 dia={dia}
-                isHoje={isoDate(dia) === hoje}
+                isHoje={dataBRT(dia) === hoje}
                 eventos={eventosDoDia(dia)}
                 onClickSlot={abrirSlot}
                 onClickEvento={abrirPopup}

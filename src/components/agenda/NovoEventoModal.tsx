@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { AgendaEvento, TIPO_LABEL, STATUS_LABEL, TIPO_COR } from '@/types/agenda';
+import { utcParaLocalInput, localInputParaUTC } from '@/lib/datas';
 
 interface Paciente { id: string; nome: string; telefone: string | null; }
 
@@ -40,27 +41,21 @@ export function NovoEventoModal({
       setDescricao(evento.descricao ?? '');
       setTipo(evento.tipo);
       setStatus(evento.status);
-      setInicio(toLocalInput(evento.inicio));
-      setFim(toLocalInput(evento.fim));
+      setInicio(utcParaLocalInput(evento.inicio));
+      setFim(utcParaLocalInput(evento.fim));
       setPacienteId(evento.paciente_id ?? '');
     } else {
       setTitulo('');
       setDescricao('');
       setTipo('consulta');
       setStatus('agendado');
-      setInicio(inicioDefault ? toLocalInput(inicioDefault) : '');
-      setFim(fimDefault ? toLocalInput(fimDefault) : '');
+      setInicio(inicioDefault ? utcParaLocalInput(inicioDefault) : '');
+      setFim(fimDefault ? utcParaLocalInput(fimDefault) : '');
       setPacienteId('');
     }
     setErro('');
     setWppMsg('');
   }, [aberto, evento, inicioDefault, fimDefault]);
-
-  function toLocalInput(iso: string) {
-    const d = new Date(iso);
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -68,8 +63,8 @@ export function NovoEventoModal({
     setLoading(true); setErro('');
     const payload = {
       titulo, descricao: descricao || null, tipo, status,
-      inicio: new Date(inicio).toISOString(),
-      fim: new Date(fim).toISOString(),
+      inicio: localInputParaUTC(inicio),
+      fim: localInputParaUTC(fim),
       paciente_id: pacienteId || null,
       cor: TIPO_COR[tipo],
     };

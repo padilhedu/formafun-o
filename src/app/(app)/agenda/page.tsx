@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { AgendaClient } from '@/components/agenda/AgendaClient';
+import { semanaUTCPorBRT } from '@/lib/datas';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,17 +14,13 @@ export default async function AgendaPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 
-  const hoje = new Date();
-  const dow = hoje.getDay();
-  const diff = dow === 0 ? -6 : 1 - dow;
-  const seg = new Date(hoje); seg.setDate(hoje.getDate() + diff);
-  const dom = new Date(seg); dom.setDate(seg.getDate() + 6); dom.setHours(23,59,59);
+  const { inicioISO: seg, fimISO: dom } = semanaUTCPorBRT();
 
   const [{ data: eventos }, { data: pacientes }] = await Promise.all([
     supabase.from('agenda_eventos')
       .select('*, pacientes(nome, telefone)')
-      .gte('inicio', seg.toISOString())
-      .lte('inicio', dom.toISOString())
+      .gte('inicio', seg)
+      .lte('inicio', dom)
       .order('inicio'),
     supabase.from('pacientes')
       .select('id, nome, telefone')
