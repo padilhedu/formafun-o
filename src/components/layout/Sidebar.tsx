@@ -147,7 +147,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             style={{ background: "rgba(89,57,158,0.35)", border: "1px solid rgba(89,57,158,0.5)" }}>
             <svg width="16" height="16" viewBox="0 0 28 28" fill="none">
               <path d="M14 3C8.477 3 4 7.477 4 13c0 3.09 1.394 5.86 3.6 7.73L14 25l6.4-4.27A9.964 9.964 0 0 0 24 13c0-5.523-4.477-10-10-10Z"
-                stroke="#A07FD4" strokeWidth="1.8" fill="none" />
+                stroke="#B89A5A" strokeWidth="1.8" fill="none" />
             </svg>
           </div>
           <div>

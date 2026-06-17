@@ -31,15 +31,15 @@ export interface OdontogramaData {
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const COND_COLORS: Record<ToothCondition, string> = {
-  saudavel:   '#1E1E22',
-  carie:      '#EF4444',
-  restaurado: '#3B82F6',
-  coroa:      '#F59E0B',
-  extraido:   '#4B4B55',
-  implante:   '#8B5CF6',
-  endodontia: '#EC4899',
-  fratura:    '#F97316',
-  ausente:    '#141416',
+  saudavel:   '#1E1E22',   // dark base — dente saudável não destaca
+  carie:      '#F87171',   // brand error
+  restaurado: '#60A5FA',   // brand info
+  coroa:      '#B89A5A',   // brand gold — coroa dourada, intuitivo
+  extraido:   '#8A8A93',   // brand muted
+  implante:   '#7B5DC0',   // brand purple-light
+  endodontia: '#EC4899',   // rosa — sem equivalente direto na paleta
+  fratura:    '#FBBF24',   // brand warning
+  ausente:    '#141416',   // base bg
 };
 
 const COND_LABELS: Record<ToothCondition, string> = {
