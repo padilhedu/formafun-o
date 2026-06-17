@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import type { UsuarioRow } from '../ConfiguracoesClient';
@@ -27,7 +27,7 @@ export function TabUsuarios({ usuarios }: Props) {
 
   const roleLabel = (r: string) => r === 'admin' ? 'Administrador' : 'Recepção';
   const roleBadge = (r: string) => r === 'admin'
-    ? { bg: 'rgba(184,154,90,0.1)', color: '#B89A5A', border: 'rgba(184,154,90,0.3)' }
+    ? { bg: 'rgba(31,122,77,0.1)', color: '#1F7A4D', border: 'rgba(31,122,77,0.3)' }
     : { bg: 'rgba(96,165,250,0.1)', color: '#60A5FA', border: 'rgba(96,165,250,0.3)' };
 
   return (
@@ -36,7 +36,7 @@ export function TabUsuarios({ usuarios }: Props) {
 
       {/* Invite form */}
       <div className="card p-5">
-        <p className="table-header mb-3" style={{ color: '#B89A5A' }}>CONVIDAR USUÁRIO</p>
+        <p className="table-header mb-3" style={{ color: '#1F7A4D' }}>CONVIDAR USUÁRIO</p>
         <form onSubmit={handleConvidar} className="flex flex-wrap gap-3 items-end">
           <div style={{ flex: 1, minWidth: 200 }}>
             <label className="table-header block mb-1">E-mail</label>
@@ -98,7 +98,7 @@ export function TabUsuarios({ usuarios }: Props) {
       </div>
 
       <div className="card p-4" style={{ background: 'rgba(248,113,113,0.04)', borderColor: 'rgba(248,113,113,0.15)' }}>
-        <p className="text-muted text-xs">Papéis disponíveis: <strong style={{ color: '#B89A5A' }}>Administrador</strong> (acesso total, incluindo configurações) · <strong style={{ color: '#60A5FA' }}>Recepção</strong> (pacientes, agenda, financeiro — sem configurações ou audit log).</p>
+        <p className="text-muted text-xs">Papéis disponíveis: <strong style={{ color: '#1F7A4D' }}>Administrador</strong> (acesso total, incluindo configurações) · <strong style={{ color: '#60A5FA' }}>Recepção</strong> (pacientes, agenda, financeiro — sem configurações ou audit log).</p>
       </div>
     </div>
   );

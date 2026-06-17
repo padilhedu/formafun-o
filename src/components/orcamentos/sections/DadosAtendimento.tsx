@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -66,20 +66,20 @@ export function DadosAtendimento({ pacienteId, pacienteNome, profissionalId, pro
   };
 
   const cardStyle: React.CSSProperties = {
-    background: '#121214', border: '1px solid rgba(255,255,255,0.07)',
+    background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.07)',
     borderRadius: 12, padding: '18px 20px',
   };
 
   const inputStyle: React.CSSProperties = {
-    width: '100%', background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.08)',
-    borderRadius: 8, padding: '8px 12px', color: '#F5F2EA',
+    width: '100%', background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: 8, padding: '8px 12px', color: '#1C1C1C',
     fontSize: 13, fontFamily: 'var(--font-montserrat)',
     outline: 'none',
   };
 
   return (
     <div style={cardStyle}>
-      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#B89A5A', fontFamily: 'var(--font-montserrat)', marginBottom: 16 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', marginBottom: 16 }}>
         Dados do Atendimento
       </div>
 
@@ -101,7 +101,7 @@ export function DadosAtendimento({ pacienteId, pacienteNome, profissionalId, pro
             {showSugestoes && sugestoes.length > 0 && (
               <div style={{
                 position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50,
-                background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.1)',
+                background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 8, overflow: 'hidden', marginTop: 4,
               }}>
                 {sugestoes.map(p => (
@@ -112,19 +112,19 @@ export function DadosAtendimento({ pacienteId, pacienteNome, profissionalId, pro
                       width: '100%', textAlign: 'left', padding: '9px 12px',
                       background: 'none', border: 'none', cursor: 'pointer',
                       borderBottom: '1px solid rgba(255,255,255,0.05)',
-                      color: '#F5F2EA', fontSize: 13, fontFamily: 'var(--font-montserrat)',
+                      color: '#1C1C1C', fontSize: 13, fontFamily: 'var(--font-montserrat)',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(184,154,90,0.08)')}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(31,122,77,0.08)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'none')}
                   >
                     {p.nome}
-                    {p.cpf && <span style={{ color: '#8A8A93', fontSize: 11, marginLeft: 8 }}>{p.cpf}</span>}
+                    {p.cpf && <span style={{ color: '#6B6B66', fontSize: 11, marginLeft: 8 }}>{p.cpf}</span>}
                   </button>
                 ))}
               </div>
             )}
             {!travado && pacienteId && (
-              <a href={`/pacientes/${pacienteId}`} style={{ fontSize: 11, color: '#B89A5A', display: 'block', marginTop: 4 }}>
+              <a href={`/pacientes/${pacienteId}`} style={{ fontSize: 11, color: '#1F7A4D', display: 'block', marginTop: 4 }}>
                 Ver cadastro →
               </a>
             )}

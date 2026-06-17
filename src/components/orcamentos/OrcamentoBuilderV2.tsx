@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -240,7 +240,7 @@ export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionai
 
   const labelStyle: React.CSSProperties = {
     fontSize: 10, fontWeight: 700, letterSpacing: '0.07em',
-    textTransform: 'uppercase', color: '#8A8A93',
+    textTransform: 'uppercase', color: '#6B6B66',
     fontFamily: 'var(--font-montserrat)', marginBottom: 4, display: 'block',
   };
 
@@ -249,7 +249,7 @@ export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionai
       {/* Toolbar */}
       <div className="flex items-center justify-between gap-3 mb-5 flex-wrap">
         {/* Abas */}
-        <div className="flex gap-1 p-1 rounded-xl" style={{ background: '#121214', border: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex gap-1 p-1 rounded-xl" style={{ background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.07)' }}>
           {(['orcamento', 'contrato'] as const).map(aba => (
             <button
               key={aba}
@@ -257,8 +257,8 @@ export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionai
               style={{
                 padding: '6px 18px', borderRadius: 10, border: 'none', cursor: 'pointer',
                 fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600,
-                background: abaAtiva === aba ? '#1A1A1E' : 'transparent',
-                color: abaAtiva === aba ? '#F5F2EA' : '#8A8A93',
+                background: abaAtiva === aba ? '#FFFFFF' : 'transparent',
+                color: abaAtiva === aba ? '#1C1C1C' : '#6B6B66',
                 transition: 'all 0.15s',
               }}
             >
@@ -372,8 +372,8 @@ export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionai
         <div className="fixed bottom-0 left-0 right-0 z-40" style={{ background: 'rgba(10,10,11,0.95)', borderTop: '1px solid rgba(255,255,255,0.07)', padding: '12px 24px', display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
           <div className="flex items-center gap-3">
             <div>
-              <span style={{ fontSize: 12, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Total </span>
-              <span style={{ fontSize: 16, color: '#B89A5A', fontFamily: 'var(--font-montserrat)', fontWeight: 700 }}>{formatBRL(total)}</span>
+              <span style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>Total </span>
+              <span style={{ fontSize: 16, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 700 }}>{formatBRL(total)}</span>
             </div>
             <span style={{ padding: '4px 10px', borderRadius: 6, fontSize: 10, fontWeight: 700, color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}`, fontFamily: 'var(--font-montserrat)' }}>
               {cfg.label}

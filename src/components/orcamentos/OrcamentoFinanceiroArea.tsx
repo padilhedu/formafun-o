@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -28,7 +28,7 @@ export function OrcamentoFinanceiroArea({ orcamentoId, status, valorTotal, parce
 
   return (
     <div>
-      <div className="mb-2" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
+      <div className="mb-2" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
         Financeiro
       </div>
 
@@ -58,7 +58,7 @@ export function OrcamentoFinanceiroArea({ orcamentoId, status, valorTotal, parce
           </Link>
         </div>
       ) : (
-        <div className="card" style={{ padding: '14px 16px', borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card" style={{ padding: '14px 16px', borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           {status === 'aprovado' ? (
             <>
               <p className="text-muted text-xs mb-3">Gere as parcelas de cobrança deste orçamento.</p>
@@ -127,8 +127,8 @@ function GerarParcelasModal({ orcamentoId, valorTotal, onClose }: { orcamentoId:
     >
       <div className="card" style={{ width: 440, maxWidth: '95vw', padding: 28 }}>
         <div className="flex items-center justify-between mb-5">
-          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#F5F2EA', fontWeight: 500 }}>Gerar Parcelas</h2>
-          <button onClick={onClose} style={{ color: '#8A8A93', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
+          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#1C1C1C', fontWeight: 500 }}>Gerar Parcelas</h2>
+          <button onClick={onClose} style={{ color: '#6B6B66', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
         </div>
 
         <p className="text-muted text-xs mb-4">Total do orçamento: <span className="text-gold font-semibold">{formatBRL(valorTotal)}</span></p>
@@ -165,8 +165,8 @@ function GerarParcelasModal({ orcamentoId, valorTotal, onClose }: { orcamentoId:
             </div>
           </div>
 
-          <div className="rounded-lg px-4 py-3" style={{ background: 'rgba(184,154,90,0.05)', border: '1px solid rgba(184,154,90,0.15)' }}>
-            <p style={{ fontSize: 12, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)' }}>
+          <div className="rounded-lg px-4 py-3" style={{ background: 'rgba(31,122,77,0.05)', border: '1px solid rgba(31,122,77,0.15)' }}>
+            <p style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>
               {entradaNum > 0 && <>Entrada de <strong>{formatBRL(entradaNum)}</strong> + </>}
               <strong>{parcelas}x</strong> de <strong>{formatBRL(valorParcela)}</strong>
             </p>

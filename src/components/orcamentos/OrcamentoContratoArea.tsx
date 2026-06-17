@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ export function OrcamentoContratoArea({ orcamentoId, pacienteId, status, contrat
 
   return (
     <div>
-      <div className="mb-2" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
+      <div className="mb-2" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
         Contrato
       </div>
 
@@ -47,7 +47,7 @@ export function OrcamentoContratoArea({ orcamentoId, pacienteId, status, contrat
           </div>
         </div>
       ) : (
-        <div className="card" style={{ padding: '14px 16px', borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card" style={{ padding: '14px 16px', borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           {status === 'aprovado' ? (
             <>
               <p className="text-muted text-xs mb-3">Orçamento aprovado — gere o contrato para envio ao paciente.</p>

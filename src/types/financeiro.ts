@@ -1,4 +1,4 @@
-export type ContaStatus = 'pendente' | 'pago' | 'vencido' | 'cancelado';
+﻿export type ContaStatus = 'pendente' | 'pago' | 'vencido' | 'cancelado';
 
 export type FormaPagamento =
   | 'pix' | 'cartao_credito' | 'cartao_debito' | 'boleto' | 'dinheiro' | 'transferencia';
@@ -57,7 +57,7 @@ export const CONTA_STATUS_CONFIG: Record<ContaStatus, { label: string; color: st
   pendente:  { label: 'Pendente',  color: '#FBBF24', bg: 'rgba(251,191,36,0.1)',  border: 'rgba(251,191,36,0.25)' },
   pago:      { label: 'Pago',      color: '#4ADE80', bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.25)' },
   vencido:   { label: 'Vencido',   color: '#F87171', bg: 'rgba(248,113,113,0.1)', border: 'rgba(248,113,113,0.25)' },
-  cancelado: { label: 'Cancelado', color: '#8A8A93', bg: 'rgba(138,138,147,0.08)', border: 'rgba(138,138,147,0.15)' },
+  cancelado: { label: 'Cancelado', color: '#6B6B66', bg: 'rgba(138,138,147,0.08)', border: 'rgba(138,138,147,0.15)' },
 };
 
 export const FORMA_PAGAMENTO_LABELS: Record<FormaPagamento, string> = {

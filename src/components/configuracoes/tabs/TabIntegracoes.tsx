@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -49,7 +49,7 @@ export function TabIntegracoes() {
                     width: 40, height: 40, borderRadius: 10,
                     background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#B89A5A', fontSize: 13,
+                    fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#1F7A4D', fontSize: 13,
                   }}>
                     {int.nome[0]}
                   </div>
@@ -83,7 +83,7 @@ export function TabIntegracoes() {
               <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span className="text-muted text-xs">Variável:</span>
-                  <code style={{ fontSize: 11, color: '#8A8A93', background: 'rgba(255,255,255,0.04)', padding: '2px 6px', borderRadius: 4, fontFamily: 'monospace' }}>
+                  <code style={{ fontSize: 11, color: '#6B6B66', background: 'rgba(255,255,255,0.04)', padding: '2px 6px', borderRadius: 4, fontFamily: 'monospace' }}>
                     {int.envVar}=••••••••••••
                   </code>
                 </div>

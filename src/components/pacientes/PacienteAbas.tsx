@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import type { Paciente, Anamnese, Evolucao, DocumentoPaciente } from '@/types/pacientes';
@@ -47,7 +47,7 @@ export function PacienteAbas({ pacienteId, abaAtiva, paciente, anamnese, evoluco
               href={`/pacientes/${pacienteId}?aba=${aba.id}`}
               className="relative px-4 py-2.5 text-xs font-medium transition-colors whitespace-nowrap flex-shrink-0"
               style={{
-                color: active ? '#B89A5A' : '#8A8A93',
+                color: active ? '#1F7A4D' : '#6B6B66',
                 fontFamily: 'var(--font-montserrat)',
               }}
             >
@@ -91,10 +91,10 @@ export function PacienteAbas({ pacienteId, abaAtiva, paciente, anamnese, evoluco
 
 function PlaceholderAba({ titulo, descricao, fase }: { titulo: string; descricao: string; fase: string }) {
   return (
-    <div className="card p-12 text-center" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.2)' }}>
+    <div className="card p-12 text-center" style={{ borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.2)' }}>
       <div className="heading text-xl text-offwhite mb-2" style={{ fontFamily: 'var(--font-cormorant)' }}>{titulo}</div>
       <p className="text-muted text-sm mb-4">{descricao}</p>
-      <span className="badge" style={{ background: 'rgba(184,154,90,0.08)', color: '#B89A5A', border: '1px solid rgba(184,154,90,0.2)' }}>
+      <span className="badge" style={{ background: 'rgba(31,122,77,0.08)', color: '#1F7A4D', border: '1px solid rgba(31,122,77,0.2)' }}>
         {fase} — Em desenvolvimento
       </span>
     </div>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { mascararCPF } from '@/lib/cpf';
@@ -33,13 +33,13 @@ function StepDot({ ativo, concluido, label }: { ativo: boolean; concluido: boole
       <div style={{
         width: 28, height: 28, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-montserrat)',
-        background: concluido ? '#4ADE80' : ativo ? 'rgba(184,154,90,0.2)' : 'rgba(138,138,147,0.15)',
-        color: concluido ? '#0A0A0B' : ativo ? '#B89A5A' : '#8A8A93',
-        border: ativo ? '2px solid #B89A5A' : concluido ? 'none' : '1px solid rgba(138,138,147,0.2)',
+        background: concluido ? '#4ADE80' : ativo ? 'rgba(31,122,77,0.2)' : 'rgba(138,138,147,0.15)',
+        color: concluido ? '#F5F3EF' : ativo ? '#1F7A4D' : '#6B6B66',
+        border: ativo ? '2px solid #1F7A4D' : concluido ? 'none' : '1px solid rgba(138,138,147,0.2)',
       }}>
         {concluido ? '✓' : ''}
       </div>
-      <span style={{ fontSize: 10, color: ativo ? '#D9C9A3' : concluido ? '#4ADE80' : '#8A8A93', fontFamily: 'var(--font-montserrat)', textAlign: 'center' }}>
+      <span style={{ fontSize: 10, color: ativo ? '#6B6B66' : concluido ? '#4ADE80' : '#6B6B66', fontFamily: 'var(--font-montserrat)', textAlign: 'center' }}>
         {label}
       </span>
     </div>
@@ -47,7 +47,7 @@ function StepDot({ ativo, concluido, label }: { ativo: boolean; concluido: boole
 }
 
 function StepLine({ ativo }: { ativo: boolean }) {
-  return <div style={{ flex: 1, height: 1, background: ativo ? '#B89A5A' : 'rgba(138,138,147,0.2)', margin: '0 4px 20px', alignSelf: 'center' }} />;
+  return <div style={{ flex: 1, height: 1, background: ativo ? '#1F7A4D' : 'rgba(138,138,147,0.2)', margin: '0 4px 20px', alignSelf: 'center' }} />;
 }
 
 const STEP_ORDER = ['rascunho', 'enviado', 'visualizado', 'assinado'];
@@ -138,12 +138,12 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
     window.open(`/api/contratos/${c.id}/download-publico?token=${c.sign_token}`, '_blank');
   }
 
-  const cardStyle: React.CSSProperties = { background: '#1A1A1E', borderRadius: 12, padding: 16, border: '1px solid rgba(255,255,255,0.07)', marginTop: 12 };
-  const labelSmall: React.CSSProperties = { fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 };
+  const cardStyle: React.CSSProperties = { background: '#FFFFFF', borderRadius: 12, padding: 16, border: '1px solid rgba(255,255,255,0.07)', marginTop: 12 };
+  const labelSmall: React.CSSProperties = { fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 };
 
   return (
     <div>
-      <p style={{ fontSize: 11, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>
+      <p style={{ fontSize: 11, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 12 }}>
         Status da Assinatura
       </p>
 
@@ -163,20 +163,20 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
       {/* Estado: RASCUNHO */}
       {status === 'rascunho' && (
         <div>
-          <p style={{ fontSize: 13, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)', marginBottom: 12 }}>
+          <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', marginBottom: 12 }}>
             Gere o link de assinatura e envie ao paciente pelo WhatsApp.
           </p>
           <button
             onClick={() => gerarLink(true)}
             disabled={loading}
-            style={{ width: '100%', padding: '12px', borderRadius: 10, background: '#B89A5A', color: '#0A0A0B', fontWeight: 700, fontSize: 14, border: 'none', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-montserrat)', opacity: loading ? 0.7 : 1 }}
+            style={{ width: '100%', padding: '12px', borderRadius: 10, background: '#1F7A4D', color: '#F5F3EF', fontWeight: 700, fontSize: 14, border: 'none', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-montserrat)', opacity: loading ? 0.7 : 1 }}
           >
             {loading ? 'Gerando...' : 'Gerar link de assinatura'}
           </button>
           <a
             href={`/api/contratos/${c.id}/pdf`}
             target="_blank"
-            style={{ display: 'block', textAlign: 'center', marginTop: 8, fontSize: 12, color: '#8A8A93', textDecoration: 'underline', fontFamily: 'var(--font-montserrat)' }}
+            style={{ display: 'block', textAlign: 'center', marginTop: 8, fontSize: 12, color: '#6B6B66', textDecoration: 'underline', fontFamily: 'var(--font-montserrat)' }}
           >
             Pré-visualizar contrato
           </a>
@@ -195,16 +195,16 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
               <input
                 readOnly
                 value={signUrl}
-                style={{ flex: 1, padding: '8px 10px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', color: '#D9C9A3', fontSize: 12, fontFamily: 'monospace' }}
+                style={{ flex: 1, padding: '8px 10px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)', color: '#6B6B66', fontSize: 12, fontFamily: 'monospace' }}
               />
               <button
                 onClick={copiarLink}
-                style={{ padding: '8px 14px', borderRadius: 8, background: copied ? 'rgba(74,222,128,0.15)' : 'rgba(184,154,90,0.15)', color: copied ? '#4ADE80' : '#B89A5A', border: `1px solid ${copied ? 'rgba(74,222,128,0.3)' : 'rgba(184,154,90,0.3)'}`, cursor: 'pointer', fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600, whiteSpace: 'nowrap' }}
+                style={{ padding: '8px 14px', borderRadius: 8, background: copied ? 'rgba(74,222,128,0.15)' : 'rgba(31,122,77,0.15)', color: copied ? '#4ADE80' : '#1F7A4D', border: `1px solid ${copied ? 'rgba(74,222,128,0.3)' : 'rgba(31,122,77,0.3)'}`, cursor: 'pointer', fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600, whiteSpace: 'nowrap' }}
               >
                 {copied ? '✓ Copiado!' : 'Copiar'}
               </button>
             </div>
-            <p style={{ fontSize: 12, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', marginTop: 8 }}>
+            <p style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', marginTop: 8 }}>
               Envie este link pelo WhatsApp. O paciente não precisa criar conta para assinar.
             </p>
             {expStr && (
@@ -220,7 +220,7 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
                 Isso invalidará o link anterior. O paciente precisará usar o novo link. Confirmar?
               </p>
               <div style={{ display: 'flex', gap: 8 }}>
-                <button onClick={() => setConfirmNewLink(false)} style={{ flex: 1, padding: 10, borderRadius: 8, background: 'transparent', color: '#8A8A93', border: '1px solid rgba(138,138,147,0.3)', cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-montserrat)' }}>Cancelar</button>
+                <button onClick={() => setConfirmNewLink(false)} style={{ flex: 1, padding: 10, borderRadius: 8, background: 'transparent', color: '#6B6B66', border: '1px solid rgba(138,138,147,0.3)', cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-montserrat)' }}>Cancelar</button>
                 <button onClick={() => gerarLink(true)} style={{ flex: 1, padding: 10, borderRadius: 8, background: 'rgba(251,191,36,0.1)', color: '#FBBF24', border: '1px solid rgba(251,191,36,0.3)', cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>Gerar novo link</button>
               </div>
             </div>
@@ -228,14 +228,14 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
             <button
               onClick={() => gerarLink()}
               disabled={loading}
-              style={{ marginTop: 10, padding: '9px 14px', borderRadius: 8, background: 'transparent', color: '#8A8A93', border: '1px solid rgba(138,138,147,0.2)', cursor: 'pointer', fontSize: 12, fontFamily: 'var(--font-montserrat)' }}
+              style={{ marginTop: 10, padding: '9px 14px', borderRadius: 8, background: 'transparent', color: '#6B6B66', border: '1px solid rgba(138,138,147,0.2)', cursor: 'pointer', fontSize: 12, fontFamily: 'var(--font-montserrat)' }}
             >
               ↺ Gerar novo link
             </button>
           )}
 
           {c.visualizado_em && (
-            <p style={{ fontSize: 11, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', marginTop: 8 }}>
+            <p style={{ fontSize: 11, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', marginTop: 8 }}>
               Visualizado em {new Date(c.visualizado_em).toLocaleString('pt-BR')}
             </p>
           )}
@@ -256,16 +256,16 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
             )}
             <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {c.signer_nome && (
-                <div><p style={labelSmall}>Signatário</p><p style={{ fontSize: 12, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{c.signer_nome}</p></div>
+                <div><p style={labelSmall}>Signatário</p><p style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{c.signer_nome}</p></div>
               )}
               {c.signer_cpf && (
-                <div><p style={labelSmall}>CPF</p><p style={{ fontSize: 12, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{mascararCPF(c.signer_cpf)}</p></div>
+                <div><p style={labelSmall}>CPF</p><p style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{mascararCPF(c.signer_cpf)}</p></div>
               )}
               {c.signer_ip && (
-                <div><p style={labelSmall}>IP</p><p style={{ fontSize: 12, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{c.signer_ip}</p></div>
+                <div><p style={labelSmall}>IP</p><p style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{c.signer_ip}</p></div>
               )}
               {c.signer_user_agent && (
-                <div style={{ gridColumn: '1 / -1' }}><p style={labelSmall}>Dispositivo</p><p style={{ fontSize: 11, color: '#8A8A93', fontFamily: 'monospace', margin: 0, wordBreak: 'break-all' }}>{c.signer_user_agent.slice(0, 80)}</p></div>
+                <div style={{ gridColumn: '1 / -1' }}><p style={labelSmall}>Dispositivo</p><p style={{ fontSize: 11, color: '#6B6B66', fontFamily: 'monospace', margin: 0, wordBreak: 'break-all' }}>{c.signer_user_agent.slice(0, 80)}</p></div>
               )}
             </div>
           </div>
@@ -273,14 +273,14 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
           <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
             <button
               onClick={downloadPdf}
-              style={{ flex: 1, padding: '10px', borderRadius: 8, background: 'rgba(184,154,90,0.12)', color: '#B89A5A', border: '1px solid rgba(184,154,90,0.3)', cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}
+              style={{ flex: 1, padding: '10px', borderRadius: 8, background: 'rgba(31,122,77,0.12)', color: '#1F7A4D', border: '1px solid rgba(31,122,77,0.3)', cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}
             >
               Baixar PDF assinado
             </button>
             <button
               onClick={reenviarPdf}
               disabled={loading || reenvioOk}
-              style={{ flex: 1, padding: '10px', borderRadius: 8, background: reenvioOk ? 'rgba(74,222,128,0.1)' : 'transparent', color: reenvioOk ? '#4ADE80' : '#8A8A93', border: `1px solid ${reenvioOk ? 'rgba(74,222,128,0.3)' : 'rgba(138,138,147,0.2)'}`, cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-montserrat)' }}
+              style={{ flex: 1, padding: '10px', borderRadius: 8, background: reenvioOk ? 'rgba(74,222,128,0.1)' : 'transparent', color: reenvioOk ? '#4ADE80' : '#6B6B66', border: `1px solid ${reenvioOk ? 'rgba(74,222,128,0.3)' : 'rgba(138,138,147,0.2)'}`, cursor: 'pointer', fontSize: 13, fontFamily: 'var(--font-montserrat)' }}
             >
               {reenvioOk ? '✓ Enviado!' : 'Reenviar e-mail'}
             </button>
@@ -295,19 +295,19 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
             Contrato recusado
           </span>
           {c.recusado_em && (
-            <p style={{ fontSize: 12, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', marginBottom: 8 }}>
+            <p style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', marginBottom: 8 }}>
               Em {new Date(c.recusado_em).toLocaleString('pt-BR')}
             </p>
           )}
           {c.recusa_motivo && (
             <div style={{ background: 'rgba(248,113,113,0.06)', borderRadius: 8, padding: '10px 12px', marginBottom: 12 }}>
               <p style={labelSmall}>Motivo da recusa</p>
-              <p style={{ fontSize: 13, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{c.recusa_motivo}</p>
+              <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', margin: 0 }}>{c.recusa_motivo}</p>
             </div>
           )}
           <a
             href={`/contratos/novo?orcamento=${c.orcamento_id ?? ''}`}
-            style={{ display: 'block', textAlign: 'center', padding: '10px', borderRadius: 8, background: 'rgba(184,154,90,0.1)', color: '#B89A5A', border: '1px solid rgba(184,154,90,0.3)', fontSize: 13, textDecoration: 'none', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}
+            style={{ display: 'block', textAlign: 'center', padding: '10px', borderRadius: 8, background: 'rgba(31,122,77,0.1)', color: '#1F7A4D', border: '1px solid rgba(31,122,77,0.3)', fontSize: 13, textDecoration: 'none', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}
           >
             Gerar novo contrato
           </a>
@@ -317,7 +317,7 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
       {/* Estado: CANCELADO */}
       {status === 'cancelado' && (
         <div style={{ ...cardStyle }}>
-          <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 5, background: 'rgba(138,138,147,0.1)', color: '#8A8A93', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>
+          <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 5, background: 'rgba(138,138,147,0.1)', color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>
             Cancelado
           </span>
         </div>

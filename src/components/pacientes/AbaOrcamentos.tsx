@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import type { Orcamento } from '@/types/orcamentos';
 import { STATUS_CONFIG } from '@/types/orcamentos';
 
@@ -15,7 +15,7 @@ export function AbaOrcamentos({ pacienteId, orcamentos }: Props) {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-offwhite font-medium" style={{ fontFamily: 'var(--font-montserrat)', fontSize: 13, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#8A8A93' }}>
+        <h2 className="text-offwhite font-medium" style={{ fontFamily: 'var(--font-montserrat)', fontSize: 13, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#6B6B66' }}>
           Orçamentos
         </h2>
         <Link
@@ -28,7 +28,7 @@ export function AbaOrcamentos({ pacienteId, orcamentos }: Props) {
       </div>
 
       {orcamentos.length === 0 ? (
-        <div className="card text-center py-12" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card text-center py-12" style={{ borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           <p className="text-muted text-sm">Nenhum orçamento para este paciente.</p>
         </div>
       ) : (

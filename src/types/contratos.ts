@@ -1,4 +1,4 @@
-export type ContratoStatus =
+﻿export type ContratoStatus =
   | 'rascunho' | 'enviado' | 'visualizado' | 'assinado' | 'recusado' | 'cancelado';
 
 export type TemplateTipo =
@@ -70,12 +70,12 @@ export interface ContratoComRelacoes extends Contrato {
 }
 
 export const CONTRATO_STATUS_CONFIG: Record<ContratoStatus, { label: string; color: string; bg: string; border: string; step: number }> = {
-  rascunho:    { label: 'Rascunho',    color: '#8A8A93', bg: 'rgba(138,138,147,0.1)', border: 'rgba(138,138,147,0.25)', step: 0 },
+  rascunho:    { label: 'Rascunho',    color: '#6B6B66', bg: 'rgba(138,138,147,0.1)', border: 'rgba(138,138,147,0.25)', step: 0 },
   enviado:     { label: 'Enviado',     color: '#60A5FA', bg: 'rgba(96,165,250,0.1)',  border: 'rgba(96,165,250,0.25)',  step: 1 },
   visualizado: { label: 'Visualizado', color: '#FBBF24', bg: 'rgba(251,191,36,0.1)',  border: 'rgba(251,191,36,0.25)',  step: 2 },
   assinado:    { label: 'Assinado',    color: '#4ADE80', bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.25)',  step: 3 },
   recusado:    { label: 'Recusado',    color: '#F87171', bg: 'rgba(248,113,113,0.1)', border: 'rgba(248,113,113,0.25)', step: -1 },
-  cancelado:   { label: 'Cancelado',   color: '#8A8A93', bg: 'rgba(138,138,147,0.08)',border: 'rgba(138,138,147,0.15)', step: -1 },
+  cancelado:   { label: 'Cancelado',   color: '#6B6B66', bg: 'rgba(138,138,147,0.08)',border: 'rgba(138,138,147,0.15)', step: -1 },
 };
 
 export const TEMPLATE_TIPO_LABELS: Record<TemplateTipo, string> = {

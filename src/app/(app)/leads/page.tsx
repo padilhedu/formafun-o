@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr';
+﻿import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { LeadsKanban } from '@/components/leads/LeadsKanban';
 
@@ -15,9 +15,9 @@ export default async function LeadsPage() {
   return (
     <div className="space-y-4">
       <div style={{ marginBottom: 24 }}>
-        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>CRM / Leads</h1>
-        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Pipeline de captação. Avance os cards com as setas ou clique para editar.</p>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>COMERCIAL</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1, marginBottom: 4 }}>CRM / Leads</h1>
+        <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>Pipeline de captação. Avance os cards com as setas ou clique para editar.</p>
       </div>
       <LeadsKanban leadsIniciais={leads ?? []} />
     </div>

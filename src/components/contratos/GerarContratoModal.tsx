@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
@@ -66,12 +66,12 @@ export function GerarContratoModal({ orcamentoId, pacienteId, onClose }: Props) 
     >
       <div className="card" style={{ width: 480, maxWidth: '95vw', padding: 28 }}>
         <div className="flex items-center justify-between mb-6">
-          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 26, color: '#F5F2EA', fontWeight: 500 }}>
+          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 26, color: '#1C1C1C', fontWeight: 500 }}>
             Gerar Contrato
           </h2>
           <button
             onClick={onClose}
-            style={{ color: '#8A8A93', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}
+            style={{ color: '#6B6B66', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}
           >
             ×
           </button>
@@ -98,8 +98,8 @@ export function GerarContratoModal({ orcamentoId, pacienteId, onClose }: Props) 
                     key={t.id}
                     className="flex items-center gap-3 cursor-pointer p-3 rounded-xl transition-colors"
                     style={{
-                      border: `1px solid ${selectedTemplate === t.id ? 'rgba(184,154,90,0.4)' : 'rgba(255,255,255,0.07)'}`,
-                      background: selectedTemplate === t.id ? 'rgba(184,154,90,0.07)' : 'transparent',
+                      border: `1px solid ${selectedTemplate === t.id ? 'rgba(31,122,77,0.4)' : 'rgba(255,255,255,0.07)'}`,
+                      background: selectedTemplate === t.id ? 'rgba(31,122,77,0.07)' : 'transparent',
                     }}
                   >
                     <input
@@ -108,7 +108,7 @@ export function GerarContratoModal({ orcamentoId, pacienteId, onClose }: Props) 
                       value={t.id}
                       checked={selectedTemplate === t.id}
                       onChange={() => setSelectedTemplate(t.id)}
-                      style={{ accentColor: '#B89A5A' }}
+                      style={{ accentColor: '#1F7A4D' }}
                     />
                     <div>
                       <div className="text-offwhite text-sm font-medium" style={{ fontFamily: 'var(--font-montserrat)' }}>{t.nome}</div>

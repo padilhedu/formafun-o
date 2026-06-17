@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import type { ContaReceber, ContaPagar } from '@/types/financeiro';
@@ -70,23 +70,23 @@ export default async function FinanceiroPage() {
   ].sort((a, b) => a.vencimento.localeCompare(b.vencimento)).slice(0, 10);
 
   const kpis = [
-    { label: 'A Receber (mês)', valor: aReceberMes, cor: '#B89A5A', href: '/financeiro/receber' },
+    { label: 'A Receber (mês)', valor: aReceberMes, cor: '#1F7A4D', href: '/financeiro/receber' },
     { label: 'Recebido (mês)', valor: recebidoMes, cor: '#4ADE80', href: '/financeiro/receber?status=pago' },
     { label: 'A Pagar (mês)', valor: aPagarMes, cor: '#F87171', href: '/financeiro/pagar' },
-    { label: 'Inadimplência', valor: inadimplencia, cor: vencidas.length > 0 ? '#F87171' : '#8A8A93', href: '/financeiro/receber?status=vencido', sub: `${vencidas.length} título(s) vencido(s)` },
+    { label: 'Inadimplência', valor: inadimplencia, cor: vencidas.length > 0 ? '#F87171' : '#6B6B66', href: '/financeiro/receber?status=vencido', sub: `${vencidas.length} título(s) vencido(s)` },
     { label: 'Saldo Previsto (mês)', valor: saldoPrevisto, cor: saldoPrevisto >= 0 ? '#4ADE80' : '#F87171', href: '/financeiro' },
   ];
 
   return (
     <div>
       <div className="mb-8">
-        <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+        <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>
           FINANCEIRO
         </div>
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1, marginBottom: 4 }}>
           Financeiro
         </h1>
-        <p style={{ fontSize: 13, color: '#8A8A93' }}>Visão geral — fluxo de caixa e inadimplência</p>
+        <p style={{ fontSize: 13, color: '#6B6B66' }}>Visão geral — fluxo de caixa e inadimplência</p>
       </div>
 
       {/* KPIs */}
@@ -101,13 +101,13 @@ export default async function FinanceiroPage() {
             borderTop: `2px solid ${k.cor}40`,
             transition: 'border-color 0.15s, transform 0.15s',
           }}>
-            <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#8A8A93', marginBottom: 8 }}>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#6B6B66', marginBottom: 8 }}>
               {k.label}
             </div>
             <div style={{ color: k.cor, fontFamily: 'var(--font-cormorant)', fontSize: 26, fontWeight: 600, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
               {formatBRL(k.valor)}
             </div>
-            {k.sub && <div style={{ color: '#8A8A93', marginTop: 4, fontSize: 10 }}>{k.sub}</div>}
+            {k.sub && <div style={{ color: '#6B6B66', marginTop: 4, fontSize: 10 }}>{k.sub}</div>}
           </Link>
         ))}
       </div>
@@ -115,7 +115,7 @@ export default async function FinanceiroPage() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
         {/* Fluxo de caixa */}
         <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 20 }}>
-          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#8A8A93', marginBottom: 16 }}>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#6B6B66', marginBottom: 16 }}>
             Fluxo de Caixa — Últimos 6 Meses
           </p>
           <FluxoCaixaChart data={fluxo} />
@@ -123,7 +123,7 @@ export default async function FinanceiroPage() {
 
         {/* Próximos vencimentos */}
         <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 20 }}>
-          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#8A8A93', marginBottom: 16 }}>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: '#6B6B66', marginBottom: 16 }}>
             Próximos Vencimentos
           </p>
           {proximos.length === 0 ? (
@@ -140,10 +140,10 @@ export default async function FinanceiroPage() {
                     style={{ border: '1px solid rgba(255,255,255,0.05)' }}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: p.tipo === 'receber' ? '#B89A5A' : '#F87171' }} />
+                      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: p.tipo === 'receber' ? '#1F7A4D' : '#F87171' }} />
                       <div className="min-w-0">
                         <div className="text-offwhite truncate" style={{ fontSize: 12, fontFamily: 'var(--font-montserrat)' }}>{p.descricao}</div>
-                        <div style={{ fontSize: 10, color: vencido ? '#F87171' : '#8A8A93' }}>
+                        <div style={{ fontSize: 10, color: vencido ? '#F87171' : '#6B6B66' }}>
                           {new Date(p.vencimento + 'T12:00:00').toLocaleDateString('pt-BR')}
                           {vencido && ' — vencido'}
                         </div>

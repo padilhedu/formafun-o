@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -52,7 +52,7 @@ export function TabFinanceiro({ config }: Props) {
       </div>
 
       <div className="card p-5 space-y-4">
-        <p className="table-header" style={{ color: '#B89A5A', marginBottom: 8 }}>FORMAS DE PAGAMENTO ACEITAS</p>
+        <p className="table-header" style={{ color: '#1F7A4D', marginBottom: 8 }}>FORMAS DE PAGAMENTO ACEITAS</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {FORMAS.map(f => {
             const active = form.formas_pagamento?.includes(f);
@@ -60,9 +60,9 @@ export function TabFinanceiro({ config }: Props) {
               <button key={f} onClick={() => toggleForma(f)} style={{
                 padding: '6px 14px', borderRadius: 6, fontSize: 12, cursor: 'pointer',
                 fontFamily: 'var(--font-montserrat)', fontWeight: 500,
-                background: active ? 'rgba(184,154,90,0.15)' : 'transparent',
-                border: `1px solid ${active ? '#B89A5A' : 'rgba(80,80,90,0.4)'}`,
-                color: active ? '#B89A5A' : '#8A8A93',
+                background: active ? 'rgba(31,122,77,0.15)' : 'transparent',
+                border: `1px solid ${active ? '#1F7A4D' : 'rgba(80,80,90,0.4)'}`,
+                color: active ? '#1F7A4D' : '#6B6B66',
               }}>
                 {FORMAS_LABELS[f]}
               </button>
@@ -72,7 +72,7 @@ export function TabFinanceiro({ config }: Props) {
       </div>
 
       <div className="card p-5 space-y-4">
-        <p className="table-header" style={{ color: '#B89A5A', marginBottom: 8 }}>NFS-e / FISCAL</p>
+        <p className="table-header" style={{ color: '#1F7A4D', marginBottom: 8 }}>NFS-e / FISCAL</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           <div>
             <label className="table-header block mb-1">Regime Tributário</label>
@@ -99,7 +99,7 @@ export function TabFinanceiro({ config }: Props) {
             onClick={() => setForm(p => ({ ...p, nota_automatica: !p.nota_automatica }))}
             style={{
               width: 40, height: 22, borderRadius: 11, cursor: 'pointer', border: 'none',
-              background: form.nota_automatica ? '#B89A5A' : 'rgba(80,80,90,0.4)',
+              background: form.nota_automatica ? '#1F7A4D' : 'rgba(80,80,90,0.4)',
               position: 'relative', transition: 'background 0.2s',
             }}
           >

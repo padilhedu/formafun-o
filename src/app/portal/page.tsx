@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
@@ -30,10 +30,10 @@ export default async function PortalHomePage() {
   if (!acesso) {
     return (
       <div className="card p-8 text-center">
-        <p style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.4rem', color: '#B89A5A', marginBottom: 8 }}>
+        <p style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.4rem', color: '#1F7A4D', marginBottom: 8 }}>
           Acesso não encontrado
         </p>
-        <p style={{ color: '#8A8A93', fontSize: 13 }}>
+        <p style={{ color: '#6B6B66', fontSize: 13 }}>
           Seu acesso ainda não foi habilitado. Entre em contato com a clínica.
         </p>
       </div>
@@ -84,22 +84,22 @@ export default async function PortalHomePage() {
     <div className="space-y-5">
       {/* Greeting */}
       <div>
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.8rem', color: '#B89A5A', fontWeight: 600, margin: 0 }}>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.8rem', color: '#1F7A4D', fontWeight: 600, margin: 0 }}>
           Olá, {pacienteNome.split(' ')[0]}
         </h1>
-        <p style={{ color: '#8A8A93', fontSize: 13, marginTop: 4 }}>Bem-vindo ao seu portal de acompanhamento</p>
+        <p style={{ color: '#6B6B66', fontSize: 13, marginTop: 4 }}>Bem-vindo ao seu portal de acompanhamento</p>
       </div>
 
       {/* Próxima consulta */}
       {proximaConsulta ? (
-        <div className="card" style={{ padding: 20, borderLeft: '3px solid #B89A5A' }}>
-          <p style={{ fontSize: 10, color: '#B89A5A', fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
+        <div className="card" style={{ padding: 20, borderLeft: '3px solid #1F7A4D' }}>
+          <p style={{ fontSize: 10, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
             Próxima Consulta
           </p>
-          <p style={{ fontSize: '1.1rem', color: '#F5F2EA', fontFamily: 'var(--font-montserrat)', fontWeight: 600, textTransform: 'capitalize', marginBottom: 4 }}>
+          <p style={{ fontSize: '1.1rem', color: '#1C1C1C', fontFamily: 'var(--font-montserrat)', fontWeight: 600, textTransform: 'capitalize', marginBottom: 4 }}>
             {formatDate(proximaConsulta.data_hora)}
           </p>
-          <p style={{ color: '#8A8A93', fontSize: 13, marginBottom: 12 }}>
+          <p style={{ color: '#6B6B66', fontSize: 13, marginBottom: 12 }}>
             {formatHour(proximaConsulta.data_hora)} · {proximaConsulta.tipo ?? 'Consulta'}
             {proximaConsulta.notas_publicas && <span> · {proximaConsulta.notas_publicas}</span>}
           </p>
@@ -116,15 +116,15 @@ export default async function PortalHomePage() {
           )}
         </div>
       ) : (
-        <div className="card" style={{ padding: 20, borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.2)', textAlign: 'center' }}>
-          <p style={{ color: '#8A8A93', fontSize: 13 }}>Nenhuma consulta agendada.</p>
+        <div className="card" style={{ padding: 20, borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.2)', textAlign: 'center' }}>
+          <p style={{ color: '#6B6B66', fontSize: 13 }}>Nenhuma consulta agendada.</p>
         </div>
       )}
 
       {/* Saldo e contratos */}
       <div className="grid grid-cols-2 gap-3">
         <div className="card" style={{ padding: 16, borderLeft: saldoAberto > 0 ? '3px solid #F87171' : '3px solid #4ADE80' }}>
-          <p style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 6 }}>
+          <p style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 6 }}>
             Saldo em Aberto
           </p>
           <p style={{ fontSize: '1.3rem', fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: saldoAberto > 0 ? '#F87171' : '#4ADE80', margin: 0 }}>
@@ -132,10 +132,10 @@ export default async function PortalHomePage() {
           </p>
         </div>
         <div className="card" style={{ padding: 16 }}>
-          <p style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 6 }}>
+          <p style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 6 }}>
             Documentos
           </p>
-          <p style={{ fontSize: '1.3rem', fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#F5F2EA', margin: 0 }}>
+          <p style={{ fontSize: '1.3rem', fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#1C1C1C', margin: 0 }}>
             {contratos.length}
           </p>
           {contratos.some(c => c.status !== 'assinado') && (
@@ -152,7 +152,7 @@ export default async function PortalHomePage() {
           </p>
           {contratos.filter(c => c.status !== 'assinado' && c.zapsign_doc_url).map(c => (
             <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-              <span style={{ fontSize: 13, color: '#F5F2EA' }}>{c.codigo}</span>
+              <span style={{ fontSize: 13, color: '#1C1C1C' }}>{c.codigo}</span>
               <a href={c.zapsign_doc_url!} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: '5px 14px', fontSize: 11, textDecoration: 'none' }}>
                 Assinar agora →
               </a>
@@ -173,14 +173,14 @@ export default async function PortalHomePage() {
           <Link key={l.href} href={l.href} style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             padding: '14px 18px', textDecoration: 'none',
-            background: '#121214', border: '1px solid rgba(255,255,255,0.07)',
+            background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.07)',
             borderRadius: 12,
           }}>
             <div>
-              <div style={{ color: '#F5F2EA', fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>{l.label}</div>
-              <div style={{ color: '#8A8A93', fontSize: 11, marginTop: 2 }}>{l.desc}</div>
+              <div style={{ color: '#1C1C1C', fontSize: 13, fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>{l.label}</div>
+              <div style={{ color: '#6B6B66', fontSize: 11, marginTop: 2 }}>{l.desc}</div>
             </div>
-            <span style={{ color: '#B89A5A', fontSize: 18 }}>›</span>
+            <span style={{ color: '#1F7A4D', fontSize: 18 }}>›</span>
           </Link>
         ))}
       </div>

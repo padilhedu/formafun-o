@@ -53,13 +53,13 @@ export default async function ImprimirOrcamentoPage({ params }: { params: Promis
           @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600&display=swap');
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { font-family: 'Montserrat', sans-serif; color: #1a1a1a; background: #fff; padding: 40px; }
-          .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 2px solid #B89A5A; margin-bottom: 28px; }
+          .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 2px solid #1F7A4D; margin-bottom: 28px; }
           .clinic-name { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: #1a1a1a; }
           .clinic-sub { font-size: 11px; color: #666; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
-          .orc-code { font-size: 18px; font-weight: 700; color: #B89A5A; }
+          .orc-code { font-size: 18px; font-weight: 700; color: #1F7A4D; }
           .orc-status { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #4a4a4a; margin-top: 4px; }
           .section { margin-bottom: 24px; }
-          .section-title { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #B89A5A; padding: 8px 0; border-bottom: 1px solid #e5e5e5; margin-bottom: 12px; }
+          .section-title { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #1F7A4D; padding: 8px 0; border-bottom: 1px solid #e5e5e5; margin-bottom: 12px; }
           .patient-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
           .field label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; }
           .field p { font-size: 13px; color: #1a1a1a; margin-top: 2px; }
@@ -69,11 +69,11 @@ export default async function ImprimirOrcamentoPage({ params }: { params: Promis
           tbody td { padding: 9px 10px; font-size: 12px; border-bottom: 1px solid #f0f0f0; }
           tbody td.right { text-align: right; }
           tbody tr:last-child td { border-bottom: none; }
-          .cat-header { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #B89A5A; padding: 10px; background: #fdf9f3; border-bottom: 1px solid #e8d9bb; }
+          .cat-header { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1F7A4D; padding: 10px; background: #fdf9f3; border-bottom: 1px solid #e8d9bb; }
           .totals { display: flex; justify-content: flex-end; }
           .totals-box { width: 280px; }
           .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; }
-          .totals-row.total { border-top: 2px solid #B89A5A; margin-top: 6px; padding-top: 10px; font-weight: 700; font-size: 16px; color: #B89A5A; }
+          .totals-row.total { border-top: 2px solid #1F7A4D; margin-top: 6px; padding-top: 10px; font-weight: 700; font-size: 16px; color: #1F7A4D; }
           .discount { color: #2a9d2a; }
           .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e5e5; display: flex; justify-content: space-between; font-size: 10px; color: #aaa; }
           .obs { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 6px; padding: 14px; font-size: 12px; color: #444; white-space: pre-wrap; }
