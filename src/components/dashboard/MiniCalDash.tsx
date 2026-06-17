@@ -1,14 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MESES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
 interface Props {
   diasComEvento?: string[]; // array de 'YYYY-MM-DD'
 }
 
-function isoDate(d: Date) { return d.toISOString().slice(0, 10); }
+function isoDate(d: Date) {
+  return d.toISOString().slice(0, 10);
+}
 
 export function MiniCalDash({ diasComEvento = [] }: Props) {
   const hoje = isoDate(new Date());
@@ -26,56 +29,64 @@ export function MiniCalDash({ diasComEvento = [] }: Props) {
   const evSet = new Set(diasComEvento);
 
   return (
-    <div style={{
-      borderRadius: 14,
-      background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
-      border: '1px solid rgba(255,255,255,0.07)',
-      padding: '16px',
-    }}>
+    <div className="card p-5">
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+      <div className="flex items-center justify-between mb-4">
         <button
           onClick={() => setMes(new Date(mes.getFullYear(), mes.getMonth() - 1, 1))}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8A8A93', fontSize: 16, lineHeight: 1, padding: '2px 6px' }}
-        >‹</button>
-        <span style={{ fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#F5F2EA' }}>
-          {MESES[mes.getMonth()]} {mes.getFullYear()}
+          className="p-1 rounded hover:bg-bg-muted transition-colors"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
+          <ChevronLeft size={16} />
+        </button>
+        <span className="text-xs font-bold tracking-widest" style={{ color: 'var(--color-text-primary)' }}>
+          {MESES[mes.getMonth()].toUpperCase()} {mes.getFullYear()}
         </span>
         <button
           onClick={() => setMes(new Date(mes.getFullYear(), mes.getMonth() + 1, 1))}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8A8A93', fontSize: 16, lineHeight: 1, padding: '2px 6px' }}
-        >›</button>
+          className="p-1 rounded hover:bg-bg-muted transition-colors"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
+          <ChevronRight size={16} />
+        </button>
       </div>
 
       {/* Dias da semana */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 4 }}>
-        {['S','T','Q','Q','S','S','D'].map((d, i) => (
-          <div key={i} style={{ textAlign: 'center', fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#8A8A93' }}>{d}</div>
+      <div className="grid grid-cols-7 gap-1 mb-2">
+        {['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map((d, i) => (
+          <div key={i} className="text-center text-xs font-bold" style={{ color: 'var(--color-text-muted)' }}>
+            {d}
+          </div>
         ))}
       </div>
 
       {/* Células */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', rowGap: 2 }}>
+      <div className="grid grid-cols-7 gap-1">
         {cells.map((d, i) => {
-          if (!d) return <div key={i} />;
+          if (!d)
+            return (
+              <div key={i} className="h-7" />
+            );
           const iso = isoDate(d);
           const isHoje = iso === hoje;
           const temEvento = evSet.has(iso);
           return (
-            <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-              <div style={{
-                width: 26, height: 26, borderRadius: '50%',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: isHoje ? '#B89A5A' : 'transparent',
-                color: isHoje ? '#0A0A0B' : '#8A8A93',
-                fontSize: 11, fontWeight: isHoje ? 700 : 400,
-                fontFamily: 'var(--font-montserrat)',
-                cursor: 'pointer',
-              }}>
+            <div key={i} className="flex flex-col items-center gap-1">
+              <div
+                className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium cursor-pointer transition-colors"
+                style={{
+                  background: isHoje ? 'var(--color-accent)' : 'transparent',
+                  color: isHoje ? 'var(--color-accent-text)' : 'var(--color-text-muted)',
+                  fontWeight: isHoje ? 700 : 400,
+                }}
+              >
                 {d.getDate()}
               </div>
               {temEvento && (
-                <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#B89A5A', marginTop: -2 }} />
+                <div
+                  className="w-1 h-1 rounded-full -mt-0.5"
+                  style={{ background: 'var(--color-accent)' }}
+                />
               )}
             </div>
           );
