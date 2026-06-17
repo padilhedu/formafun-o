@@ -14,19 +14,56 @@ Idioma de toda a interface: português brasileiro. Moeda: BRL. Fuso: America/Sao
 - Gráficos: Recharts
 
 ## Identidade visual (obrigatória)
-Tema dark premium, mesmo estilo do dashboard Indaiá Eventos:
-- Fundo: #0A0A0B (base), #121214 (cards/superfícies), #1A1A1E (superfícies elevadas)
-- Bordas: rgba(255,255,255,0.07), radius 12-16px
-- Acento principal: dourado #B89A5A (botões primários, links ativos, destaques)
-- Tons de apoio: champanhe #D9C9A3, off-white #F5F2EA para texto principal
-- Texto secundário: #8A8A93
-- Estados: sucesso #4ADE80, alerta #FBBF24, erro #F87171, info #60A5FA
-- Tipografia: Cormorant Garamond (títulos/headings, peso 500-600) + Montserrat (UI/corpo, 400-600)
-- Sidebar fixa à esquerda com grupos colapsáveis (COMERCIAL, CLÍNICO, FINANCEIRO, OPERACIONAL)
-- Topbar: toggle de tema, notificações, avatar do usuário com role badge
-- Banners de status coloridos com borda (verde = travado/assinado, roxo = informativo)
-- Tabelas com header em caps pequeno, linhas com hover sutil
-- Evitar estética genérica de IA: nada de gradientes roxo/azul, nada de emojis na UI
+Tema light premium — off-white quente com acento VERDE (paleta Lovable aprovada):
+
+### Tokens de cor
+| Token CSS              | Valor hex  | Uso                                     |
+|------------------------|------------|-----------------------------------------|
+| `--background`         | #F5F3EF    | Fundo geral                             |
+| `--surface`            | #FAF8F4    | Header de tabela, rodapés               |
+| `--card`               | #FFFFFF    | Cards e painéis                         |
+| `--foreground`         | #1C1C1C    | Títulos e dados                         |
+| `--muted-foreground`   | #6B6B66    | Labels, metadados, texto secundário     |
+| `--primary`            | #1F7A4D    | Verde — botões, ativo, links            |
+| `--primary-hover`      | #1A6A43    | Verde hover                             |
+| `--sidebar`            | #1C1C1C    | Sidebar preta                           |
+| `--sidebar-accent`     | rgba(255,255,255,0.08) | Item ativo na sidebar         |
+| `--sand`               | #E8E0D0    | Card bege/areia da clínica              |
+| `--success`            | #1F7A4D    | Aprovado, confirmado                    |
+| `--warning`            | #C98A1E    | Visualizado, aguardando                 |
+| `--destructive`        | #C0392B    | Recusado, erro                          |
+| `--info`               | #2D6AA3    | Informativo                             |
+| `--border`             | rgba(0,0,0,0.08) | Bordas sutis                       |
+
+### Forma
+- Border-radius: 14px (cards), 10px (botões/inputs), 9999px (chips/avatares)
+- Sombra: `0 1px 2px rgba(0,0,0,0.04)` (padrão), `0 4px 12px rgba(0,0,0,0.06)` (hover)
+
+### Tipografia
+- Cormorant Garamond: títulos/headings, números KPI grandes (serif elegante)
+- Montserrat: UI, corpo, botões (sans-serif)
+- `tabular-nums` em todos os valores numéricos
+
+### Layout
+- Sidebar fixa à esquerda (#1C1C1C), 224px, grupos colapsáveis (COMERCIAL, CLÍNICO, FINANCEIRO, OPERACIONAL)
+- Item ativo: fundo branco 8%, texto branco, ícone verde (#1F7A4D)
+- Configurações fixo na base da sidebar
+- Header de página dentro do conteúdo (não barra separada): título serif + subtítulo muted + busca + botão verde
+- SEM toggle dark/light — tema único light
+
+### Status de orçamentos (chips)
+- rascunho  → cinza muted
+- enviado   → cinza-escuro foreground
+- negociacao→ âmbar #C98A1E
+- aprovado  → verde #1F7A4D
+- recusado  → vermelho #C0392B
+- expirado  → cinza (line-through)
+
+### Regras
+- Nenhum componente com cor hardcoded fora dos tokens acima
+- Nada de gradientes roxo/azul, nada de emojis na UI
+- Tabelas: header em `#FAF8F4` caps pequeno cinza; linhas com hover `rgba(0,0,0,0.025)`
+- Banners de status: verde para travado/assinado, âmbar para pendente
 
 ## Integrações externas
 - Vindi (pagamentos): API v1, chave em VINDI_API_KEY

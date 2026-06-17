@@ -96,10 +96,10 @@ export const CATEGORIA_LABELS: Record<ProcedimentoCategoria, string> = {
 };
 
 export const STATUS_CONFIG: Record<OrcamentoStatus, { label: string; color: string; bg: string; border: string }> = {
-  rascunho:   { label: 'Rascunho',    color: '#8A8A93', bg: 'rgba(138,138,147,0.1)', border: 'rgba(138,138,147,0.25)' },
-  enviado:    { label: 'Enviado',     color: '#60A5FA', bg: 'rgba(96,165,250,0.1)',  border: 'rgba(96,165,250,0.25)' },
-  negociacao: { label: 'Negociação',  color: '#FBBF24', bg: 'rgba(251,191,36,0.1)',  border: 'rgba(251,191,36,0.25)' },
-  aprovado:   { label: 'Aprovado',    color: '#4ADE80', bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.25)' },
-  recusado:   { label: 'Recusado',    color: '#F87171', bg: 'rgba(248,113,113,0.1)', border: 'rgba(248,113,113,0.25)' },
-  expirado:   { label: 'Expirado',    color: '#8A8A93', bg: 'rgba(138,138,147,0.08)',border: 'rgba(138,138,147,0.15)' },
+  rascunho:   { label: 'Rascunho',    color: '#6B6B66', bg: 'rgba(107,107,102,0.10)', border: 'rgba(107,107,102,0.20)' },
+  enviado:    { label: 'Enviado',     color: '#3A3A3A', bg: 'rgba(28,28,28,0.07)',    border: 'rgba(28,28,28,0.15)'   },
+  negociacao: { label: 'Negociação',  color: '#C98A1E', bg: 'rgba(201,138,30,0.12)',  border: 'rgba(201,138,30,0.25)' },
+  aprovado:   { label: 'Aprovado',    color: '#1F7A4D', bg: 'rgba(31,122,77,0.10)',   border: 'rgba(31,122,77,0.25)'  },
+  recusado:   { label: 'Recusado',    color: '#C0392B', bg: 'rgba(192,57,43,0.10)',   border: 'rgba(192,57,43,0.20)'  },
+  expirado:   { label: 'Expirado',    color: '#9B9BA0', bg: 'rgba(107,107,102,0.06)', border: 'rgba(107,107,102,0.15)'},
 };
