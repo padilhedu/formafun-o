@@ -1,7 +1,7 @@
 export type ContaStatus = 'pendente' | 'pago' | 'vencido' | 'cancelado';
 
 export type FormaPagamento =
-  | 'pix' | 'cartao_credito' | 'cartao_debito' | 'boleto' | 'dinheiro' | 'transferencia';
+  | 'pix' | 'cartao_credito' | 'cartao_debito' | 'boleto' | 'dinheiro' | 'transferencia' | 'stripe';
 
 export type PagarCategoria =
   | 'fornecedor' | 'laboratorio' | 'aluguel' | 'salarios' | 'impostos'
@@ -24,6 +24,8 @@ export interface ContaReceber {
   vindi_bill_id: string | null;
   vindi_charge_id: string | null;
   vindi_url: string | null;
+  stripe_checkout_session_id: string | null;
+  stripe_payment_intent_id: string | null;
   observacoes: string | null;
   criado_por: string | null;
   created_at: string;
@@ -67,6 +69,7 @@ export const FORMA_PAGAMENTO_LABELS: Record<FormaPagamento, string> = {
   boleto:          'Boleto',
   dinheiro:        'Dinheiro',
   transferencia:   'Transferência',
+  stripe:          'Stripe (online)',
 };
 
 export const PAGAR_CATEGORIA_LABELS: Record<PagarCategoria, string> = {

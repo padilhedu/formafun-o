@@ -62,6 +62,8 @@ export async function updateSession(request: NextRequest) {
     // Fluxo de assinatura externa: o signatário acessa sem login (validação por token+HMAC)
     "/assinar",
     "/api/contratos/assinar", "/api/contratos/recusar",
+    // Páginas de retorno do Stripe (acessadas sem sessão do CRM)
+    "/pagamentos",
   ];
   const isPublic = publicRoutes.some(r => pathname.startsWith(r));
 

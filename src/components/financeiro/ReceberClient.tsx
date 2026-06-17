@@ -27,6 +27,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
   const [novaConta, setNovaConta] = useState(false);
   const [loading, setLoading] = useState('');
   const [erro, setErro] = useState('');
+  const [stripeLink, setStripeLink] = useState<{ url: string; codigo: string } | null>(null);
 
   const filtradas = useMemo(() => {
     if (filtro === 'todos') return contas;
@@ -55,6 +56,23 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
       if (!res.ok) setErro(data.error ?? 'Erro Vindi');
       else if (data._dev_mode) setErro(data.message ?? 'Modo dev');
       else router.refresh();
+    } finally {
+      setLoading('');
+    }
+  };
+
+  const gerarStripe = async (conta: ContaReceberComPaciente) => {
+    setLoading('stripe-' + conta.id);
+    setErro('');
+    try {
+      const res = await fetch('/api/pagamentos/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ conta_receber_id: conta.id }),
+      });
+      const data = await res.json() as { url?: string; error?: string };
+      if (!res.ok || !data.url) { setErro(data.error ?? 'Erro ao gerar link'); return; }
+      setStripeLink({ url: data.url, codigo: conta.codigo });
     } finally {
       setLoading('');
     }
@@ -199,6 +217,14 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
                             </button>
                           )}
                           <button
+                            onClick={() => gerarStripe(c)}
+                            disabled={!!loading}
+                            className="btn-ghost"
+                            style={{ fontSize: 10, padding: '4px 10px', marginRight: 6, color: '#B89A5A' }}
+                          >
+                            {loading === 'stripe-' + c.id ? '...' : 'Link Stripe'}
+                          </button>
+                          <button
                             onClick={() => setBaixaConta(c)}
                             className="btn-primary"
                             style={{ fontSize: 10, padding: '4px 10px', marginRight: 6 }}
@@ -226,6 +252,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
 
       {baixaConta && <BaixaModal conta={baixaConta} onClose={() => setBaixaConta(null)} />}
       {novaConta && <NovaContaModal onClose={() => setNovaConta(false)} />}
+      {stripeLink && <StripeLinkModal url={stripeLink.url} codigo={stripeLink.codigo} onClose={() => setStripeLink(null)} />}
     </div>
   );
 }
@@ -373,6 +400,48 @@ function NovaContaModal({ onClose }: { onClose: () => void }) {
             {loading ? '...' : 'Criar Cobrança'}
           </button>
         </div>
+      </div>
+    </ModalShell>
+  );
+}
+
+// ============ Modal: link Stripe para copiar ============
+function StripeLinkModal({ url, codigo, onClose }: { url: string; codigo: string; onClose: () => void }) {
+  const [copiado, setCopiado] = useState(false);
+
+  const copiar = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopiado(true);
+      setTimeout(() => setCopiado(false), 2500);
+    });
+  };
+
+  return (
+    <ModalShell title="Link de Pagamento" onClose={onClose}>
+      <p className="text-muted text-xs mb-4">
+        Cobrança <span className="text-gold font-medium">{codigo}</span> — envie o link abaixo ao paciente via WhatsApp ou e-mail.
+      </p>
+      <div style={{ background: '#0A0A0B', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '10px 14px', marginBottom: 12, wordBreak: 'break-all' }}>
+        <span style={{ fontSize: 11, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)' }}>{url}</span>
+      </div>
+      <div className="flex gap-3 justify-end">
+        <button onClick={onClose} className="btn-ghost text-xs" style={{ padding: '8px 16px' }}>Fechar</button>
+        <button
+          onClick={copiar}
+          className="btn-primary text-xs"
+          style={{ padding: '8px 20px', background: copiado ? 'rgba(74,222,128,0.15)' : undefined, color: copiado ? '#4ADE80' : undefined }}
+        >
+          {copiado ? 'Copiado!' : 'Copiar Link'}
+        </button>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-ghost text-xs"
+          style={{ padding: '8px 16px' }}
+        >
+          Abrir →
+        </a>
       </div>
     </ModalShell>
   );
