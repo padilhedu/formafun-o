@@ -2,8 +2,8 @@ import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import type { Orcamento, OrcamentoItem, OrcamentoHistorico, ModeloPagamento } from '@/types/orcamentos';
-import { STATUS_CONFIG, CATEGORIA_LABELS } from '@/types/orcamentos';
-import { StatusBadge } from '@/components/orcamentos/StatusBadge';
+import { CATEGORIA_LABELS } from '@/types/orcamentos';
+import { StatusChip } from '@/components/ui/StatusChip';
 import { OrcamentoBuilderV2 } from '@/components/orcamentos/OrcamentoBuilderV2';
 
 export const dynamic = 'force-dynamic';
@@ -82,46 +82,45 @@ export default async function OrcamentoPage({ params }: { params: Promise<{ id: 
     <div>
       {/* Locked banner */}
       {orc.travado && (
-        <div className="mb-5 px-5 py-3 rounded-xl flex items-center gap-3"
-          style={{ background: 'rgba(74,222,128,0.06)', border: '1px solid rgba(74,222,128,0.25)' }}>
-          <div className="w-2 h-2 rounded-full bg-success flex-shrink-0" />
-          <span className="text-success font-medium" style={{ fontFamily: 'var(--font-montserrat)', fontSize: 13 }}>
+        <div style={{ marginBottom: 20, padding: '10px 18px', borderRadius: 12, display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(31,122,77,0.06)', border: '1px solid rgba(31,122,77,0.25)' }}>
+          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#1F7A4D', flexShrink: 0 }} />
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, color: '#1F7A4D' }}>
             Orçamento aprovado e travado — alterações somente via aditivo
           </span>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-6 flex-wrap">
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
         <div>
-          <Link href="/orcamentos" className="text-muted hover:text-offwhite transition-colors mb-2 block" style={{ fontSize: 12 }}>
+          <Link href="/orcamentos" style={{ fontSize: 12, color: '#6B6B66', textDecoration: 'none', display: 'block', marginBottom: 8 }}>
             ← Orçamentos
           </Link>
-          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-body)', fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: '#6B6B66', marginBottom: 4 }}>
             COMERCIAL
           </p>
-          <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="heading" style={{ fontFamily: 'var(--font-cormorant)', fontSize: 28, color: '#F5F2EA', fontWeight: 600 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: '#1C1C1C', fontWeight: 600, lineHeight: 1.1 }}>
               {orc.codigo}
             </h1>
-            <StatusBadge status={orc.status} />
+            <StatusChip status={orc.status} type="orcamento" size="md" />
             {categPredominante && (
               <span style={{
                 fontSize: 10, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase',
                 padding: '3px 10px', borderRadius: 6,
-                background: 'rgba(184,154,90,0.1)', color: '#B89A5A', border: '1px solid rgba(184,154,90,0.2)',
-                fontFamily: 'var(--font-montserrat)',
+                background: 'rgba(31,122,77,0.08)', color: '#1F7A4D', border: '1px solid rgba(31,122,77,0.20)',
+                fontFamily: 'var(--font-body)',
               }}>
                 {CATEGORIA_LABELS[categPredominante as keyof typeof CATEGORIA_LABELS] ?? categPredominante}
               </span>
             )}
           </div>
-          <div className="flex items-center gap-4 mt-1 flex-wrap">
-            <Link href={`/pacientes/${orc.paciente_id}`} className="hover:text-gold transition-colors" style={{ fontFamily: 'var(--font-montserrat)', fontSize: 13, color: '#D9C9A3' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 6, flexWrap: 'wrap' }}>
+            <Link href={`/pacientes/${orc.paciente_id}`} style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: '#1F7A4D', textDecoration: 'none' }}>
               {orc.pacientes?.nome ?? '—'}
             </Link>
             {orc.validade && (
-              <span className="text-muted" style={{ fontSize: 12 }}>
+              <span style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-body)' }}>
                 Válido até {new Date(orc.validade).toLocaleDateString('pt-BR')}
               </span>
             )}
