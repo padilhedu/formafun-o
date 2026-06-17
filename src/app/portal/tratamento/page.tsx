@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
@@ -22,23 +22,23 @@ export default async function PortalTratamentoPage() {
   const ors = orcamentos ?? [];
 
   const STATUS_EXEC: Record<string, { label: string; color: string }> = {
-    pendente:     { label: 'A realizar', color: '#8A8A93' },
-    em_andamento: { label: 'Em andamento', color: '#FBBF24' },
-    concluido:    { label: 'Concluído', color: '#4ADE80' },
+    pendente:     { label: 'A realizar', color: '#6B6B66' },
+    em_andamento: { label: 'Em andamento', color: '#C98A1E' },
+    concluido:    { label: 'Concluído', color: '#1F7A4D' },
   };
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3 mb-2">
-        <Link href="/portal" style={{ color: '#8A8A93', fontSize: 13 }}>← Início</Link>
+        <Link href="/portal" style={{ color: '#6B6B66', fontSize: 13 }}>← Início</Link>
       </div>
-      <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.6rem', color: '#B89A5A', fontWeight: 600, margin: 0 }}>
+      <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.6rem', color: '#1F7A4D', fontWeight: 600, margin: 0 }}>
         Meu Tratamento
       </h1>
 
       {ors.length === 0 && (
         <div className="card p-8 text-center">
-          <p style={{ color: '#8A8A93', fontSize: 13 }}>Nenhum plano de tratamento ativo.</p>
+          <p style={{ color: '#6B6B66', fontSize: 13 }}>Nenhum plano de tratamento ativo.</p>
         </div>
       )}
 
@@ -51,18 +51,18 @@ export default async function PortalTratamentoPage() {
         return (
           <div key={orc.id} className="card" style={{ padding: 0, overflow: 'hidden' }}>
             {/* Header */}
-            <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(0,0,0,0.07)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                <p style={{ fontSize: 13, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)', fontWeight: 600, margin: 0 }}>
+                <p style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)', fontWeight: 600, margin: 0 }}>
                   Plano {orc.codigo}
                 </p>
-                <span style={{ fontSize: 12, color: '#4ADE80', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>
+                <span style={{ fontSize: 12, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>
                   {concluidos}/{total} concluídos
                 </span>
               </div>
               {/* Progress bar */}
               <div style={{ height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${progresso}%`, background: '#4ADE80', borderRadius: 2, transition: 'width 0.3s' }} />
+                <div style={{ height: '100%', width: `${progresso}%`, background: '#1F7A4D', borderRadius: 2, transition: 'width 0.3s' }} />
               </div>
             </div>
 
@@ -70,11 +70,11 @@ export default async function PortalTratamentoPage() {
             {itens.map((item, i) => {
               const exec = STATUS_EXEC[item.status_execucao ?? 'pendente'] ?? STATUS_EXEC.pendente;
               return (
-                <div key={item.id} style={{ padding: '12px 20px', borderTop: i > 0 ? '1px solid rgba(255,255,255,0.04)' : undefined, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div key={item.id} style={{ padding: '12px 20px', borderTop: i > 0 ? '1px solid rgba(0,0,0,0.05)' : undefined, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <p style={{ fontSize: 13, color: '#F5F2EA', margin: 0 }}>{item.descricao}</p>
+                    <p style={{ fontSize: 13, color: '#1C1C1C', margin: 0 }}>{item.descricao}</p>
                     {(item.dente || item.face) && (
-                      <p style={{ fontSize: 11, color: '#8A8A93', marginTop: 2 }}>
+                      <p style={{ fontSize: 11, color: '#6B6B66', marginTop: 2 }}>
                         {item.dente && `Dente ${item.dente}`}{item.face && ` · ${item.face}`}
                       </p>
                     )}

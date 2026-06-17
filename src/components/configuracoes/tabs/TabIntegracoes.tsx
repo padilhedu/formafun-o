@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -47,9 +47,9 @@ export function TabIntegracoes() {
                 <div className="flex items-center gap-3">
                   <div style={{
                     width: 40, height: 40, borderRadius: 10,
-                    background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(255,255,255,0.08)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#B89A5A', fontSize: 13,
+                    fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#1F7A4D', fontSize: 13,
                   }}>
                     {int.nome[0]}
                   </div>
@@ -63,7 +63,7 @@ export function TabIntegracoes() {
                     <span className="badge" style={{
                       fontSize: 10,
                       background: status === 'ok' ? 'rgba(74,222,128,0.1)' : status === 'dev' ? 'rgba(251,191,36,0.1)' : 'rgba(248,113,113,0.1)',
-                      color: status === 'ok' ? '#4ADE80' : status === 'dev' ? '#FBBF24' : '#F87171',
+                      color: status === 'ok' ? '#1F7A4D' : status === 'dev' ? '#C98A1E' : '#C0392B',
                       border: `1px solid ${status === 'ok' ? 'rgba(74,222,128,0.3)' : status === 'dev' ? 'rgba(251,191,36,0.3)' : 'rgba(248,113,113,0.3)'}`,
                     }}>
                       {status === 'ok' ? '✓ Conectado' : status === 'dev' ? '⚡ Modo Dev' : '✗ Erro'}
@@ -80,10 +80,10 @@ export function TabIntegracoes() {
                 </div>
               </div>
 
-              <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+              <div className="mt-3 pt-3" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span className="text-muted text-xs">Variável:</span>
-                  <code style={{ fontSize: 11, color: '#8A8A93', background: 'rgba(255,255,255,0.04)', padding: '2px 6px', borderRadius: 4, fontFamily: 'monospace' }}>
+                  <code style={{ fontSize: 11, color: '#6B6B66', background: 'rgba(0,0,0,0.05)', padding: '2px 6px', borderRadius: 4, fontFamily: 'monospace' }}>
                     {int.envVar}=••••••••••••
                   </code>
                 </div>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -38,7 +38,7 @@ export function TabAgenda({ config }: Props) {
       </div>
 
       <div className="card p-5 space-y-4">
-        <p className="table-header" style={{ color: '#B89A5A', marginBottom: 8 }}>HORÁRIO DE FUNCIONAMENTO</p>
+        <p className="table-header" style={{ color: '#1F7A4D', marginBottom: 8 }}>HORÁRIO DE FUNCIONAMENTO</p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div>
             <label className="table-header block mb-1">Abertura</label>
@@ -60,7 +60,7 @@ export function TabAgenda({ config }: Props) {
       </div>
 
       <div className="card p-5 space-y-4">
-        <p className="table-header" style={{ color: '#B89A5A', marginBottom: 8 }}>AGENDAMENTO</p>
+        <p className="table-header" style={{ color: '#1F7A4D', marginBottom: 8 }}>AGENDAMENTO</p>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="table-header block mb-1">Duração do slot (minutos)</label>

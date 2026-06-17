@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -51,7 +51,7 @@ function NavLink({ item, active, collapsed }: { item: NavItem; active: boolean; 
       }}
       onMouseEnter={e => {
         if (!active) {
-          (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
+          (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.06)";
           (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.80)";
         }
       }}
@@ -98,7 +98,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         style={{
           width,
           background: "#1C1C1C",
-          borderRight: "1px solid rgba(255,255,255,0.06)",
+          borderRight: "1px solid rgba(0,0,0,0.07)",
         }}
       >
         <style>{`
@@ -117,7 +117,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             alignItems: "center",
             justifyContent: collapsed ? "center" : "space-between",
             padding: collapsed ? "18px 0" : "16px 16px 16px 18px",
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            borderBottom: "1px solid rgba(0,0,0,0.07)",
             flexShrink: 0,
           }}
         >
@@ -150,7 +150,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               className="hidden lg:flex"
               onClick={() => setCollapsed(true)}
               style={{
-                background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 6,
+                background: "rgba(0,0,0,0.07)", border: "none", borderRadius: 6,
                 width: 24, height: 24, alignItems: "center", justifyContent: "center",
                 cursor: "pointer", color: "rgba(255,255,255,0.40)", flexShrink: 0,
               }}
@@ -164,7 +164,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               className="hidden lg:flex absolute"
               onClick={() => setCollapsed(false)}
               style={{
-                background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 6,
+                background: "rgba(0,0,0,0.07)", border: "none", borderRadius: 6,
                 width: 24, height: 24, alignItems: "center", justifyContent: "center",
                 cursor: "pointer", color: "rgba(255,255,255,0.40)",
                 right: -12, top: 20, zIndex: 1,
@@ -190,7 +190,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         </nav>
 
         {/* Configurações — fixo na base */}
-        <div style={{ padding: collapsed ? "10px 8px" : "10px", borderTop: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
+        <div style={{ padding: collapsed ? "10px 8px" : "10px", borderTop: "1px solid rgba(0,0,0,0.07)", flexShrink: 0 }}>
           <NavLink
             item={{ href: "/configuracoes", label: "Configurações", icon: <Settings size={16} /> }}
             active={pathname.startsWith("/configuracoes")}

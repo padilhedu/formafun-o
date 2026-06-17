@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -120,7 +120,7 @@ export function FormPaciente({ paciente }: Props) {
           </Field>
           <Field label="Sexo">
             <select className="input-field" value={form.sexo} onChange={e => set('sexo', e.target.value)}
-              style={{ background: '#1A1A1E' }}>
+              style={{ background: '#FAF8F4' }}>
               <option value="">Selecionar</option>
               <option value="F">Feminino</option>
               <option value="M">Masculino</option>
@@ -189,7 +189,7 @@ export function FormPaciente({ paciente }: Props) {
           <Field label="Como nos conheceu">
             <select className="input-field" value={form.indicacao_origem}
               onChange={e => set('indicacao_origem', e.target.value)}
-              style={{ background: '#1A1A1E' }}>
+              style={{ background: '#FAF8F4' }}>
               <option value="">Selecionar</option>
               <option value="Indicação">Indicação</option>
               <option value="Instagram">Instagram</option>
@@ -207,7 +207,7 @@ export function FormPaciente({ paciente }: Props) {
             <Field label="Status">
               <select className="input-field" value={form.status}
                 onChange={e => set('status', e.target.value)}
-                style={{ background: '#1A1A1E' }}>
+                style={{ background: '#FAF8F4' }}>
                 <option value="ativo">Ativo</option>
                 <option value="inativo">Inativo</option>
               </select>
@@ -232,7 +232,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   return (
     <div className="card p-5">
       <h3 className="text-offwhite font-semibold text-sm mb-4"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '0.75rem' }}>
+        style={{ borderBottom: '1px solid rgba(0,0,0,0.07)', paddingBottom: '0.75rem' }}>
         {title}
       </h3>
       {children}

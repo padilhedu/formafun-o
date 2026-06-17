@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
@@ -93,11 +93,11 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
   };
 
   const FILTROS: { key: Filtro; label: string; cor: string }[] = [
-    { key: 'todos', label: 'Todos', cor: '#8A8A93' },
-    { key: 'pendente', label: 'Pendentes', cor: '#FBBF24' },
-    { key: 'vencido', label: 'Vencidos', cor: '#F87171' },
-    { key: 'pago', label: 'Pagos', cor: '#4ADE80' },
-    { key: 'cancelado', label: 'Cancelados', cor: '#8A8A93' },
+    { key: 'todos', label: 'Todos', cor: '#6B6B66' },
+    { key: 'pendente', label: 'Pendentes', cor: '#C98A1E' },
+    { key: 'vencido', label: 'Vencidos', cor: '#C0392B' },
+    { key: 'pago', label: 'Pagos', cor: '#1F7A4D' },
+    { key: 'cancelado', label: 'Cancelados', cor: '#6B6B66' },
   ];
 
   return (
@@ -111,7 +111,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
             className="card text-left transition-colors"
             style={{
               padding: '12px 18px', minWidth: 130, cursor: 'pointer',
-              border: `1px solid ${filtro === f.key ? f.cor : 'rgba(255,255,255,0.07)'}`,
+              border: `1px solid ${filtro === f.key ? f.cor : 'rgba(0,0,0,0.08)'}`,
             }}
           >
             <div style={{ fontSize: 10, color: f.cor, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
@@ -133,13 +133,13 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
 
       {erro && (
         <div className="mb-4 px-4 py-2.5 rounded-lg" style={{ background: 'rgba(251,191,36,0.07)', border: '1px solid rgba(251,191,36,0.25)' }}>
-          <span style={{ fontSize: 12, color: '#FBBF24', fontFamily: 'var(--font-montserrat)' }}>{erro}</span>
+          <span style={{ fontSize: 12, color: '#C98A1E', fontFamily: 'var(--font-montserrat)' }}>{erro}</span>
         </div>
       )}
 
       {/* Table */}
       {filtradas.length === 0 ? (
-        <div className="card text-center py-16" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card text-center py-16" style={{ borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           <p className="text-muted text-sm">Nenhuma cobrança neste filtro.</p>
         </div>
       ) : (
@@ -157,7 +157,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
                 const st = statusEfetivo(c);
                 const cfg = CONTA_STATUS_CONFIG[st];
                 return (
-                  <tr key={c.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                  <tr key={c.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                     <td style={{ padding: '11px 14px' }}>
                       <span className="text-gold" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 500 }}>{c.codigo}</span>
                     </td>
@@ -175,7 +175,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
                       )}
                     </td>
                     <td style={{ padding: '11px 14px' }}>
-                      <span style={{ fontSize: 12, color: st === 'vencido' ? '#F87171' : '#F5F2EA' }}>
+                      <span style={{ fontSize: 12, color: st === 'vencido' ? '#C0392B' : '#1C1C1C' }}>
                         {new Date(c.vencimento + 'T12:00:00').toLocaleDateString('pt-BR')}
                       </span>
                     </td>
@@ -220,7 +220,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
                             onClick={() => gerarStripe(c)}
                             disabled={!!loading}
                             className="btn-ghost"
-                            style={{ fontSize: 10, padding: '4px 10px', marginRight: 6, color: '#B89A5A' }}
+                            style={{ fontSize: 10, padding: '4px 10px', marginRight: 6, color: '#1F7A4D' }}
                           >
                             {loading === 'stripe-' + c.id ? '...' : 'Link Stripe'}
                           </button>
@@ -235,7 +235,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
                             onClick={() => cancelar(c)}
                             disabled={!!loading}
                             className="btn-ghost"
-                            style={{ fontSize: 10, padding: '4px 8px', color: '#F87171' }}
+                            style={{ fontSize: 10, padding: '4px 8px', color: '#C0392B' }}
                           >
                             {loading === 'cancel-' + c.id ? '...' : '✕'}
                           </button>
@@ -357,19 +357,19 @@ function NovaContaModal({ onClose }: { onClose: () => void }) {
           {pacienteSel ? (
             <div className="flex items-center justify-between input-field">
               <span className="text-offwhite text-sm">{pacienteSel.nome}</span>
-              <button onClick={() => { setPacienteSel(null); setPacienteBusca(''); }} style={{ color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer' }}>×</button>
+              <button onClick={() => { setPacienteSel(null); setPacienteBusca(''); }} style={{ color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer' }}>×</button>
             </div>
           ) : (
             <div className="relative">
               <input className="input-field w-full" placeholder="Buscar por nome ou CPF..." value={pacienteBusca} onChange={e => buscar(e.target.value)} />
               {pacientes.length > 0 && (
-                <div className="absolute z-10 w-full mt-1 rounded-xl overflow-hidden" style={{ background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="absolute z-10 w-full mt-1 rounded-xl overflow-hidden" style={{ background: '#FAF8F4', border: '1px solid rgba(255,255,255,0.1)' }}>
                   {pacientes.map(p => (
                     <button
                       key={p.id}
                       onClick={() => { setPacienteSel(p); setPacientes([]); }}
                       className="w-full text-left px-3 py-2 hover:bg-white/5 transition-colors"
-                      style={{ fontSize: 13, color: '#F5F2EA', background: 'none', border: 'none', cursor: 'pointer' }}
+                      style={{ fontSize: 13, color: '#1C1C1C', background: 'none', border: 'none', cursor: 'pointer' }}
                     >
                       {p.nome} {p.cpf && <span className="text-muted" style={{ fontSize: 11 }}>· {p.cpf}</span>}
                     </button>
@@ -393,7 +393,7 @@ function NovaContaModal({ onClose }: { onClose: () => void }) {
             <input type="date" className="input-field w-full" value={vencimento} onChange={e => setVencimento(e.target.value)} />
           </div>
         </div>
-        {erro && <p style={{ fontSize: 12, color: '#F87171', fontFamily: 'var(--font-montserrat)' }}>{erro}</p>}
+        {erro && <p style={{ fontSize: 12, color: '#C0392B', fontFamily: 'var(--font-montserrat)' }}>{erro}</p>}
         <div className="flex gap-3 justify-end pt-2">
           <button onClick={onClose} className="btn-ghost text-xs" style={{ padding: '8px 16px' }}>Cancelar</button>
           <button onClick={salvar} disabled={loading} className="btn-primary text-xs" style={{ padding: '8px 20px' }}>
@@ -421,15 +421,15 @@ function StripeLinkModal({ url, codigo, onClose }: { url: string; codigo: string
       <p className="text-muted text-xs mb-4">
         Cobrança <span className="text-gold font-medium">{codigo}</span> — envie o link abaixo ao paciente via WhatsApp ou e-mail.
       </p>
-      <div style={{ background: '#0A0A0B', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '10px 14px', marginBottom: 12, wordBreak: 'break-all' }}>
-        <span style={{ fontSize: 11, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)' }}>{url}</span>
+      <div style={{ background: '#F5F3EF', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '10px 14px', marginBottom: 12, wordBreak: 'break-all' }}>
+        <span style={{ fontSize: 11, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>{url}</span>
       </div>
       <div className="flex gap-3 justify-end">
         <button onClick={onClose} className="btn-ghost text-xs" style={{ padding: '8px 16px' }}>Fechar</button>
         <button
           onClick={copiar}
           className="btn-primary text-xs"
-          style={{ padding: '8px 20px', background: copiado ? 'rgba(74,222,128,0.15)' : undefined, color: copiado ? '#4ADE80' : undefined }}
+          style={{ padding: '8px 20px', background: copiado ? 'rgba(74,222,128,0.15)' : undefined, color: copiado ? '#1F7A4D' : undefined }}
         >
           {copiado ? 'Copiado!' : 'Copiar Link'}
         </button>
@@ -457,8 +457,8 @@ function ModalShell({ title, onClose, children }: { title: string; onClose: () =
     >
       <div className="card" style={{ width: 460, maxWidth: '95vw', padding: 28 }}>
         <div className="flex items-center justify-between mb-5">
-          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#F5F2EA', fontWeight: 500 }}>{title}</h2>
-          <button onClick={onClose} style={{ color: '#8A8A93', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
+          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#1C1C1C', fontWeight: 500 }}>{title}</h2>
+          <button onClick={onClose} style={{ color: '#6B6B66', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
         </div>
         {children}
       </div>

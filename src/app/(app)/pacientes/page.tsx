@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { formatDate, calcAge } from '@/lib/masks';
 import type { Paciente } from '@/types/pacientes';
@@ -45,13 +45,13 @@ export default async function PacientesPage({ searchParams }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>
+          <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>
             CLÍNICO
           </div>
-          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
+          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1, marginBottom: 4 }}>
             Pacientes
           </h1>
-          <p style={{ fontSize: 13, color: '#8A8A93' }}>{total} paciente{total !== 1 ? 's' : ''} encontrado{total !== 1 ? 's' : ''}</p>
+          <p style={{ fontSize: 13, color: '#6B6B66' }}>{total} paciente{total !== 1 ? 's' : ''} encontrado{total !== 1 ? 's' : ''}</p>
         </div>
         <Link href="/pacientes/novo" className="btn-primary">
           + Novo Paciente
@@ -62,7 +62,7 @@ export default async function PacientesPage({ searchParams }: Props) {
       <div className="flex items-center gap-3 mb-5">
         <form className="flex-1 flex gap-3" method="GET">
           <div className="flex-1 relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="14" height="14" viewBox="0 0 15 15" fill="none" style={{ color: '#8A8A93' }}>
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2" width="14" height="14" viewBox="0 0 15 15" fill="none" style={{ color: '#6B6B66' }}>
               <circle cx="6.5" cy="6.5" r="4" stroke="currentColor" strokeWidth="1.3" />
               <path d="M9.5 9.5l3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
             </svg>
@@ -75,7 +75,7 @@ export default async function PacientesPage({ searchParams }: Props) {
           </div>
           <select name="status" defaultValue={status}
             className="input-field w-36"
-            style={{ background: '#1A1A1E' }}>
+            style={{ background: '#FAF8F4' }}>
             <option value="ativo">Ativos</option>
             <option value="inativo">Inativos</option>
             <option value="todos">Todos</option>
@@ -85,10 +85,10 @@ export default async function PacientesPage({ searchParams }: Props) {
       </div>
 
       {/* Tabela */}
-      <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', overflow: 'hidden' }}>
+      <div style={{ borderRadius: 14, background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', overflow: 'hidden' }}>
         <table className="w-full min-w-[640px]">
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+            <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
               {['Paciente', 'CPF', 'Contato', 'Idade', 'Origem', 'Status', ''].map(col => (
                 <th key={col} className="table-header text-left px-4 py-3">{col}</th>
               ))}
@@ -102,7 +102,7 @@ export default async function PacientesPage({ searchParams }: Props) {
                 </td>
               </tr>
             ) : pacientes.map((p) => (
-              <tr key={p.id} className="table-row-hover" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <tr key={p.id} className="table-row-hover" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <Avatar nome={p.nome} />
@@ -123,7 +123,7 @@ export default async function PacientesPage({ searchParams }: Props) {
                 <td className="px-4 py-3">
                   <span className="badge" style={{
                     background: p.status === 'ativo' ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)',
-                    color: p.status === 'ativo' ? '#4ADE80' : '#8A8A93',
+                    color: p.status === 'ativo' ? '#1F7A4D' : '#6B6B66',
                     border: `1px solid ${p.status === 'ativo' ? 'rgba(74,222,128,0.25)' : 'rgba(138,138,147,0.15)'}`,
                   }}>{p.status}</span>
                 </td>
@@ -141,7 +141,7 @@ export default async function PacientesPage({ searchParams }: Props) {
         {/* Paginação */}
         {totalPages > 1 && (
           <div className="flex items-center justify-between px-4 py-3"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+            style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
             <span className="text-muted text-xs">
               Página {page} de {totalPages} · {total} resultados
             </span>
@@ -168,7 +168,7 @@ function Avatar({ nome }: { nome: string }) {
   const initials = nome.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase();
   return (
     <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-      style={{ background: 'rgba(184,154,90,0.12)', border: '1px solid rgba(184,154,90,0.2)', color: '#B89A5A', fontFamily: 'var(--font-montserrat)' }}>
+      style={{ background: 'rgba(31,122,77,0.12)', border: '1px solid rgba(31,122,77,0.2)', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)' }}>
       {initials}
     </div>
   );

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import {
@@ -51,7 +51,7 @@ function LeadModal({ lead, onFechar, onSalvo, onExcluido }: {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }} onClick={e => { if (e.target === e.currentTarget) onFechar(); }}>
       <div className="card-elevated w-full max-w-md rounded-modal">
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
           <h2 className="heading text-offwhite text-base">{lead ? 'Editar Lead' : 'Novo Lead'}</h2>
           <button onClick={onFechar} className="text-muted hover:text-offwhite text-xl">×</button>
         </div>
@@ -120,14 +120,14 @@ function LeadCard({ lead, colStatus, onEditar, onMover }: {
       <p className="text-offwhite font-medium" style={{ fontSize: '0.78rem', lineHeight: 1.3 }}>{lead.nome}</p>
       {lead.telefone && <p className="text-muted" style={{ fontSize: '0.65rem', marginTop: 2 }}>{lead.telefone}</p>}
       <div className="flex items-center gap-1 mt-2">
-        <span className="badge" style={{ background: 'rgba(255,255,255,0.06)', color: '#8A8A93', fontSize: '0.58rem', padding: '0.1rem 0.4rem', textTransform: 'none', letterSpacing: 0, fontWeight: 500 }}>
+        <span className="badge" style={{ background: 'rgba(0,0,0,0.07)', color: '#6B6B66', fontSize: '0.58rem', padding: '0.1rem 0.4rem', textTransform: 'none', letterSpacing: 0, fontWeight: 500 }}>
           {ORIGEM_LABEL[lead.origem ?? 'outros']}
         </span>
       </div>
       {/* Avançar/Recuar rápido */}
       <div className="flex gap-1 mt-2" onClick={e => e.stopPropagation()}>
         {COLUNAS.indexOf(colStatus) > 0 && (
-          <button onClick={() => onMover(lead.id, COLUNAS[COLUNAS.indexOf(colStatus) - 1])} className="text-muted hover:text-offwhite" style={{ fontSize: '0.65rem', background: 'rgba(255,255,255,0.05)', borderRadius: 4, padding: '1px 5px' }}>‹</button>
+          <button onClick={() => onMover(lead.id, COLUNAS[COLUNAS.indexOf(colStatus) - 1])} className="text-muted hover:text-offwhite" style={{ fontSize: '0.65rem', background: 'rgba(0,0,0,0.06)', borderRadius: 4, padding: '1px 5px' }}>‹</button>
         )}
         {COLUNAS.indexOf(colStatus) < COLUNAS.length - 1 && (
           <button onClick={() => onMover(lead.id, COLUNAS[COLUNAS.indexOf(colStatus) + 1])} className="text-muted hover:text-offwhite" style={{ fontSize: '0.65rem', background: 'rgba(89,57,158,0.15)', borderRadius: 4, padding: '1px 5px' }}>›</button>
@@ -262,27 +262,27 @@ export function LeadsKanban({ leadsIniciais }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #1F7A4D' }}>
           <p className="table-header mb-2">Total de Leads</p>
           <p className="heading text-3xl font-semibold text-offwhite">{leads.length}</p>
           <p className="text-muted text-xs mt-1">{ativos} em andamento</p>
         </div>
-        <div className="card p-5" style={{ borderLeft: '3px solid #4ADE80' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #1F7A4D' }}>
           <p className="table-header mb-2">Convertidos</p>
-          <p className="heading text-3xl font-semibold" style={{ color: '#4ADE80' }}>{convertidos}</p>
+          <p className="heading text-3xl font-semibold" style={{ color: '#1F7A4D' }}>{convertidos}</p>
           <div className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1"
-            style={{ background: 'rgba(74,222,128,0.1)', color: '#4ADE80' }}>
+            style={{ background: 'rgba(74,222,128,0.1)', color: '#1F7A4D' }}>
             {leads.length > 0 ? `${Math.round((convertidos / leads.length) * 100)}% taxa` : '—'}
           </div>
         </div>
-        <div className="card p-5" style={{ borderLeft: '3px solid #FBBF24' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #C98A1E' }}>
           <p className="table-header mb-2">Em Andamento</p>
-          <p className="heading text-3xl font-semibold" style={{ color: '#FBBF24' }}>{ativos}</p>
+          <p className="heading text-3xl font-semibold" style={{ color: '#C98A1E' }}>{ativos}</p>
           <p className="text-muted text-xs mt-1">aguardando ação</p>
         </div>
-        <div className="card p-5" style={{ borderLeft: '3px solid #F87171' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #C0392B' }}>
           <p className="table-header mb-2">Perdidos</p>
-          <p className="heading text-3xl font-semibold" style={{ color: '#F87171' }}>{perdidos}</p>
+          <p className="heading text-3xl font-semibold" style={{ color: '#C0392B' }}>{perdidos}</p>
           <p className="text-muted text-xs mt-1">não convertidos</p>
         </div>
       </div>

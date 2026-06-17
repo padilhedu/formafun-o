@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import type { DescontoTipo } from '@/types/orcamentos';
 
@@ -25,25 +25,25 @@ export function ResumoFinanceiro({ subtotal, descontoAbs, total, descontoTipo, d
   const motivoObrigatorio = descontoTipo === 'percentual' && descontoValor > LIMITE_MOTIVO_OBRIGATORIO;
 
   const cardStyle: React.CSSProperties = {
-    background: '#121214', border: '1px solid rgba(255,255,255,0.07)',
+    background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)',
     borderRadius: 12, padding: '18px 20px',
   };
 
   const inputStyle: React.CSSProperties = {
-    background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.08)',
-    borderRadius: 8, padding: '7px 10px', color: '#F5F2EA',
+    background: '#FAF8F4', border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: 8, padding: '7px 10px', color: '#1C1C1C',
     fontSize: 13, fontFamily: 'var(--font-montserrat)', outline: 'none',
   };
 
   const labelStyle: React.CSSProperties = {
     fontSize: 10, fontWeight: 700, letterSpacing: '0.07em',
-    textTransform: 'uppercase', color: '#8A8A93',
+    textTransform: 'uppercase', color: '#6B6B66',
     fontFamily: 'var(--font-montserrat)', marginBottom: 4, display: 'block',
   };
 
   return (
     <div style={cardStyle}>
-      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#B89A5A', fontFamily: 'var(--font-montserrat)', marginBottom: 16 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', marginBottom: 16 }}>
         Resumo Financeiro
       </div>
 
@@ -76,7 +76,7 @@ export function ResumoFinanceiro({ subtotal, descontoAbs, total, descontoTipo, d
             </div>
             {descontoTipo && (
               <div>
-                <label style={{ ...labelStyle, color: motivoObrigatorio ? '#F87171' : '#8A8A93' }}>
+                <label style={{ ...labelStyle, color: motivoObrigatorio ? '#C0392B' : '#6B6B66' }}>
                   Motivo {motivoObrigatorio && '(obrigatório acima de 10%)'}
                 </label>
                 <input
@@ -95,21 +95,21 @@ export function ResumoFinanceiro({ subtotal, descontoAbs, total, descontoTipo, d
         <div style={{ marginLeft: !travado ? 'auto' : undefined, minWidth: 220 }}>
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span style={{ fontSize: 12, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Subtotal</span>
-              <span style={{ fontSize: 14, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)', fontWeight: 500 }}>{formatBRL(subtotal)}</span>
+              <span style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>Subtotal</span>
+              <span style={{ fontSize: 14, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)', fontWeight: 500 }}>{formatBRL(subtotal)}</span>
             </div>
             {descontoAbs > 0 && (
               <div className="flex justify-between items-center">
-                <span style={{ fontSize: 12, color: '#4ADE80', fontFamily: 'var(--font-montserrat)' }}>
+                <span style={{ fontSize: 12, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)' }}>
                   Desconto {descontoTipo === 'percentual' ? `(${descontoValor}%)` : ''}
                 </span>
-                <span style={{ fontSize: 14, color: '#4ADE80', fontFamily: 'var(--font-montserrat)', fontWeight: 500 }}>−{formatBRL(descontoAbs)}</span>
+                <span style={{ fontSize: 14, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 500 }}>−{formatBRL(descontoAbs)}</span>
               </div>
             )}
-            <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', margin: '6px 0' }} />
+            <div style={{ height: 1, background: 'rgba(0,0,0,0.07)', margin: '6px 0' }} />
             <div className="flex justify-between items-center">
-              <span style={{ fontSize: 13, color: '#D9C9A3', fontFamily: 'var(--font-montserrat)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total</span>
-              <span style={{ fontSize: 22, color: '#B89A5A', fontFamily: 'var(--font-montserrat)', fontWeight: 700 }}>{formatBRL(total)}</span>
+              <span style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total</span>
+              <span style={{ fontSize: 22, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 700 }}>{formatBRL(total)}</span>
             </div>
           </div>
         </div>

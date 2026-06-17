@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useCallback, useEffect, useRef, memo } from 'react';
 
@@ -32,14 +32,14 @@ export interface OdontogramaData {
 // ─── Constants ───────────────────────────────────────────────────────────────
 const COND_COLORS: Record<ToothCondition, string> = {
   saudavel:   '#1E1E22',   // dark base — dente saudável não destaca
-  carie:      '#F87171',   // brand error
+  carie:      '#C0392B',   // brand error
   restaurado: '#60A5FA',   // brand info
-  coroa:      '#B89A5A',   // brand gold — coroa dourada, intuitivo
-  extraido:   '#8A8A93',   // brand muted
+  coroa:      '#1F7A4D',   // brand gold — coroa dourada, intuitivo
+  extraido:   '#6B6B66',   // brand muted
   implante:   '#7B5DC0',   // brand purple-light
   endodontia: '#EC4899',   // rosa — sem equivalente direto na paleta
-  fratura:    '#FBBF24',   // brand warning
-  ausente:    '#141416',   // base bg
+  fratura:    '#C98A1E',   // brand warning
+  ausente:    '#FFFFFF',   // base bg
 };
 
 const COND_LABELS: Record<ToothCondition, string> = {
@@ -144,7 +144,7 @@ const ToothSVG = memo(function ToothSVG({ num, data, camada, selected, activeSur
 
       {isExtracted ? (
         <>
-          <rect x="0" y="0" width="44" height="44" rx="5" fill="#141416" stroke="rgba(80,80,90,0.3)" strokeWidth="1" />
+          <rect x="0" y="0" width="44" height="44" rx="5" fill="#FFFFFF" stroke="rgba(80,80,90,0.3)" strokeWidth="1" />
           <line x1="9" y1="9" x2="35" y2="35" stroke="#4B4B55" strokeWidth="2.5" strokeLinecap="round" />
           <line x1="35" y1="9" x2="9"  y2="35" stroke="#4B4B55" strokeWidth="2.5" strokeLinecap="round" />
         </>
@@ -157,7 +157,7 @@ const ToothSVG = memo(function ToothSVG({ num, data, camada, selected, activeSur
                 key={s}
                 points={pts}
                 fill={fc(s)}
-                stroke={isSel ? '#B89A5A' : 'rgba(0,0,0,0.25)'}
+                stroke={isSel ? '#1F7A4D' : 'rgba(0,0,0,0.25)'}
                 strokeWidth={isSel ? 1.5 : 0.5}
                 clipPath={`url(#${clipId})`}
                 onClick={e => { e.stopPropagation(); onFaceClick(s); }}
@@ -174,7 +174,7 @@ const ToothSVG = memo(function ToothSVG({ num, data, camada, selected, activeSur
               <rect
                 x="11" y="11" width="22" height="22"
                 fill={fc('oclusal')}
-                stroke={isSel ? '#B89A5A' : 'rgba(0,0,0,0.25)'}
+                stroke={isSel ? '#1F7A4D' : 'rgba(0,0,0,0.25)'}
                 strokeWidth={isSel ? 1.5 : 0.5}
                 onClick={e => { e.stopPropagation(); onFaceClick('oclusal'); }}
                 style={{ cursor: 'pointer' }}
@@ -184,7 +184,7 @@ const ToothSVG = memo(function ToothSVG({ num, data, camada, selected, activeSur
           })()}
           {/* Outer border */}
           <rect x="0" y="0" width="44" height="44" rx="5" fill="none"
-            stroke={selected ? '#B89A5A' : 'rgba(80,80,90,0.4)'}
+            stroke={selected ? '#1F7A4D' : 'rgba(80,80,90,0.4)'}
             strokeWidth={selected ? 2 : 0.8}
             style={{ pointerEvents: 'none' }}
           />
@@ -217,7 +217,7 @@ const ToothBtn = memo(function ToothBtn({
   const numEl = (
     <span style={{
       fontSize: 9, lineHeight: 1, fontFamily: 'var(--font-montserrat)',
-      color: selected ? '#B89A5A' : '#8A8A93', userSelect: 'none',
+      color: selected ? '#1F7A4D' : '#6B6B66', userSelect: 'none',
     }}>
       {num}
     </span>
@@ -426,7 +426,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
       <style>{`
         .tooth-face-poly { transition: filter 0.08s; }
         .tooth-face-poly:hover { filter: brightness(1.4) saturate(1.2); }
-        .tooth-wrapper:focus-visible { outline: 2px solid #B89A5A; outline-offset: 3px; border-radius: 7px; }
+        .tooth-wrapper:focus-visible { outline: 2px solid #1F7A4D; outline-offset: 3px; border-radius: 7px; }
       `}</style>
 
       {/* ── TOOLBAR ── */}
@@ -436,8 +436,8 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
           {(['situacao', 'plano'] as Camada[]).map(c => (
             <button key={c} onClick={() => setCamada(c)} style={{
               padding: '5px 13px', fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600,
-              background: camada === c ? (c === 'situacao' ? 'rgba(184,154,90,0.18)' : 'rgba(96,165,250,0.18)') : 'transparent',
-              color: camada === c ? (c === 'situacao' ? '#B89A5A' : '#60A5FA') : '#8A8A93',
+              background: camada === c ? (c === 'situacao' ? 'rgba(31,122,77,0.18)' : 'rgba(96,165,250,0.18)') : 'transparent',
+              color: camada === c ? (c === 'situacao' ? '#1F7A4D' : '#60A5FA') : '#6B6B66',
               border: 'none', cursor: 'pointer',
               borderLeft: c === 'plano' ? '1px solid rgba(255,255,255,0.08)' : undefined,
             }}>
@@ -455,7 +455,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
         <button onClick={() => setModoRapido(!modoRapido)} style={{
           padding: '5px 11px', fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600,
           background: modoRapido ? 'rgba(251,191,36,0.14)' : 'transparent',
-          color: modoRapido ? '#FBBF24' : '#8A8A93',
+          color: modoRapido ? '#C98A1E' : '#6B6B66',
           border: `1px solid ${modoRapido ? 'rgba(251,191,36,0.4)' : 'rgba(255,255,255,0.1)'}`,
           borderRadius: 6, cursor: 'pointer',
         }}>
@@ -469,7 +469,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
               <button key={c} onClick={() => setCondRapida(c)} title={COND_LABELS[c]} style={{
                 width: 20, height: 20, borderRadius: 4, cursor: 'pointer', border: 'none',
                 background: COND_COLORS[c],
-                outline: condRapida === c ? '2px solid #F5F2EA' : '2px solid transparent',
+                outline: condRapida === c ? '2px solid #1C1C1C' : '2px solid transparent',
                 outlineOffset: 1,
               }} />
             ))}
@@ -489,7 +489,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
       {/* ── QUICK MODE PALETTE ── */}
       {modoRapido && (
         <div className="card p-3" style={{ background: 'rgba(251,191,36,0.04)', borderColor: 'rgba(251,191,36,0.25)' }}>
-          <p style={{ fontSize: 11, color: '#FBBF24', fontFamily: 'var(--font-montserrat)', marginBottom: 8 }}>
+          <p style={{ fontSize: 11, color: '#C98A1E', fontFamily: 'var(--font-montserrat)', marginBottom: 8 }}>
             ⚡ Clique nos dentes ou faces para marcar como <strong>{COND_LABELS[condRapida]}</strong>
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -499,7 +499,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
                 fontFamily: 'var(--font-montserrat)', fontWeight: 600,
                 background: condRapida === c ? `${COND_COLORS[c]}30` : 'transparent',
                 border: `1px solid ${condRapida === c ? COND_COLORS[c] : 'rgba(255,255,255,0.1)'}`,
-                color: condRapida === c ? COND_COLORS[c] : '#8A8A93',
+                color: condRapida === c ? COND_COLORS[c] : '#6B6B66',
                 display: 'flex', alignItems: 'center', gap: 6,
               }}>
                 <span style={{ width: 8, height: 8, borderRadius: 2, background: COND_COLORS[c], display: 'inline-block', flexShrink: 0 }} />
@@ -517,7 +517,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
           {ALL_CONDITIONS.map(c => (
             <div key={c} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
               <div style={{ width: 12, height: 12, borderRadius: 3, background: COND_COLORS[c], border: '1px solid rgba(255,255,255,0.1)', flexShrink: 0 }} />
-              <span style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>{COND_LABELS[c]}</span>
+              <span style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>{COND_LABELS[c]}</span>
             </div>
           ))}
         </div>
@@ -533,7 +533,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
         ].map(s => (
           <div key={s.label} style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
             <span style={{ fontSize: 20, fontWeight: 700, color: s.color, fontFamily: 'var(--font-montserrat)', lineHeight: 1 }}>{s.value}</span>
-            <span style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>{s.label}</span>
+            <span style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>{s.label}</span>
           </div>
         ))}
         {sumPlano > 0 && (
@@ -582,36 +582,36 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <div style={{
                   width: 34, height: 34, borderRadius: 7,
-                  background: 'rgba(184,154,90,0.12)', border: '1px solid rgba(184,154,90,0.25)',
+                  background: 'rgba(31,122,77,0.12)', border: '1px solid rgba(31,122,77,0.25)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#B89A5A', fontSize: 14,
+                  fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#1F7A4D', fontSize: 14,
                 }}>
                   {selectedTooth}
                 </div>
                 <div>
-                  <div style={{ fontSize: 13, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>Dente {selectedTooth}</div>
-                  <div style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>
+                  <div style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>Dente {selectedTooth}</div>
+                  <div style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>
                     {camada === 'situacao' ? 'Situação atual' : 'Plano de tratamento'}
                   </div>
                 </div>
               </div>
               <button onClick={() => { setSelectedTooth(null); setActiveSurface(null); }}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8A8A93', fontSize: 20, lineHeight: 1, padding: 2 }}>
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6B6B66', fontSize: 20, lineHeight: 1, padding: 2 }}>
                 ×
               </button>
             </div>
 
             {/* Active surface tag */}
             {activeSurface && (
-              <div style={{ marginBottom: 10, padding: '3px 10px', borderRadius: 5, background: 'rgba(184,154,90,0.1)', border: '1px solid rgba(184,154,90,0.25)', display: 'inline-block' }}>
-                <span style={{ fontSize: 11, color: '#B89A5A', fontFamily: 'var(--font-montserrat)' }}>
+              <div style={{ marginBottom: 10, padding: '3px 10px', borderRadius: 5, background: 'rgba(31,122,77,0.1)', border: '1px solid rgba(31,122,77,0.25)', display: 'inline-block' }}>
+                <span style={{ fontSize: 11, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)' }}>
                   Face: {SURFACE_LABELS[activeSurface]}
                 </span>
               </div>
             )}
 
             {/* Condition palette */}
-            <p style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>
+            <p style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>
               {activeSurface ? `Condição — ${SURFACE_LABELS[activeSurface]}` : 'Aplicar a todas as faces'}
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -628,7 +628,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
                     fontFamily: 'var(--font-montserrat)', textAlign: 'left',
                     background: active ? `${COND_COLORS[c]}28` : 'transparent',
                     border: `1px solid ${active ? COND_COLORS[c] : 'rgba(80,80,90,0.3)'}`,
-                    color: active ? COND_COLORS[c] : '#8A8A93',
+                    color: active ? COND_COLORS[c] : '#6B6B66',
                     display: 'flex', alignItems: 'center', gap: 8,
                   }}>
                     <span style={{ width: 9, height: 9, borderRadius: 3, background: COND_COLORS[c], flexShrink: 0, display: 'inline-block' }} />
@@ -639,8 +639,8 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
             </div>
 
             {/* Per-surface overview */}
-            <div style={{ marginTop: 12, padding: 10, borderRadius: 8, background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <p style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8 }}>Faces</p>
+            <div style={{ marginTop: 12, padding: 10, borderRadius: 8, background: 'rgba(31,122,77,0.04)', border: '1px solid rgba(0,0,0,0.07)' }}>
+              <p style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 8 }}>Faces</p>
               {ALL_SURFACES.map(s => {
                 const cond = selFaces[s] ?? 'saudavel';
                 const isSel = activeSurface === s;
@@ -648,10 +648,10 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
                   <div key={s} onClick={() => setActiveSurface(isSel ? null : s)} style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                     padding: '4px 6px', borderRadius: 5, marginBottom: 2, cursor: 'pointer',
-                    background: isSel ? 'rgba(184,154,90,0.1)' : 'transparent',
-                    border: `1px solid ${isSel ? 'rgba(184,154,90,0.25)' : 'transparent'}`,
+                    background: isSel ? 'rgba(31,122,77,0.1)' : 'transparent',
+                    border: `1px solid ${isSel ? 'rgba(31,122,77,0.25)' : 'transparent'}`,
                   }}>
-                    <span style={{ fontSize: 11, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>{SURFACE_LABELS[s]}</span>
+                    <span style={{ fontSize: 11, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>{SURFACE_LABELS[s]}</span>
                     <span style={{ fontSize: 11, color: COND_COLORS[cond], fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>{COND_LABELS[cond]}</span>
                   </div>
                 );
@@ -660,7 +660,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
 
             {/* Note */}
             <div style={{ marginTop: 10 }}>
-              <p style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Observação</p>
+              <p style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>Observação</p>
               <textarea
                 className="input-field w-full"
                 rows={2}
@@ -682,7 +682,7 @@ export function AbaOdontograma({ pacienteId, odontograma: initial }: Props) {
 
       {/* ── GENERAL NOTES ── */}
       <div className="card" style={{ padding: 14 }}>
-        <p style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6 }}>Observações Gerais</p>
+        <p style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6 }}>Observações Gerais</p>
         <textarea
           className="input-field w-full"
           rows={2}

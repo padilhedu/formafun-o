@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import {
@@ -67,23 +67,23 @@ function MiniCalendario({ referencia, onSelect }: { referencia: Date; onSelect: 
   for (let d = 1; d <= diasNoMes; d++) cells.push(new Date(mes.getFullYear(), mes.getMonth(), d));
 
   return (
-    <div style={{ background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '12px' }}>
+    <div style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, padding: '12px' }}>
       <div className="flex items-center justify-between mb-3">
         <button
           onClick={() => setMes(new Date(mes.getFullYear(), mes.getMonth() - 1, 1))}
-          style={{ color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, padding: '0 4px', lineHeight: 1 }}
+          style={{ color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, padding: '0 4px', lineHeight: 1 }}
         >‹</button>
-        <span style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#F5F2EA', letterSpacing: '0.04em' }}>
+        <span style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#1C1C1C', letterSpacing: '0.04em' }}>
           {MESES_PT[mes.getMonth()]} {mes.getFullYear()}
         </span>
         <button
           onClick={() => setMes(new Date(mes.getFullYear(), mes.getMonth() + 1, 1))}
-          style={{ color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, padding: '0 4px', lineHeight: 1 }}
+          style={{ color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, padding: '0 4px', lineHeight: 1 }}
         >›</button>
       </div>
       <div className="grid grid-cols-7 mb-1">
         {['S','T','Q','Q','S','S','D'].map((d, i) => (
-          <div key={i} style={{ textAlign: 'center', fontSize: 9, color: '#8A8A93', fontWeight: 700, fontFamily: 'var(--font-montserrat)' }}>{d}</div>
+          <div key={i} style={{ textAlign: 'center', fontSize: 9, color: '#6B6B66', fontWeight: 700, fontFamily: 'var(--font-montserrat)' }}>{d}</div>
         ))}
       </div>
       <div className="grid grid-cols-7 gap-y-0.5">
@@ -96,8 +96,8 @@ function MiniCalendario({ referencia, onSelect }: { referencia: Date; onSelect: 
             <button key={i} onClick={() => onSelect(d)} style={{
               width: 24, height: 24, borderRadius: '50%', fontSize: 10, margin: '0 auto',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: isRef ? '#B89A5A' : isHoje ? 'rgba(184,154,90,0.15)' : 'transparent',
-              color: isRef ? '#0A0A0B' : isHoje ? '#B89A5A' : '#8A8A93',
+              background: isRef ? '#1F7A4D' : isHoje ? 'rgba(31,122,77,0.15)' : 'transparent',
+              color: isRef ? '#F5F3EF' : isHoje ? '#1F7A4D' : '#6B6B66',
               fontWeight: isHoje || isRef ? 700 : 400,
               border: 'none', cursor: 'pointer',
               fontFamily: 'var(--font-montserrat)',
@@ -158,7 +158,7 @@ function EventoPopup({ evento, pos, onEditar, onFechar, onStatusChange }: {
   return (
     <div ref={ref} style={{
       position: 'fixed', top, left, zIndex: 100, width: 268,
-      background: 'linear-gradient(145deg, #1A1A1E 0%, #141416 100%)',
+      background: 'linear-gradient(145deg, #FAF8F4 0%, #FFFFFF 100%)',
       border: '1px solid rgba(255,255,255,0.10)',
       borderRadius: 14, boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
       padding: '16px',
@@ -174,20 +174,20 @@ function EventoPopup({ evento, pos, onEditar, onFechar, onStatusChange }: {
           }}>
             {TIPO_LABEL[evento.tipo].toUpperCase()}
           </div>
-          <div style={{ fontSize: 14, fontFamily: 'var(--font-montserrat)', fontWeight: 600, color: '#F5F2EA', lineHeight: 1.3 }}>
+          <div style={{ fontSize: 14, fontFamily: 'var(--font-montserrat)', fontWeight: 600, color: '#1C1C1C', lineHeight: 1.3 }}>
             {evento.titulo}
           </div>
           {evento.pacientes && (
-            <div style={{ fontSize: 12, color: '#8A8A93', marginTop: 2 }}>{evento.pacientes.nome}</div>
+            <div style={{ fontSize: 12, color: '#6B6B66', marginTop: 2 }}>{evento.pacientes.nome}</div>
           )}
         </div>
-        <button onClick={onFechar} style={{ color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, lineHeight: 1, flexShrink: 0, marginLeft: 8 }}>×</button>
+        <button onClick={onFechar} style={{ color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, lineHeight: 1, flexShrink: 0, marginLeft: 8 }}>×</button>
       </div>
 
       {/* Horário */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12, padding: '8px 10px', background: 'rgba(255,255,255,0.04)', borderRadius: 8 }}>
-        <span style={{ fontSize: 11, color: '#8A8A93' }}>🕐</span>
-        <span style={{ fontSize: 12, fontFamily: 'var(--font-montserrat)', color: '#D9C9A3', fontVariantNumeric: 'tabular-nums' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12, padding: '8px 10px', background: 'rgba(0,0,0,0.05)', borderRadius: 8 }}>
+        <span style={{ fontSize: 11, color: '#6B6B66' }}>🕐</span>
+        <span style={{ fontSize: 12, fontFamily: 'var(--font-montserrat)', color: '#6B6B66', fontVariantNumeric: 'tabular-nums' }}>
           {fmtHora(evento.inicio)} – {fmtHora(evento.fim)}
         </span>
         <span style={{
@@ -201,10 +201,10 @@ function EventoPopup({ evento, pos, onEditar, onFechar, onStatusChange }: {
 
       {/* WhatsApp status */}
       {evento.paciente_id && (
-        <div style={{ fontSize: 11, color: '#8A8A93', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ fontSize: 11, color: '#6B6B66', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
           <span>📱</span>
           {evento.whatsapp_confirmado
-            ? <span style={{ color: '#4ADE80' }}>Paciente confirmou via WhatsApp</span>
+            ? <span style={{ color: '#1F7A4D' }}>Paciente confirmou via WhatsApp</span>
             : evento.whatsapp_enviado
             ? <span>Lembrete enviado — aguardando resposta</span>
             : <span>Lembrete não enviado ainda</span>}
@@ -212,7 +212,7 @@ function EventoPopup({ evento, pos, onEditar, onFechar, onStatusChange }: {
       )}
 
       {/* Botões de status rápido */}
-      <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#8A8A93', letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: 6 }}>
+      <div style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, color: '#6B6B66', letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: 6 }}>
         Atualizar status
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4, marginBottom: 12 }}>
@@ -225,7 +225,7 @@ function EventoPopup({ evento, pos, onEditar, onFechar, onStatusChange }: {
               fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600,
               padding: '7px 8px', borderRadius: 7, border: `1px solid ${STATUS_COR[btn.status]}30`,
               background: evento.status === btn.status ? `${STATUS_COR[btn.status]}20` : 'transparent',
-              color: evento.status === btn.status ? STATUS_COR[btn.status] : '#8A8A93',
+              color: evento.status === btn.status ? STATUS_COR[btn.status] : '#6B6B66',
               cursor: evento.status === btn.status ? 'default' : 'pointer',
               transition: 'all 0.15s ease',
             }}
@@ -239,7 +239,7 @@ function EventoPopup({ evento, pos, onEditar, onFechar, onStatusChange }: {
       <div style={{ display: 'flex', gap: 6 }}>
         <button
           onClick={onEditar}
-          style={{ flex: 1, padding: '8px', borderRadius: 8, background: 'rgba(184,154,90,0.12)', border: '1px solid rgba(184,154,90,0.25)', color: '#B89A5A', fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600, cursor: 'pointer' }}
+          style={{ flex: 1, padding: '8px', borderRadius: 8, background: 'rgba(31,122,77,0.12)', border: '1px solid rgba(31,122,77,0.25)', color: '#1F7A4D', fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600, cursor: 'pointer' }}
         >
           Editar
         </button>
@@ -264,7 +264,7 @@ function DroppableSlot({ dia, horaIndex, onClickSlot }: {
       style={{
         position: 'absolute', top: horaIndex * HORA_PX, left: 0, right: 0, height: HORA_PX,
         borderBottom: '1px solid rgba(255,255,255,0.03)', cursor: 'pointer',
-        background: isOver ? 'rgba(184,154,90,0.08)' : 'transparent',
+        background: isOver ? 'rgba(31,122,77,0.08)' : 'transparent',
         transition: 'background 0.1s ease',
       }}
     />
@@ -316,7 +316,7 @@ function DraggableEvento({ ev, onClickEvento }: {
         </div>
       )}
       {ev.status === 'confirmado' && h > 28 && (
-        <div style={{ fontSize: 8, color: '#4ADE80', fontWeight: 700, marginTop: 1 }}>✓ CONF</div>
+        <div style={{ fontSize: 8, color: '#1F7A4D', fontWeight: 700, marginTop: 1 }}>✓ CONF</div>
       )}
     </button>
   );
@@ -351,7 +351,7 @@ function DiaColuna({ dia, eventos, isHoje, onClickSlot, onClickEvento }: {
   const horas = Array.from({ length: HORA_FIM - HORA_INICIO }, (_, i) => i);
 
   return (
-    <div style={{ position: 'relative', height: GRID_H, borderLeft: '1px solid rgba(255,255,255,0.04)', background: isHoje ? 'rgba(184,154,90,0.015)' : 'transparent' }}>
+    <div style={{ position: 'relative', height: GRID_H, borderLeft: '1px solid rgba(0,0,0,0.05)', background: isHoje ? 'rgba(31,122,77,0.015)' : 'transparent' }}>
       {horas.map(i => (
         <DroppableSlot key={i} dia={dia} horaIndex={i} onClickSlot={onClickSlot} />
       ))}
@@ -480,27 +480,27 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
       {/* ── Grade semanal ── */}
       <div className="flex-1 flex flex-col min-w-0" style={{
         borderRadius: 14, overflow: 'hidden',
-        background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
-        border: '1px solid rgba(255,255,255,0.07)',
+        background: '#FFFFFF',
+        border: '1px solid rgba(0,0,0,0.08)',
       }}>
         {/* Header da grade */}
-        <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: '1px solid rgba(0,0,0,0.07)', flexShrink: 0 }}>
           <button
             onClick={() => setReferencia(new Date())}
-            style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, padding: '4px 10px', borderRadius: 6, background: 'rgba(184,154,90,0.1)', border: '1px solid rgba(184,154,90,0.25)', color: '#B89A5A', cursor: 'pointer' }}
+            style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, padding: '4px 10px', borderRadius: 6, background: 'rgba(31,122,77,0.1)', border: '1px solid rgba(31,122,77,0.25)', color: '#1F7A4D', cursor: 'pointer' }}
           >Hoje</button>
           <button
             onClick={() => { const d = new Date(referencia); d.setDate(d.getDate()-7); setReferencia(d); }}
-            style={{ fontSize: 16, color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer', padding: '0 4px', lineHeight: 1 }}
+            style={{ fontSize: 16, color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer', padding: '0 4px', lineHeight: 1 }}
           >‹</button>
           <button
             onClick={() => { const d = new Date(referencia); d.setDate(d.getDate()+7); setReferencia(d); }}
-            style={{ fontSize: 16, color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer', padding: '0 4px', lineHeight: 1 }}
+            style={{ fontSize: 16, color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer', padding: '0 4px', lineHeight: 1 }}
           >›</button>
-          <span style={{ fontFamily: 'var(--font-cormorant)', fontSize: 16, fontWeight: 600, color: '#F5F2EA', marginLeft: 4 }}>
+          <span style={{ fontFamily: 'var(--font-cormorant)', fontSize: 16, fontWeight: 600, color: '#1C1C1C', marginLeft: 4 }}>
             {dias[0].getDate()} – {dias[6].getDate()} {MESES_PT[dias[6].getMonth()]} {dias[6].getFullYear()}
           </span>
-          {carregando && <span style={{ fontSize: 10, color: '#8A8A93' }}>carregando…</span>}
+          {carregando && <span style={{ fontSize: 10, color: '#6B6B66' }}>carregando…</span>}
           <div style={{ flex: 1 }} />
           <button
             onClick={() => { setPopup(null); setEventoSelecionado(null); setSlotInicio(''); setSlotFim(''); setModalAberto(true); }}
@@ -512,28 +512,28 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
         </div>
 
         {/* Cabeçalho dos dias */}
-        <div style={{ display: 'grid', gridTemplateColumns: '44px repeat(7, 1fr)', flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '44px repeat(7, 1fr)', flexShrink: 0, borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
           <div />
           {dias.map(dia => {
             const isHoje = dataBRT(dia) === hoje;
             const qtd = eventosDoDia(dia).filter(e => e.status !== 'cancelado').length;
             return (
               <div key={dataBRT(dia)} style={{ textAlign: 'center', padding: '8px 4px 6px' }}>
-                <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', fontFamily: 'var(--font-montserrat)', color: isHoje ? '#B89A5A' : '#8A8A93' }}>
+                <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', fontFamily: 'var(--font-montserrat)', color: isHoje ? '#1F7A4D' : '#6B6B66' }}>
                   {DIAS_PT_CURTO[dia.getDay()]}
                 </div>
                 <div style={{
                   width: 28, height: 28, borderRadius: '50%', margin: '3px auto 0',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: isHoje ? '#B89A5A' : 'transparent',
-                  color: isHoje ? '#0A0A0B' : '#F5F2EA',
+                  background: isHoje ? '#1F7A4D' : 'transparent',
+                  color: isHoje ? '#F5F3EF' : '#1C1C1C',
                   fontSize: 13, fontWeight: isHoje ? 700 : 400,
                   fontFamily: 'var(--font-montserrat)',
                 }}>
                   {dia.getDate()}
                 </div>
                 {qtd > 0 && (
-                  <div style={{ fontSize: 9, color: isHoje ? '#B89A5A' : '#8A8A93', fontFamily: 'var(--font-montserrat)', marginTop: 1 }}>
+                  <div style={{ fontSize: 9, color: isHoje ? '#1F7A4D' : '#6B6B66', fontFamily: 'var(--font-montserrat)', marginTop: 1 }}>
                     {qtd}
                   </div>
                 )}
@@ -548,7 +548,7 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
             <div style={{ position: 'relative' }}>
               {horas.map(h => (
                 <div key={h} style={{ height: HORA_PX, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end', paddingRight: 8, paddingTop: 3 }}>
-                  <span style={{ fontSize: 9, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>{String(h).padStart(2,'0')}:00</span>
+                  <span style={{ fontSize: 9, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>{String(h).padStart(2,'0')}:00</span>
                 </div>
               ))}
             </div>
@@ -571,31 +571,31 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
         <MiniCalendario referencia={referencia} onSelect={setReferencia} />
 
         {/* Resumo da semana */}
-        <div style={{ background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '12px' }}>
-          <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#8A8A93', marginBottom: 10 }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, padding: '12px' }}>
+          <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#6B6B66', marginBottom: 10 }}>
             Esta semana
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
             {[
-              { label: 'Total', value: totalSemana, color: '#D9C9A3' },
-              { label: 'Conf.', value: confirmados, color: '#4ADE80' },
-              { label: 'Realiz.', value: realizados, color: '#8A8A93' },
+              { label: 'Total', value: totalSemana, color: '#6B6B66' },
+              { label: 'Conf.', value: confirmados, color: '#1F7A4D' },
+              { label: 'Realiz.', value: realizados, color: '#6B6B66' },
             ].map(item => (
               <div key={item.label} style={{ textAlign: 'center', padding: '6px 4px', borderRadius: 8, background: 'rgba(255,255,255,0.03)' }}>
                 <div style={{ fontSize: 18, fontFamily: 'var(--font-cormorant)', fontWeight: 600, color: item.color, lineHeight: 1 }}>{item.value}</div>
-                <div style={{ fontSize: 8, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', fontWeight: 600, marginTop: 2 }}>{item.label}</div>
+                <div style={{ fontSize: 8, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontWeight: 600, marginTop: 2 }}>{item.label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* Seu dia hoje */}
-        <div style={{ background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '12px', flex: 1, overflowY: 'auto' }}>
-          <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#8A8A93', marginBottom: 8 }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, padding: '12px', flex: 1, overflowY: 'auto' }}>
+          <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#6B6B66', marginBottom: 8 }}>
             Hoje
           </div>
           {eventosHoje.length === 0 ? (
-            <p style={{ fontSize: 11, color: '#8A8A93' }}>Nenhum evento hoje.</p>
+            <p style={{ fontSize: 11, color: '#6B6B66' }}>Nenhum evento hoje.</p>
           ) : (
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
               {eventosHoje
@@ -605,12 +605,12 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                     <div style={{ width: 3, minHeight: 36, borderRadius: 2, background: STATUS_COR[ev.status], flexShrink: 0, marginTop: 2 }} />
                     <div>
-                      <div style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, color: '#F5F2EA', lineHeight: 1.3 }}>{ev.titulo}</div>
-                      <div style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>
+                      <div style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, color: '#1C1C1C', lineHeight: 1.3 }}>{ev.titulo}</div>
+                      <div style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>
                         {fmtHora(ev.inicio)} – {fmtHora(ev.fim)}
                       </div>
                       {ev.pacientes && (
-                        <div style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>{ev.pacientes.nome}</div>
+                        <div style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>{ev.pacientes.nome}</div>
                       )}
                       <div style={{ fontSize: 9, fontWeight: 700, fontFamily: 'var(--font-montserrat)', color: STATUS_COR[ev.status], marginTop: 1 }}>{STATUS_LABEL[ev.status].toUpperCase()}</div>
                     </div>
@@ -622,15 +622,15 @@ export function AgendaClient({ eventosIniciais, pacientes }: Props) {
         </div>
 
         {/* Legenda de tipos */}
-        <div style={{ background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, padding: '12px' }}>
-          <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#8A8A93', marginBottom: 8 }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, padding: '12px' }}>
+          <div style={{ fontSize: 9, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: '#6B6B66', marginBottom: 8 }}>
             Tipos
           </div>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
             {(Object.entries(TIPO_LABEL) as [AgendaEvento['tipo'], string][]).map(([tipo, label]) => (
               <li key={tipo} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: TIPO_COR[tipo], flexShrink: 0, boxShadow: `0 0 4px ${TIPO_COR[tipo]}60` }} />
-                <span style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>{label}</span>
+                <span style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>{label}</span>
               </li>
             ))}
           </ul>

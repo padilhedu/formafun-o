@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ReactNode } from "react";
 
@@ -15,11 +15,11 @@ interface KpiCardProps {
 }
 
 const COLOR_MAP = {
-  gold:    { accent: "#B89A5A", bg: "rgba(184,154,90,0.06)",  border: "rgba(184,154,90,0.18)",  glow: "rgba(184,154,90,0.12)" },
-  success: { accent: "#4ADE80", bg: "rgba(74,222,128,0.06)",  border: "rgba(74,222,128,0.18)",  glow: "rgba(74,222,128,0.10)" },
-  warning: { accent: "#FBBF24", bg: "rgba(251,191,36,0.06)",  border: "rgba(251,191,36,0.18)",  glow: "rgba(251,191,36,0.10)" },
+  gold:    { accent: "#1F7A4D", bg: "rgba(31,122,77,0.06)",  border: "rgba(31,122,77,0.18)",  glow: "rgba(31,122,77,0.12)" },
+  success: { accent: "#1F7A4D", bg: "rgba(74,222,128,0.06)",  border: "rgba(74,222,128,0.18)",  glow: "rgba(74,222,128,0.10)" },
+  warning: { accent: "#C98A1E", bg: "rgba(251,191,36,0.06)",  border: "rgba(251,191,36,0.18)",  glow: "rgba(251,191,36,0.10)" },
   info:    { accent: "#60A5FA", bg: "rgba(96,165,250,0.06)",  border: "rgba(96,165,250,0.18)",  glow: "rgba(96,165,250,0.10)" },
-  error:   { accent: "#F87171", bg: "rgba(248,113,113,0.06)", border: "rgba(248,113,113,0.18)", glow: "rgba(248,113,113,0.10)" },
+  error:   { accent: "#C0392B", bg: "rgba(248,113,113,0.06)", border: "rgba(248,113,113,0.18)", glow: "rgba(248,113,113,0.10)" },
 };
 
 export function KpiCard({ title, value, sub, trend, trendUp, color, icon, progress, progressLabel }: KpiCardProps) {
@@ -29,7 +29,7 @@ export function KpiCard({ title, value, sub, trend, trendUp, color, icon, progre
     <div
       className="group relative overflow-hidden rounded-2xl p-5 transition-all duration-200"
       style={{
-        background: "linear-gradient(145deg, #141416 0%, #111113 100%)",
+        background: "#FFFFFF",
         border: `1px solid ${c.border}`,
         boxShadow: `0 1px 3px rgba(0,0,0,0.4), 0 0 0 0 ${c.glow}`,
       }}
@@ -52,7 +52,7 @@ export function KpiCard({ title, value, sub, trend, trendUp, color, icon, progre
       <div className="flex items-start justify-between mb-4">
         <span
           className="text-xs font-semibold tracking-widest uppercase"
-          style={{ color: "#8A8A93", fontFamily: "var(--font-montserrat)" }}
+          style={{ color: "#6B6B66", fontFamily: "var(--font-montserrat)" }}
         >
           {title}
         </span>
@@ -69,14 +69,14 @@ export function KpiCard({ title, value, sub, trend, trendUp, color, icon, progre
       {/* Value */}
       <div
         className="text-4xl font-semibold leading-none mb-2 tabular-nums"
-        style={{ color: "#F5F2EA", fontFamily: "var(--font-cormorant)", letterSpacing: "-0.02em" }}
+        style={{ color: "#1C1C1C", fontFamily: "var(--font-cormorant)", letterSpacing: "-0.02em" }}
       >
         {value}
       </div>
 
       {/* Sub */}
       {sub && (
-        <div className="text-xs mb-3" style={{ color: "#8A8A93", fontFamily: "var(--font-montserrat)" }}>
+        <div className="text-xs mb-3" style={{ color: "#6B6B66", fontFamily: "var(--font-montserrat)" }}>
           {sub}
         </div>
       )}
@@ -84,14 +84,14 @@ export function KpiCard({ title, value, sub, trend, trendUp, color, icon, progre
       {/* Progress bar */}
       {typeof progress === "number" && (
         <div className="mb-3">
-          <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+          <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.07)" }}>
             <div
               className="h-full rounded-full transition-all duration-700"
               style={{ width: `${Math.min(100, progress)}%`, background: `linear-gradient(90deg, ${c.accent}88, ${c.accent})` }}
             />
           </div>
           {progressLabel && (
-            <div className="text-xs mt-1" style={{ color: "#8A8A93" }}>{progressLabel}</div>
+            <div className="text-xs mt-1" style={{ color: "#6B6B66" }}>{progressLabel}</div>
           )}
         </div>
       )}
@@ -102,7 +102,7 @@ export function KpiCard({ title, value, sub, trend, trendUp, color, icon, progre
           className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full"
           style={{
             background: trendUp ? "rgba(74,222,128,0.1)" : "rgba(251,191,36,0.1)",
-            color: trendUp ? "#4ADE80" : "#FBBF24",
+            color: trendUp ? "#1F7A4D" : "#C98A1E",
             border: `1px solid ${trendUp ? "rgba(74,222,128,0.2)" : "rgba(251,191,36,0.2)"}`,
           }}
         >

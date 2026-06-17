@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -50,7 +50,7 @@
     --sidebar-bg:        #1C1C1C;
     --sidebar-fg:        #FFFFFF;
     --sidebar-active-bg: rgba(255,255,255,0.08);
-    --sidebar-hover-bg:  rgba(255,255,255,0.05);
+    --sidebar-hover-bg:  rgba(0,0,0,0.06);
     --sidebar-primary:   #1F7A4D;
     --sidebar-muted:     rgba(255,255,255,0.40);
   }

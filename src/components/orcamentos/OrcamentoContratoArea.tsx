@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -41,7 +41,7 @@ export function OrcamentoContratoArea({ orcamentoId, pacienteId, status, contrat
         <div>
           <div className="table-header mb-0.5">Documentos para assinatura</div>
           {total > 0 && (
-            <div style={{ fontSize: 11, color: assinados === total ? '#4ADE80' : '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>
+            <div style={{ fontSize: 11, color: assinados === total ? '#1F7A4D' : '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>
               {assinados} de {total} documento{total !== 1 ? 's' : ''} assinado{assinados !== 1 ? 's' : ''}
             </div>
           )}
@@ -59,7 +59,7 @@ export function OrcamentoContratoArea({ orcamentoId, pacienteId, status, contrat
 
       {/* Lista de contratos */}
       {contratos.length === 0 ? (
-        <div className="card" style={{ padding: '16px', borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card" style={{ padding: '16px', borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           {podeGerar ? (
             <>
               <p className="text-muted text-xs mb-3">
@@ -88,7 +88,7 @@ export function OrcamentoContratoArea({ orcamentoId, pacienteId, status, contrat
                     {/* Indicador de status */}
                     <div style={{ width: 3, height: 36, borderRadius: 2, background: cfg.color, flexShrink: 0 }} />
                     <div>
-                      <div style={{ fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600, color: '#F5F2EA' }}>
+                      <div style={{ fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600, color: '#1C1C1C' }}>
                         {c.codigo}
                       </div>
                       <div style={{ marginTop: 3 }}>
@@ -101,7 +101,7 @@ export function OrcamentoContratoArea({ orcamentoId, pacienteId, status, contrat
                           {cfg.label.toUpperCase()}
                         </span>
                         {c.status === 'assinado' && (
-                          <span style={{ marginLeft: 6, fontSize: 9, color: '#4ADE80', fontFamily: 'var(--font-montserrat)', fontWeight: 700 }}>
+                          <span style={{ marginLeft: 6, fontSize: 9, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 700 }}>
                             ✓ Travado
                           </span>
                         )}
@@ -123,11 +123,11 @@ export function OrcamentoContratoArea({ orcamentoId, pacienteId, status, contrat
           {/* Barra de progresso quando há múltiplos documentos */}
           {total > 1 && (
             <div style={{ marginTop: 4 }}>
-              <div style={{ height: 3, background: 'rgba(255,255,255,0.07)', borderRadius: 2, overflow: 'hidden' }}>
+              <div style={{ height: 3, background: 'rgba(0,0,0,0.08)', borderRadius: 2, overflow: 'hidden' }}>
                 <div style={{
                   height: '100%',
                   width: `${(assinados / total) * 100}%`,
-                  background: assinados === total ? '#4ADE80' : '#B89A5A',
+                  background: assinados === total ? '#1F7A4D' : '#1F7A4D',
                   borderRadius: 2,
                   transition: 'width 0.3s ease',
                 }} />

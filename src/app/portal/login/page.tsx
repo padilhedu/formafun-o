@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -39,26 +39,26 @@ export default function PortalLoginPage() {
   return (
     <div style={{ maxWidth: 380, margin: '40px auto', padding: '0 16px' }}>
       <div style={{ textAlign: 'center', marginBottom: 32 }}>
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', color: '#B89A5A', fontSize: '2rem', fontWeight: 600, margin: 0 }}>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', color: '#1F7A4D', fontSize: '2rem', fontWeight: 600, margin: 0 }}>
           Forma & Função
         </h1>
-        <p style={{ color: '#8A8A93', fontSize: 13, marginTop: 4 }}>Portal do Paciente</p>
+        <p style={{ color: '#6B6B66', fontSize: 13, marginTop: 4 }}>Portal do Paciente</p>
       </div>
 
       {/* Mode switch */}
       <div style={{ display: 'flex', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, overflow: 'hidden', marginBottom: 24 }}>
         <button onClick={() => setModo('magic')} style={{
           flex: 1, padding: '10px', fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600,
-          background: modo === 'magic' ? 'rgba(184,154,90,0.15)' : 'transparent',
-          color: modo === 'magic' ? '#B89A5A' : '#8A8A93',
+          background: modo === 'magic' ? 'rgba(31,122,77,0.15)' : 'transparent',
+          color: modo === 'magic' ? '#1F7A4D' : '#6B6B66',
           border: 'none', cursor: 'pointer',
         }}>
           Link por E-mail
         </button>
         <button onClick={() => setModo('convite')} style={{
           flex: 1, padding: '10px', fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600,
-          background: modo === 'convite' ? 'rgba(184,154,90,0.15)' : 'transparent',
-          color: modo === 'convite' ? '#B89A5A' : '#8A8A93',
+          background: modo === 'convite' ? 'rgba(31,122,77,0.15)' : 'transparent',
+          color: modo === 'convite' ? '#1F7A4D' : '#6B6B66',
           border: 'none', cursor: 'pointer',
           borderLeft: '1px solid rgba(255,255,255,0.08)',
         }}>
@@ -71,49 +71,49 @@ export default function PortalLoginPage() {
           enviado ? (
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 40, marginBottom: 12 }}>📧</div>
-              <p style={{ color: '#4ADE80', fontFamily: 'var(--font-montserrat)', fontWeight: 600, marginBottom: 8 }}>Link enviado!</p>
-              <p style={{ color: '#8A8A93', fontSize: 13 }}>Verifique seu e-mail <strong style={{ color: '#F5F2EA' }}>{email}</strong> e clique no link para entrar.</p>
+              <p style={{ color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 600, marginBottom: 8 }}>Link enviado!</p>
+              <p style={{ color: '#6B6B66', fontSize: 13 }}>Verifique seu e-mail <strong style={{ color: '#1C1C1C' }}>{email}</strong> e clique no link para entrar.</p>
             </div>
           ) : (
             <form onSubmit={handleMagicLink} className="space-y-4">
               <div>
-                <label style={{ fontSize: 11, color: '#8A8A93', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <label style={{ fontSize: 11, color: '#6B6B66', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   E-mail cadastrado
                 </label>
                 <input type="email" className="input-field" value={email} onChange={e => setEmail(e.target.value)}
                   placeholder="seu@email.com" required style={{ fontSize: 14 }} />
               </div>
-              {msg && <p style={{ color: '#F87171', fontSize: 12 }}>{msg}</p>}
+              {msg && <p style={{ color: '#C0392B', fontSize: 12 }}>{msg}</p>}
               <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', padding: '12px', fontSize: 13 }}>
                 {loading ? 'Enviando...' : 'Enviar link de acesso'}
               </button>
-              <p style={{ fontSize: 11, color: '#8A8A93', textAlign: 'center' }}>Você receberá um link seguro por e-mail. Não é necessário senha.</p>
+              <p style={{ fontSize: 11, color: '#6B6B66', textAlign: 'center' }}>Você receberá um link seguro por e-mail. Não é necessário senha.</p>
             </form>
           )
         ) : (
           <form onSubmit={handleConvite} className="space-y-4">
             <div>
-              <label style={{ fontSize: 11, color: '#8A8A93', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <label style={{ fontSize: 11, color: '#6B6B66', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Código de Convite
               </label>
               <input className="input-field" value={codigo} onChange={e => setCodigo(e.target.value)}
                 placeholder="Código fornecido pela clínica" required style={{ fontSize: 14, letterSpacing: '0.1em' }} />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#8A8A93', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <label style={{ fontSize: 11, color: '#6B6B66', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 CPF (confirmação)
               </label>
               <input className="input-field" value={cpf} onChange={e => setCpf(e.target.value)}
                 placeholder="000.000.000-00" required style={{ fontSize: 14 }} />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: '#8A8A93', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <label style={{ fontSize: 11, color: '#6B6B66', display: 'block', marginBottom: 6, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Criar senha de acesso
               </label>
               <input type="password" className="input-field" value={senha} onChange={e => setSenha(e.target.value)}
                 placeholder="Mínimo 8 caracteres" required minLength={8} style={{ fontSize: 14 }} />
             </div>
-            {msg && <p style={{ color: '#F87171', fontSize: 12 }}>{msg}</p>}
+            {msg && <p style={{ color: '#C0392B', fontSize: 12 }}>{msg}</p>}
             <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', padding: '12px', fontSize: 13 }}>
               {loading ? 'Verificando...' : 'Ativar meu acesso'}
             </button>

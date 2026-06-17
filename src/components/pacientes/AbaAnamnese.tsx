@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import type { Anamnese } from '@/types/pacientes';
@@ -92,7 +92,7 @@ export function AbaAnamnese({ pacienteId, anamnese }: Props) {
       {CAMPOS_ANAMNESE.map(grupo => (
         <div key={grupo.grupo} className="card p-5">
           <h3 className="text-offwhite font-semibold text-sm mb-4"
-            style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '0.75rem' }}>
+            style={{ borderBottom: '1px solid rgba(0,0,0,0.07)', paddingBottom: '0.75rem' }}>
             {grupo.grupo}
           </h3>
           <div className="space-y-4">
@@ -114,9 +114,9 @@ export function AbaAnamnese({ pacienteId, anamnese }: Props) {
                           onClick={() => setRespostas(r => ({ ...r, [campo.id]: val }))}
                           className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
                           style={{
-                            background: active ? (opt === 'Sim' ? 'rgba(248,113,113,0.15)' : 'rgba(74,222,128,0.1)') : '#1A1A1E',
-                            color: active ? (opt === 'Sim' ? '#F87171' : '#4ADE80') : '#8A8A93',
-                            border: `1px solid ${active ? (opt === 'Sim' ? 'rgba(248,113,113,0.3)' : 'rgba(74,222,128,0.25)') : 'rgba(255,255,255,0.07)'}`,
+                            background: active ? (opt === 'Sim' ? 'rgba(248,113,113,0.15)' : 'rgba(74,222,128,0.1)') : '#FAF8F4',
+                            color: active ? (opt === 'Sim' ? '#C0392B' : '#1F7A4D') : '#6B6B66',
+                            border: `1px solid ${active ? (opt === 'Sim' ? 'rgba(248,113,113,0.3)' : 'rgba(74,222,128,0.25)') : 'rgba(0,0,0,0.08)'}`,
                           }}>
                           {opt}
                         </button>
@@ -142,11 +142,11 @@ export function AbaAnamnese({ pacienteId, anamnese }: Props) {
 
       {/* Alertas computados */}
       {computeAlertas().length > 0 && (
-        <div className="card p-4" style={{ borderColor: 'rgba(248,113,113,0.25)', borderLeftWidth: 3, borderLeftColor: '#F87171' }}>
+        <div className="card p-4" style={{ borderColor: 'rgba(248,113,113,0.25)', borderLeftWidth: 3, borderLeftColor: '#C0392B' }}>
           <p className="text-error text-xs font-semibold uppercase tracking-wider mb-2">Alertas gerados</p>
           <div className="flex flex-wrap gap-2">
             {computeAlertas().map(a => (
-              <span key={a} className="badge" style={{ background: 'rgba(248,113,113,0.1)', color: '#F87171', border: '1px solid rgba(248,113,113,0.25)' }}>
+              <span key={a} className="badge" style={{ background: 'rgba(248,113,113,0.1)', color: '#C0392B', border: '1px solid rgba(248,113,113,0.25)' }}>
                 ⚠ {a}
               </span>
             ))}

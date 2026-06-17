@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -42,20 +42,20 @@ export default function NovoOrcamentoPage() {
   return (
     <div style={{ maxWidth: 520 }}>
       <div style={{ marginBottom: 24 }}>
-        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>COMERCIAL</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1, marginBottom: 4 }}>
           Novo Orçamento
         </h1>
-        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Selecione o paciente para iniciar</p>
+        <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>Selecione o paciente para iniciar</p>
       </div>
 
-      <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 24 }}>
+      <div style={{ borderRadius: 14, background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', padding: 24 }}>
         <label className="text-muted block mb-1" style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Paciente
         </label>
 
         {selected ? (
-          <div className="flex items-center justify-between p-3 rounded-xl" style={{ background: 'rgba(184,154,90,0.08)', border: '1px solid rgba(184,154,90,0.25)' }}>
+          <div className="flex items-center justify-between p-3 rounded-xl" style={{ background: 'rgba(31,122,77,0.08)', border: '1px solid rgba(31,122,77,0.25)' }}>
             <span className="text-offwhite" style={{ fontFamily: 'var(--font-montserrat)' }}>{selected.nome}</span>
             <button onClick={() => { setSelected(null); setPacienteSearch(''); }} className="text-muted hover:text-offwhite transition-colors" style={{ fontSize: 18 }}>×</button>
           </div>

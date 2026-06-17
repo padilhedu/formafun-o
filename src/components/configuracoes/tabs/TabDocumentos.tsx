@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import type { ContratoTemplate, CategoriaDocumento } from '@/types/contratos';
@@ -53,7 +53,7 @@ function TemplateEditor({ item, onFechar, onSalvo }: TemplateEditorProps) {
       onClick={e => { if (e.target === e.currentTarget) onFechar(); }}>
       <div className="card-elevated" style={{ width: '100%', maxWidth: 800, maxHeight: '90vh', display: 'flex', flexDirection: 'column', borderRadius: 16 }}>
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)', flexShrink: 0 }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)', flexShrink: 0 }}>
           <h2 className="heading text-offwhite text-base">{item ? `Editar — ${item.nome} (v${item.versao + 1})` : 'Novo Template'}</h2>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={() => setPreview(!preview)} className="btn-ghost" style={{ padding: '4px 12px', fontSize: 11 }}>
@@ -95,8 +95,8 @@ function TemplateEditor({ item, onFechar, onSalvo }: TemplateEditorProps) {
                     <button key={p.key} type="button" onClick={() => insertPlaceholder(p.key)}
                       title={p.desc} style={{
                         padding: '2px 8px', borderRadius: 4, fontSize: 10, cursor: 'pointer',
-                        background: 'rgba(184,154,90,0.1)', border: '1px solid rgba(184,154,90,0.25)',
-                        color: '#B89A5A', fontFamily: 'monospace',
+                        background: 'rgba(31,122,77,0.1)', border: '1px solid rgba(31,122,77,0.25)',
+                        color: '#1F7A4D', fontFamily: 'monospace',
                       }}>
                       {p.key}
                     </button>
@@ -110,7 +110,7 @@ function TemplateEditor({ item, onFechar, onSalvo }: TemplateEditorProps) {
           <div style={{ flex: 1, padding: '0 20px 12px', minHeight: 200 }}>
             {preview ? (
               <div className="card" style={{ padding: 20, height: '100%', overflow: 'auto' }}>
-                <div dangerouslySetInnerHTML={{ __html: html }} style={{ color: '#F5F2EA', fontSize: 13, lineHeight: 1.7 }} />
+                <div dangerouslySetInnerHTML={{ __html: html }} style={{ color: '#1C1C1C', fontSize: 13, lineHeight: 1.7 }} />
               </div>
             ) : (
               <textarea
@@ -125,7 +125,7 @@ function TemplateEditor({ item, onFechar, onSalvo }: TemplateEditorProps) {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center gap-3 px-5 py-3" style={{ borderTop: '1px solid rgba(255,255,255,0.07)', flexShrink: 0 }}>
+          <div className="flex items-center gap-3 px-5 py-3" style={{ borderTop: '1px solid rgba(0,0,0,0.08)', flexShrink: 0 }}>
             {item && (
               <span className="text-muted text-xs">Editar criará versão v{(item.versao ?? 1) + 1}. Versão atual é preservada.</span>
             )}
@@ -217,8 +217,8 @@ export function TabDocumentos() {
         {(['templates', 'matriz'] as const).map(t => (
           <button key={t} onClick={() => setAba(t)} style={{
             padding: '6px 18px', fontSize: 12, fontFamily: 'var(--font-montserrat)', fontWeight: 600,
-            background: aba === t ? 'rgba(184,154,90,0.15)' : 'transparent',
-            color: aba === t ? '#B89A5A' : '#8A8A93',
+            background: aba === t ? 'rgba(31,122,77,0.15)' : 'transparent',
+            color: aba === t ? '#1F7A4D' : '#6B6B66',
             border: 'none', cursor: 'pointer',
             borderLeft: t === 'matriz' ? '1px solid rgba(255,255,255,0.08)' : undefined,
           }}>
@@ -235,9 +235,9 @@ export function TabDocumentos() {
               <button key={c} onClick={() => setFiltroCat(c)} style={{
                 padding: '4px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
                 fontFamily: 'var(--font-montserrat)', fontWeight: 600,
-                background: filtroCat === c ? 'rgba(184,154,90,0.15)' : 'transparent',
-                border: `1px solid ${filtroCat === c ? '#B89A5A' : 'rgba(80,80,90,0.3)'}`,
-                color: filtroCat === c ? '#B89A5A' : '#8A8A93',
+                background: filtroCat === c ? 'rgba(31,122,77,0.15)' : 'transparent',
+                border: `1px solid ${filtroCat === c ? '#1F7A4D' : 'rgba(80,80,90,0.3)'}`,
+                color: filtroCat === c ? '#1F7A4D' : '#6B6B66',
               }}>
                 {c === 'todos' ? `Todos (${templates.length})` : c === 'contrato' ? `Contratos (${templates.filter(t => t.categoria_documento === 'contrato').length})` : `TCLEs (${templates.filter(t => t.categoria_documento === 'tcle').length})`}
               </button>
@@ -255,23 +255,23 @@ export function TabDocumentos() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span className="badge" style={{
                       fontSize: 9, fontWeight: 700,
-                      background: t.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.1)' : 'rgba(184,154,90,0.1)',
-                      color: t.categoria_documento === 'tcle' ? '#60A5FA' : '#B89A5A',
-                      border: `1px solid ${t.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.3)' : 'rgba(184,154,90,0.3)'}`,
+                      background: t.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.1)' : 'rgba(31,122,77,0.1)',
+                      color: t.categoria_documento === 'tcle' ? '#60A5FA' : '#1F7A4D',
+                      border: `1px solid ${t.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.3)' : 'rgba(31,122,77,0.3)'}`,
                     }}>
                       {t.categoria_documento === 'tcle' ? 'TCLE' : 'CONTRATO'}
                     </span>
                     <span className="text-offwhite text-sm font-medium">{t.nome}</span>
                     <span className="text-muted text-xs">v{t.versao}</span>
                     {t.origem === 'sistema' && (
-                      <span style={{ fontSize: 9, color: '#FBBF24', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: 4, padding: '1px 5px' }}>
+                      <span style={{ fontSize: 9, color: '#C98A1E', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: 4, padding: '1px 5px' }}>
                         Revisar c/ jurídico
                       </span>
                     )}
                   </div>
                   <div style={{ display: 'flex', gap: 8 }}>
                     <button onClick={() => setEditor(t)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11 }}>Editar</button>
-                    <button onClick={() => excluirTemplate(t.id)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11, color: '#F87171', borderColor: 'rgba(248,113,113,0.2)' }}>Inativar</button>
+                    <button onClick={() => excluirTemplate(t.id)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11, color: '#C0392B', borderColor: 'rgba(248,113,113,0.2)' }}>Inativar</button>
                   </div>
                 </div>
               </div>
@@ -288,7 +288,7 @@ export function TabDocumentos() {
 
           {/* Add row */}
           <div className="card p-4">
-            <p className="table-header mb-3" style={{ color: '#B89A5A' }}>VINCULAR DOCUMENTO A PROCEDIMENTO</p>
+            <p className="table-header mb-3" style={{ color: '#1F7A4D' }}>VINCULAR DOCUMENTO A PROCEDIMENTO</p>
             <div className="flex flex-wrap gap-3 items-end">
               <div>
                 <label className="table-header block mb-1">Categoria do Procedimento</label>
@@ -305,7 +305,7 @@ export function TabDocumentos() {
                 </select>
               </div>
               <div className="flex items-center gap-2">
-                <input type="checkbox" id="obrig" checked={novoObrig} onChange={e => setNovoObrig(e.target.checked)} style={{ width: 14, height: 14, accentColor: '#B89A5A' }} />
+                <input type="checkbox" id="obrig" checked={novoObrig} onChange={e => setNovoObrig(e.target.checked)} style={{ width: 14, height: 14, accentColor: '#1F7A4D' }} />
                 <label htmlFor="obrig" className="text-muted text-xs">Obrigatório</label>
               </div>
               <button onClick={adicionarProcDoc} disabled={!novaCategoria || !novoTemplate} className="btn-primary" style={{ padding: '6px 16px', fontSize: 12 }}>Adicionar</button>
@@ -327,7 +327,7 @@ export function TabDocumentos() {
                   <tr><td colSpan={5} className="text-center text-muted py-10 text-sm">Nenhum vínculo configurado.</td></tr>
                 )}
                 {procDocs.map(pd => (
-                  <tr key={pd.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                  <tr key={pd.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                     <td style={{ padding: '10px 16px' }}>
                       <span className="text-offwhite text-sm">{pd.categoria_procedimento}</span>
                     </td>
@@ -337,20 +337,20 @@ export function TabDocumentos() {
                     <td style={{ padding: '10px 16px' }}>
                       <span className="badge" style={{
                         fontSize: 9,
-                        background: pd.contratos_templates?.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.1)' : 'rgba(184,154,90,0.1)',
-                        color: pd.contratos_templates?.categoria_documento === 'tcle' ? '#60A5FA' : '#B89A5A',
-                        border: `1px solid ${pd.contratos_templates?.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.3)' : 'rgba(184,154,90,0.3)'}`,
+                        background: pd.contratos_templates?.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.1)' : 'rgba(31,122,77,0.1)',
+                        color: pd.contratos_templates?.categoria_documento === 'tcle' ? '#60A5FA' : '#1F7A4D',
+                        border: `1px solid ${pd.contratos_templates?.categoria_documento === 'tcle' ? 'rgba(96,165,250,0.3)' : 'rgba(31,122,77,0.3)'}`,
                       }}>
                         {pd.contratos_templates?.categoria_documento === 'tcle' ? 'TCLE' : 'Contrato'}
                       </span>
                     </td>
                     <td style={{ padding: '10px 16px' }}>
-                      <span style={{ color: pd.obrigatorio ? '#4ADE80' : '#8A8A93', fontSize: 12 }}>
+                      <span style={{ color: pd.obrigatorio ? '#1F7A4D' : '#6B6B66', fontSize: 12 }}>
                         {pd.obrigatorio ? '✓ Sim' : 'Não'}
                       </span>
                     </td>
                     <td style={{ padding: '10px 16px', textAlign: 'right' }}>
-                      <button onClick={() => removerProcDoc(pd.id)} className="btn-ghost" style={{ padding: '3px 8px', fontSize: 11, color: '#F87171' }}>Remover</button>
+                      <button onClick={() => removerProcDoc(pd.id)} className="btn-ghost" style={{ padding: '3px 8px', fontSize: 11, color: '#C0392B' }}>Remover</button>
                     </td>
                   </tr>
                 ))}

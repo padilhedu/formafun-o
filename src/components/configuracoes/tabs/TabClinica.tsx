@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
@@ -55,7 +55,7 @@ export function TabClinica({ config }: Props) {
       {erro && <p className="text-error text-sm">{erro}</p>}
 
       <div className="card p-5 space-y-4">
-        <p className="table-header" style={{ color: '#B89A5A', marginBottom: 8 }}>IDENTIFICAÇÃO</p>
+        <p className="table-header" style={{ color: '#1F7A4D', marginBottom: 8 }}>IDENTIFICAÇÃO</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Field label="Razão Social" value={form.razao_social ?? ''} onChange={set('razao_social')} />
           <Field label="Nome Fantasia" value={form.nome_fantasia ?? ''} onChange={set('nome_fantasia')} />
@@ -65,7 +65,7 @@ export function TabClinica({ config }: Props) {
       </div>
 
       <div className="card p-5 space-y-4">
-        <p className="table-header" style={{ color: '#B89A5A', marginBottom: 8 }}>ENDEREÇO E CONTATO</p>
+        <p className="table-header" style={{ color: '#1F7A4D', marginBottom: 8 }}>ENDEREÇO E CONTATO</p>
         <Field label="Endereço Completo" value={form.endereco ?? ''} onChange={set('endereco')} placeholder="Rua, número, bairro" />
         <div className="grid grid-cols-2 gap-3">
           <Field label="Cidade" value={form.cidade ?? ''} onChange={set('cidade')} />
@@ -78,14 +78,14 @@ export function TabClinica({ config }: Props) {
       </div>
 
       <div className="card p-5 space-y-4">
-        <p className="table-header" style={{ color: '#B89A5A', marginBottom: 8 }}>RESPONSÁVEL TÉCNICO</p>
+        <p className="table-header" style={{ color: '#1F7A4D', marginBottom: 8 }}>RESPONSÁVEL TÉCNICO</p>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Nome do Responsável" value={form.responsavel_tecnico ?? ''} onChange={set('responsavel_tecnico')} />
           <Field label="CRO do Responsável" value={form.cro_responsavel ?? ''} onChange={set('cro_responsavel')} />
         </div>
       </div>
 
-      <div className="card p-4" style={{ background: 'rgba(184,154,90,0.04)', borderColor: 'rgba(184,154,90,0.15)' }}>
+      <div className="card p-4" style={{ background: 'rgba(31,122,77,0.04)', borderColor: 'rgba(31,122,77,0.15)' }}>
         <p className="text-muted text-xs">Esses dados são usados nos PDFs de orçamento, contratos e notas fiscais.</p>
       </div>
     </div>

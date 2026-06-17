@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useRef } from 'react';
 import type { DocumentoPaciente } from '@/types/pacientes';
@@ -13,10 +13,10 @@ const TIPO_LABELS: Record<string, string> = {
 
 const TIPO_COLORS: Record<string, { bg: string; color: string; border: string }> = {
   radiografia: { bg: 'rgba(96,165,250,0.1)', color: '#60A5FA', border: 'rgba(96,165,250,0.2)' },
-  foto: { bg: 'rgba(184,154,90,0.1)', color: '#B89A5A', border: 'rgba(184,154,90,0.2)' },
-  exame: { bg: 'rgba(74,222,128,0.1)', color: '#4ADE80', border: 'rgba(74,222,128,0.2)' },
-  contrato: { bg: 'rgba(217,201,163,0.1)', color: '#D9C9A3', border: 'rgba(217,201,163,0.2)' },
-  outro: { bg: 'rgba(138,138,147,0.1)', color: '#8A8A93', border: 'rgba(138,138,147,0.15)' },
+  foto: { bg: 'rgba(31,122,77,0.1)', color: '#1F7A4D', border: 'rgba(31,122,77,0.2)' },
+  exame: { bg: 'rgba(74,222,128,0.1)', color: '#1F7A4D', border: 'rgba(74,222,128,0.2)' },
+  contrato: { bg: 'rgba(217,201,163,0.1)', color: '#6B6B66', border: 'rgba(217,201,163,0.2)' },
+  outro: { bg: 'rgba(138,138,147,0.1)', color: '#6B6B66', border: 'rgba(138,138,147,0.15)' },
 };
 
 interface Props { pacienteId: string; documentos: DocumentoPaciente[]; }
@@ -55,7 +55,7 @@ export function AbaDocumentos({ pacienteId, documentos: iniciais }: Props) {
       {/* Upload + filtro */}
       <div className="flex items-center gap-3 mb-5 flex-wrap">
         <select value={tipo} onChange={e => setTipo(e.target.value as DocumentoPaciente['tipo'])}
-          className="input-field w-36" style={{ background: '#1A1A1E' }}>
+          className="input-field w-36" style={{ background: '#FAF8F4' }}>
           {Object.entries(TIPO_LABELS).map(([k, v]) => (
             <option key={k} value={k}>{v}</option>
           ))}
@@ -71,9 +71,9 @@ export function AbaDocumentos({ pacienteId, documentos: iniciais }: Props) {
             <button key={t} onClick={() => setFiltro(t)}
               className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
               style={{
-                background: filtro === t ? 'rgba(184,154,90,0.1)' : 'transparent',
-                color: filtro === t ? '#B89A5A' : '#8A8A93',
-                border: `1px solid ${filtro === t ? 'rgba(184,154,90,0.25)' : 'rgba(255,255,255,0.07)'}`,
+                background: filtro === t ? 'rgba(31,122,77,0.1)' : 'transparent',
+                color: filtro === t ? '#1F7A4D' : '#6B6B66',
+                border: `1px solid ${filtro === t ? 'rgba(31,122,77,0.25)' : 'rgba(0,0,0,0.08)'}`,
               }}>
               {t === 'todos' ? 'Todos' : TIPO_LABELS[t]}
             </button>
@@ -100,7 +100,7 @@ export function AbaDocumentos({ pacienteId, documentos: iniciais }: Props) {
                 onClick={() => doc.drive_link && window.open(doc.drive_link, '_blank')}>
                 {/* Preview */}
                 <div className="w-full h-24 rounded-lg mb-3 flex items-center justify-center overflow-hidden"
-                  style={{ background: '#121214' }}>
+                  style={{ background: '#FFFFFF' }}>
                   {isImage(doc.mime_type) && doc.drive_link ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={doc.drive_link} alt={doc.nome} className="w-full h-full object-cover" />

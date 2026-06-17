@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
@@ -6,10 +6,10 @@ export const dynamic = 'force-dynamic';
 
 function StatusBadge({ status }: { status: string }) {
   const cfg: Record<string, { label: string; color: string; bg: string }> = {
-    assinado:    { label: '✓ Assinado', color: '#4ADE80', bg: 'rgba(74,222,128,0.1)' },
-    enviado:     { label: '⏳ Aguardando assinatura', color: '#FBBF24', bg: 'rgba(251,191,36,0.1)' },
+    assinado:    { label: '✓ Assinado', color: '#1F7A4D', bg: 'rgba(74,222,128,0.1)' },
+    enviado:     { label: '⏳ Aguardando assinatura', color: '#C98A1E', bg: 'rgba(251,191,36,0.1)' },
     visualizado: { label: '👁 Visualizado', color: '#60A5FA', bg: 'rgba(96,165,250,0.1)' },
-    rascunho:    { label: 'Pendente', color: '#8A8A93', bg: 'rgba(138,138,147,0.1)' },
+    rascunho:    { label: 'Pendente', color: '#6B6B66', bg: 'rgba(138,138,147,0.1)' },
   };
   const c = cfg[status] ?? cfg.rascunho;
   return (
@@ -38,15 +38,15 @@ export default async function PortalDocumentosPage() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3 mb-2">
-        <Link href="/portal" style={{ color: '#8A8A93', fontSize: 13 }}>← Início</Link>
+        <Link href="/portal" style={{ color: '#6B6B66', fontSize: 13 }}>← Início</Link>
       </div>
-      <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.6rem', color: '#B89A5A', fontWeight: 600, margin: 0 }}>
+      <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.6rem', color: '#1F7A4D', fontWeight: 600, margin: 0 }}>
         Meus Documentos
       </h1>
 
       {docs.length === 0 && (
         <div className="card p-8 text-center">
-          <p style={{ color: '#8A8A93', fontSize: 13 }}>Nenhum documento disponível.</p>
+          <p style={{ color: '#6B6B66', fontSize: 13 }}>Nenhum documento disponível.</p>
         </div>
       )}
 
@@ -54,10 +54,10 @@ export default async function PortalDocumentosPage() {
         <div key={c.id} className="card" style={{ padding: 18 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
             <div>
-              <p style={{ fontSize: 13, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)', fontWeight: 600, margin: 0 }}>
+              <p style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)', fontWeight: 600, margin: 0 }}>
                 {c.codigo}
               </p>
-              <p style={{ fontSize: 11, color: '#8A8A93', marginTop: 3 }}>
+              <p style={{ fontSize: 11, color: '#6B6B66', marginTop: 3 }}>
                 {c.categoria_documento === 'tcle' ? 'Termo de Consentimento' : 'Contrato'} ·{' '}
                 {new Date(c.created_at).toLocaleDateString('pt-BR')}
               </p>

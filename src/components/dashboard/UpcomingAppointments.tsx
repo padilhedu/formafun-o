@@ -1,4 +1,4 @@
-const APPOINTMENTS = [
+﻿const APPOINTMENTS = [
   { time: "08:30", name: "Ana Paula Ferreira", proc: "Avaliação", status: "confirmado" },
   { time: "09:00", name: "Marcos Silveira", proc: "Canal · #46", status: "confirmado" },
   { time: "10:00", name: "Cláudia Mendes", proc: "Clareamento", status: "agendado" },
@@ -9,9 +9,9 @@ const APPOINTMENTS = [
 ];
 
 const STATUS_STYLE: Record<string, { color: string; label: string; bg: string }> = {
-  confirmado: { color: "#4ADE80", label: "Confirmado", bg: "rgba(74,222,128,0.1)" },
-  agendado:   { color: "#FBBF24", label: "Agendado",   bg: "rgba(251,191,36,0.1)" },
-  faltou:     { color: "#F87171", label: "Faltou",     bg: "rgba(248,113,113,0.1)" },
+  confirmado: { color: "#1F7A4D", label: "Confirmado", bg: "rgba(74,222,128,0.1)" },
+  agendado:   { color: "#C98A1E", label: "Agendado",   bg: "rgba(251,191,36,0.1)" },
+  faltou:     { color: "#C0392B", label: "Faltou",     bg: "rgba(248,113,113,0.1)" },
 };
 
 export function UpcomingAppointments() {
@@ -19,28 +19,28 @@ export function UpcomingAppointments() {
     <div
       className="rounded-2xl p-5 h-full"
       style={{
-        background: "linear-gradient(145deg, #141416 0%, #111113 100%)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: "#FFFFFF",
+        border: "1px solid rgba(0,0,0,0.08)",
       }}
     >
       <div className="flex items-center justify-between mb-5">
         <div>
           <h2
             className="text-sm font-semibold"
-            style={{ color: "#F5F2EA", fontFamily: "var(--font-montserrat)" }}
+            style={{ color: "#1C1C1C", fontFamily: "var(--font-montserrat)" }}
           >
             Agenda de Hoje
           </h2>
-          <p className="text-xs mt-0.5" style={{ color: "#8A8A93" }}>
+          <p className="text-xs mt-0.5" style={{ color: "#6B6B66" }}>
             {APPOINTMENTS.length} consultas agendadas
           </p>
         </div>
         <span
           className="text-xs font-semibold px-2.5 py-1 rounded-full"
           style={{
-            color: "#B89A5A",
-            background: "rgba(184,154,90,0.1)",
-            border: "1px solid rgba(184,154,90,0.2)",
+            color: "#1F7A4D",
+            background: "rgba(31,122,77,0.1)",
+            border: "1px solid rgba(31,122,77,0.2)",
             fontFamily: "var(--font-montserrat)",
           }}
         >
@@ -56,13 +56,13 @@ export function UpcomingAppointments() {
               key={i}
               className="flex items-center gap-3 py-2.5 transition-colors duration-150 hover:bg-white/[0.025] rounded-lg px-2 -mx-2 cursor-pointer"
               style={{
-                borderBottom: i < APPOINTMENTS.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
+                borderBottom: i < APPOINTMENTS.length - 1 ? "1px solid rgba(0,0,0,0.05)" : "none",
               }}
             >
               {/* Time */}
               <div
                 className="text-xs font-semibold w-11 flex-shrink-0 tabular-nums text-right"
-                style={{ color: "#8A8A93", fontFamily: "var(--font-montserrat)" }}
+                style={{ color: "#6B6B66", fontFamily: "var(--font-montserrat)" }}
               >
                 {a.time}
               </div>
@@ -77,11 +77,11 @@ export function UpcomingAppointments() {
               <div className="flex-1 min-w-0">
                 <div
                   className="text-xs font-medium truncate"
-                  style={{ color: "#F5F2EA", fontFamily: "var(--font-montserrat)" }}
+                  style={{ color: "#1C1C1C", fontFamily: "var(--font-montserrat)" }}
                 >
                   {a.name}
                 </div>
-                <div className="text-xs truncate mt-0.5" style={{ color: "#8A8A93", fontSize: "0.7rem" }}>
+                <div className="text-xs truncate mt-0.5" style={{ color: "#6B6B66", fontSize: "0.7rem" }}>
                   {a.proc}
                 </div>
               </div>

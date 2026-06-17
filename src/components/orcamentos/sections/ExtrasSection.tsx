@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import type { ItemRascunho } from '../OrcamentoBuilderV2';
 
@@ -20,13 +20,13 @@ function isExtra(i: ItemRascunho) {
 
 const th: React.CSSProperties = {
   padding: '7px 12px', fontSize: 10, fontWeight: 700, letterSpacing: '0.07em',
-  color: '#8A8A93', textTransform: 'uppercase', textAlign: 'left',
+  color: '#6B6B66', textTransform: 'uppercase', textAlign: 'left',
   fontFamily: 'var(--font-montserrat)',
 };
 
 const inputInline: React.CSSProperties = {
   background: 'transparent', border: 'none', outline: 'none',
-  color: '#F5F2EA', fontSize: 13, fontFamily: 'var(--font-montserrat)',
+  color: '#1C1C1C', fontSize: 13, fontFamily: 'var(--font-montserrat)',
   width: '100%', padding: 0,
 };
 
@@ -49,12 +49,12 @@ export function ExtrasSection({ itens, travado, onUpdate, onAdd, onRemove }: Pro
   };
 
   const cardStyle: React.CSSProperties = {
-    background: '#121214', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, overflow: 'hidden',
+    background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, overflow: 'hidden',
   };
 
   return (
     <div>
-      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#B89A5A', fontFamily: 'var(--font-montserrat)', marginBottom: 10 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', marginBottom: 10 }}>
         Itens Extras / Materiais
       </div>
 
@@ -62,7 +62,7 @@ export function ExtrasSection({ itens, travado, onUpdate, onAdd, onRemove }: Pro
         {extras.length > 0 && (
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                 <th style={th}>Item</th>
                 <th style={{ ...th, width: 110 }}>Valor</th>
                 <th style={{ ...th, width: 60 }}>Qtde</th>
@@ -75,7 +75,7 @@ export function ExtrasSection({ itens, travado, onUpdate, onAdd, onRemove }: Pro
                 <tr key={item._key} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
                   <td style={{ padding: '8px 12px' }}>
                     {travado ? (
-                      <span style={{ fontSize: 13, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)' }}>{item.descricao || '—'}</span>
+                      <span style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)' }}>{item.descricao || '—'}</span>
                     ) : (
                       <input
                         style={inputInline}
@@ -88,7 +88,7 @@ export function ExtrasSection({ itens, travado, onUpdate, onAdd, onRemove }: Pro
                   </td>
                   <td style={{ padding: '8px 12px' }}>
                     {travado ? (
-                      <span style={{ fontSize: 13, color: '#F5F2EA' }}>{formatBRL(item.valor_unitario)}</span>
+                      <span style={{ fontSize: 13, color: '#1C1C1C' }}>{formatBRL(item.valor_unitario)}</span>
                     ) : (
                       <input
                         type="number" step="0.01" min="0"
@@ -101,7 +101,7 @@ export function ExtrasSection({ itens, travado, onUpdate, onAdd, onRemove }: Pro
                   </td>
                   <td style={{ padding: '8px 12px' }}>
                     {travado ? (
-                      <span style={{ fontSize: 13, color: '#F5F2EA' }}>{item.qtde}</span>
+                      <span style={{ fontSize: 13, color: '#1C1C1C' }}>{item.qtde}</span>
                     ) : (
                       <input
                         type="number" min="1" step="1"
@@ -112,14 +112,14 @@ export function ExtrasSection({ itens, travado, onUpdate, onAdd, onRemove }: Pro
                       />
                     )}
                   </td>
-                  <td style={{ padding: '8px 12px', fontFamily: 'var(--font-montserrat)', fontSize: 13, color: '#B89A5A', fontWeight: 600 }}>
+                  <td style={{ padding: '8px 12px', fontFamily: 'var(--font-montserrat)', fontSize: 13, color: '#1F7A4D', fontWeight: 600 }}>
                     {formatBRL(item.total)}
                   </td>
                   {!travado && (
                     <td style={{ padding: '8px 6px' }}>
                       <button
                         onClick={() => onRemove(item._key)}
-                        style={{ background: 'none', border: 'none', color: '#F87171', cursor: 'pointer', fontSize: 14, padding: '0 4px' }}
+                        style={{ background: 'none', border: 'none', color: '#C0392B', cursor: 'pointer', fontSize: 14, padding: '0 4px' }}
                         aria-label="Remover item"
                       >
                         ×
@@ -134,15 +134,15 @@ export function ExtrasSection({ itens, travado, onUpdate, onAdd, onRemove }: Pro
 
         {extras.length === 0 && (
           <div style={{ padding: '20px 0', textAlign: 'center' }}>
-            <p style={{ color: '#8A8A93', fontSize: 13, marginBottom: 0 }}>Nenhum item extra</p>
+            <p style={{ color: '#6B6B66', fontSize: 13, marginBottom: 0 }}>Nenhum item extra</p>
           </div>
         )}
 
         {!travado && (
-          <div style={{ padding: '10px 14px', borderTop: extras.length > 0 ? '1px solid rgba(255,255,255,0.04)' : undefined }}>
+          <div style={{ padding: '10px 14px', borderTop: extras.length > 0 ? '1px solid rgba(0,0,0,0.05)' : undefined }}>
             <button
               onClick={adicionarExtra}
-              style={{ fontSize: 11, color: '#B89A5A', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-montserrat)', padding: 0 }}
+              style={{ fontSize: 11, color: '#1F7A4D', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-montserrat)', padding: 0 }}
             >
               + Adicionar item extra
             </button>

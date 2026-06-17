@@ -1,4 +1,4 @@
-export type ProteseStatus = 'solicitado' | 'em_producao' | 'pronto' | 'entregue' | 'cancelado';
+﻿export type ProteseStatus = 'solicitado' | 'em_producao' | 'pronto' | 'entregue' | 'cancelado';
 
 export interface ProtesePedido {
   id: string;
@@ -27,10 +27,10 @@ export const STATUS_LABEL: Record<ProteseStatus, string> = {
 
 export const STATUS_COR: Record<ProteseStatus, string> = {
   solicitado: '#60A5FA',
-  em_producao: '#FBBF24',
-  pronto: '#4ADE80',
-  entregue: '#8A8A93',
-  cancelado: '#F87171',
+  em_producao: '#C98A1E',
+  pronto: '#1F7A4D',
+  entregue: '#6B6B66',
+  cancelado: '#C0392B',
 };
 
 export const TIPOS_PROTESE = [

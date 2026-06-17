@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -81,7 +81,7 @@ export function OrcamentoAcoes({ orcamentoId, status, travado, codigo }: Props) 
           onClick={() => mudarStatus('recusado')}
           disabled={!!loading}
           className="btn-ghost text-xs"
-          style={{ padding: '7px 14px', color: '#F87171' }}
+          style={{ padding: '7px 14px', color: '#C0392B' }}
         >
           Recusado
         </button>
@@ -101,7 +101,7 @@ export function OrcamentoAcoes({ orcamentoId, status, travado, codigo }: Props) 
           onClick={travar}
           disabled={!!loading}
           className="btn-primary text-xs"
-          style={{ padding: '7px 16px', background: 'rgba(74,222,128,0.15)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.3)' }}
+          style={{ padding: '7px 16px', background: 'rgba(74,222,128,0.15)', color: '#1F7A4D', border: '1px solid rgba(74,222,128,0.3)' }}
         >
           {loading === 'travar' ? '...' : 'Travar Orçamento'}
         </button>

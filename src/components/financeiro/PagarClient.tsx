@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
@@ -63,10 +63,10 @@ export function PagarClient({ contas }: { contas: ContaPagar[] }) {
   };
 
   const FILTROS: { key: Filtro; label: string; cor: string }[] = [
-    { key: 'todos', label: 'Todas', cor: '#8A8A93' },
-    { key: 'pendente', label: 'Pendentes', cor: '#FBBF24' },
-    { key: 'vencido', label: 'Vencidas', cor: '#F87171' },
-    { key: 'pago', label: 'Pagas', cor: '#4ADE80' },
+    { key: 'todos', label: 'Todas', cor: '#6B6B66' },
+    { key: 'pendente', label: 'Pendentes', cor: '#C98A1E' },
+    { key: 'vencido', label: 'Vencidas', cor: '#C0392B' },
+    { key: 'pago', label: 'Pagas', cor: '#1F7A4D' },
   ];
 
   return (
@@ -79,7 +79,7 @@ export function PagarClient({ contas }: { contas: ContaPagar[] }) {
             className="card text-left transition-colors"
             style={{
               padding: '12px 18px', minWidth: 130, cursor: 'pointer',
-              border: `1px solid ${filtro === f.key ? f.cor : 'rgba(255,255,255,0.07)'}`,
+              border: `1px solid ${filtro === f.key ? f.cor : 'rgba(0,0,0,0.08)'}`,
             }}
           >
             <div style={{ fontSize: 10, color: f.cor, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
@@ -100,7 +100,7 @@ export function PagarClient({ contas }: { contas: ContaPagar[] }) {
       </div>
 
       {filtradas.length === 0 ? (
-        <div className="card text-center py-16" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card text-center py-16" style={{ borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           <p className="text-muted text-sm">Nenhuma despesa neste filtro.</p>
         </div>
       ) : (
@@ -118,7 +118,7 @@ export function PagarClient({ contas }: { contas: ContaPagar[] }) {
                 const st = statusEfetivo(c);
                 const cfg = CONTA_STATUS_CONFIG[st];
                 return (
-                  <tr key={c.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                  <tr key={c.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                     <td style={{ padding: '11px 14px' }}>
                       <span className="text-offwhite" style={{ fontSize: 12 }}>{c.descricao}</span>
                       {c.recorrente && <span className="text-muted block" style={{ fontSize: 9 }}>↻ recorrente</span>}
@@ -130,7 +130,7 @@ export function PagarClient({ contas }: { contas: ContaPagar[] }) {
                       <span className="text-muted" style={{ fontSize: 11 }}>{c.fornecedor ?? '—'}</span>
                     </td>
                     <td style={{ padding: '11px 14px' }}>
-                      <span style={{ fontSize: 12, color: st === 'vencido' ? '#F87171' : '#F5F2EA' }}>
+                      <span style={{ fontSize: 12, color: st === 'vencido' ? '#C0392B' : '#1C1C1C' }}>
                         {new Date(c.vencimento + 'T12:00:00').toLocaleDateString('pt-BR')}
                       </span>
                     </td>
@@ -157,7 +157,7 @@ export function PagarClient({ contas }: { contas: ContaPagar[] }) {
                         onClick={() => excluir(c)}
                         disabled={!!loading}
                         className="btn-ghost"
-                        style={{ fontSize: 10, padding: '4px 8px', color: '#F87171' }}
+                        style={{ fontSize: 10, padding: '4px 8px', color: '#C0392B' }}
                       >
                         {loading === 'del-' + c.id ? '...' : '✕'}
                       </button>
@@ -220,8 +220,8 @@ function NovaDespesaModal({ onClose }: { onClose: () => void }) {
     >
       <div className="card" style={{ width: 460, maxWidth: '95vw', padding: 28 }}>
         <div className="flex items-center justify-between mb-5">
-          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#F5F2EA', fontWeight: 500 }}>Nova Despesa</h2>
-          <button onClick={onClose} style={{ color: '#8A8A93', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
+          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#1C1C1C', fontWeight: 500 }}>Nova Despesa</h2>
+          <button onClick={onClose} style={{ color: '#6B6B66', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
         </div>
         <div className="space-y-4">
           <div>
@@ -253,10 +253,10 @@ function NovaDespesaModal({ onClose }: { onClose: () => void }) {
             </div>
           </div>
           <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" checked={recorrente} onChange={e => setRecorrente(e.target.checked)} style={{ accentColor: '#B89A5A' }} />
+            <input type="checkbox" checked={recorrente} onChange={e => setRecorrente(e.target.checked)} style={{ accentColor: '#1F7A4D' }} />
             <span className="text-muted text-xs">Despesa recorrente (mensal)</span>
           </label>
-          {erro && <p style={{ fontSize: 12, color: '#F87171', fontFamily: 'var(--font-montserrat)' }}>{erro}</p>}
+          {erro && <p style={{ fontSize: 12, color: '#C0392B', fontFamily: 'var(--font-montserrat)' }}>{erro}</p>}
           <div className="flex gap-3 justify-end pt-2">
             <button onClick={onClose} className="btn-ghost text-xs" style={{ padding: '8px 16px' }}>Cancelar</button>
             <button onClick={salvar} disabled={loading} className="btn-primary text-xs" style={{ padding: '8px 20px' }}>

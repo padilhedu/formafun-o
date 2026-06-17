@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import type { ProfissionalRow } from '../ConfiguracoesClient';
@@ -6,7 +6,7 @@ import type { ProfissionalRow } from '../ConfiguracoesClient';
 interface Props { profissionais: ProfissionalRow[]; }
 
 const ESPECIALIDADES = ['Clínico Geral', 'Ortodontia', 'Implantodontia', 'Endodontia', 'Periodontia', 'Cirurgia', 'Prótese', 'Estética', 'Odontopediatria', 'Outro'];
-const CORES = ['#B89A5A', '#4ADE80', '#60A5FA', '#F87171', '#FBBF24', '#8B5CF6', '#EC4899', '#F97316'];
+const CORES = ['#1F7A4D', '#1F7A4D', '#60A5FA', '#C0392B', '#C98A1E', '#8B5CF6', '#EC4899', '#F97316'];
 
 function Modal({ item, onFechar, onSalvo }: {
   item?: ProfissionalRow | null;
@@ -16,7 +16,7 @@ function Modal({ item, onFechar, onSalvo }: {
   const [nome, setNome] = useState(item?.nome ?? '');
   const [cro, setCro] = useState(item?.cro ?? '');
   const [esp, setEsp] = useState(item?.especialidade ?? '');
-  const [cor, setCor] = useState(item?.cor ?? '#B89A5A');
+  const [cor, setCor] = useState(item?.cor ?? '#1F7A4D');
   const [comissao, setComissao] = useState(String(item?.comissao_percentual ?? 0));
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
@@ -39,7 +39,7 @@ function Modal({ item, onFechar, onSalvo }: {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }}
       onClick={e => { if (e.target === e.currentTarget) onFechar(); }}>
       <div className="card-elevated w-full max-w-md rounded-modal">
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
           <h2 className="heading text-offwhite text-base">{item ? 'Editar Profissional' : 'Novo Profissional'}</h2>
           <button onClick={onFechar} className="text-muted text-xl">×</button>
         </div>
@@ -71,7 +71,7 @@ function Modal({ item, onFechar, onSalvo }: {
               {CORES.map(c => (
                 <button key={c} type="button" onClick={() => setCor(c)} style={{
                   width: 28, height: 28, borderRadius: 6, background: c, border: 'none', cursor: 'pointer',
-                  outline: cor === c ? '2px solid #F5F2EA' : '2px solid transparent', outlineOffset: 2,
+                  outline: cor === c ? '2px solid #1C1C1C' : '2px solid transparent', outlineOffset: 2,
                 }} />
               ))}
             </div>
@@ -128,7 +128,7 @@ export function TabProfissionais({ profissionais: initial }: Props) {
               <tr><td colSpan={7} className="text-center text-muted py-12 text-sm">Nenhum profissional cadastrado.</td></tr>
             )}
             {lista.map(p => (
-              <tr key={p.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+              <tr key={p.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                 <td style={{ padding: '12px 16px' }}>
                   <span className="text-offwhite text-sm font-medium">{p.nome}</span>
                 </td>
@@ -142,12 +142,12 @@ export function TabProfissionais({ profissionais: initial }: Props) {
                   <span className="text-muted text-xs">{p.comissao_percentual ? `${p.comissao_percentual}%` : '—'}</span>
                 </td>
                 <td style={{ padding: '12px 16px' }}>
-                  <div style={{ width: 16, height: 16, borderRadius: 4, background: p.cor ?? '#B89A5A' }} />
+                  <div style={{ width: 16, height: 16, borderRadius: 4, background: p.cor ?? '#1F7A4D' }} />
                 </td>
                 <td style={{ padding: '12px 16px' }}>
                   <span className="badge" style={{
                     background: p.ativo ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)',
-                    color: p.ativo ? '#4ADE80' : '#8A8A93',
+                    color: p.ativo ? '#1F7A4D' : '#6B6B66',
                     border: `1px solid ${p.ativo ? 'rgba(74,222,128,0.25)' : 'rgba(138,138,147,0.15)'}`,
                     fontSize: 10,
                   }}>{p.ativo ? 'Ativo' : 'Inativo'}</span>
@@ -155,7 +155,7 @@ export function TabProfissionais({ profissionais: initial }: Props) {
                 <td style={{ padding: '12px 16px' }}>
                   <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
                     <button onClick={() => setModal(p)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11 }}>Editar</button>
-                    <button onClick={() => toggleAtivo(p)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11, color: '#8A8A93' }}>
+                    <button onClick={() => toggleAtivo(p)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11, color: '#6B6B66' }}>
                       {p.ativo ? 'Inativar' : 'Ativar'}
                     </button>
                   </div>

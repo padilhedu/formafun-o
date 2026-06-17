@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { ProtesePedido, ProteseStatus, STATUS_LABEL, STATUS_COR, TIPOS_PROTESE } from '@/types/protese';
@@ -49,7 +49,7 @@ function PedidoModal({ pedido, pacientes, onFechar, onSalvo, onExcluido }: {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }} onClick={e => { if (e.target === e.currentTarget) onFechar(); }}>
       <div className="card-elevated w-full max-w-lg rounded-modal" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
           <h2 className="heading text-offwhite text-base">{pedido ? 'Editar Pedido' : 'Novo Pedido de Prótese'}</h2>
           <button onClick={onFechar} className="text-muted hover:text-offwhite text-xl">×</button>
         </div>
@@ -120,16 +120,16 @@ export function ProteseClient({ pedidosIniciais, pacientes }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #1F7A4D' }}>
           <p className="table-header mb-2">Em Aberto</p>
           <p className="heading text-3xl font-semibold text-offwhite">{emAberto}</p>
           <p className="text-muted text-xs mt-1">pedidos ativos</p>
         </div>
-        <div className="card p-5" style={{ borderLeft: `3px solid ${prontos > 0 ? '#4ADE80' : '#8A8A93'}` }}>
+        <div className="card p-5" style={{ borderLeft: `3px solid ${prontos > 0 ? '#1F7A4D' : '#6B6B66'}` }}>
           <p className="table-header mb-2">Prontos para Entrega</p>
-          <p className="heading text-3xl font-semibold" style={{ color: prontos > 0 ? '#4ADE80' : '#F5F2EA' }}>{prontos}</p>
+          <p className="heading text-3xl font-semibold" style={{ color: prontos > 0 ? '#1F7A4D' : '#1C1C1C' }}>{prontos}</p>
           <div className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1"
-            style={{ background: prontos > 0 ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)', color: prontos > 0 ? '#4ADE80' : '#8A8A93' }}>
+            style={{ background: prontos > 0 ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)', color: prontos > 0 ? '#1F7A4D' : '#6B6B66' }}>
             {prontos > 0 ? '↑ aguardando retirada' : '— nenhum pronto'}
           </div>
         </div>
@@ -160,7 +160,7 @@ export function ProteseClient({ pedidosIniciais, pacientes }: Props) {
       <div className="card overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.07)' }}>
               {['Tipo','Paciente','Laboratório','Prazo','Valor','Status',''].map(h => (
                 <th key={h} className="table-header text-left px-4 py-3">{h}</th>
               ))}
@@ -171,11 +171,11 @@ export function ProteseClient({ pedidosIniciais, pacientes }: Props) {
             {visiveis.map(p => {
               const atrasado = p.prazo && p.status !== 'entregue' && p.status !== 'cancelado' && new Date(p.prazo) < new Date();
               return (
-                <tr key={p.id} className="table-row-hover" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                <tr key={p.id} className="table-row-hover" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                   <td className="px-4 py-3 text-offwhite text-sm font-medium">{p.tipo}</td>
                   <td className="px-4 py-3 text-muted text-xs">{p.pacientes?.nome ?? '—'}</td>
                   <td className="px-4 py-3 text-muted text-xs">{p.laboratorio ?? '—'}</td>
-                  <td className="px-4 py-3 text-xs" style={{ color: atrasado ? '#F87171' : '#8A8A93' }}>
+                  <td className="px-4 py-3 text-xs" style={{ color: atrasado ? '#C0392B' : '#6B6B66' }}>
                     {p.prazo ? new Date(p.prazo).toLocaleDateString('pt-BR') : '—'}
                     {atrasado && ' ⚠'}
                   </td>

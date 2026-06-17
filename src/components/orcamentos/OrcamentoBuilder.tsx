@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import type { ProcedimentoTabela, OrcamentoItem, ProcedimentoCategoria } from '@/types/orcamentos';
@@ -140,9 +140,9 @@ export function OrcamentoBuilder({
     fontSize: 10,
     fontWeight: 600,
     letterSpacing: '0.06em',
-    color: '#8A8A93',
+    color: '#6B6B66',
     fontFamily: 'var(--font-montserrat)',
-    borderBottom: '1px solid rgba(255,255,255,0.06)',
+    borderBottom: '1px solid rgba(0,0,0,0.07)',
     textTransform: 'uppercase',
   };
 
@@ -180,7 +180,7 @@ export function OrcamentoBuilder({
 
       {/* Catalog search dropdown */}
       {showCatalog && !travado && (
-        <div className="card-elevated" style={{ padding: 16, border: '1px solid rgba(184,154,90,0.2)' }}>
+        <div className="card-elevated" style={{ padding: 16, border: '1px solid rgba(31,122,77,0.2)' }}>
           <input
             className="input-field w-full mb-3"
             placeholder="Buscar procedimento por nome ou código..."
@@ -216,15 +216,15 @@ export function OrcamentoBuilder({
 
       {/* Items grouped by category */}
       {itens.length === 0 ? (
-        <div className="card text-center py-12" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card text-center py-12" style={{ borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           <p className="text-muted text-sm">Nenhum item adicionado ainda.</p>
           <p className="text-muted text-xs mt-1">Use os botões acima para adicionar procedimentos.</p>
         </div>
       ) : (
         Object.entries(grouped).map(([cat, catItens]) => (
           <div key={cat} className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            <div style={{ padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(184,154,90,0.04)' }}>
-              <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', color: '#B89A5A', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
+            <div style={{ padding: '10px 16px', borderBottom: '1px solid rgba(0,0,0,0.07)', background: 'rgba(31,122,77,0.04)' }}>
+              <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
                 {CATEGORIA_LABELS[cat as ProcedimentoCategoria] ?? cat}
               </span>
             </div>
@@ -242,7 +242,7 @@ export function OrcamentoBuilder({
               </thead>
               <tbody>
                 {catItens.map(item => (
-                  <tr key={item._key} className="table-row-hover" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <tr key={item._key} className="table-row-hover" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                     <td style={{ padding: '8px 12px' }}>
                       {travado ? (
                         <span className="text-offwhite text-sm">{item.descricao}</span>
@@ -321,7 +321,7 @@ export function OrcamentoBuilder({
                       <td style={{ padding: '8px 8px', textAlign: 'center' }}>
                         <button
                           onClick={() => removeItem(item._key)}
-                          style={{ color: '#F87171', fontSize: 16, lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer' }}
+                          style={{ color: '#C0392B', fontSize: 16, lineHeight: 1, background: 'none', border: 'none', cursor: 'pointer' }}
                         >
                           ×
                         </button>
@@ -374,7 +374,7 @@ export function OrcamentoBuilder({
             <span className="text-muted text-sm">
               Desconto {descontoTipo === 'percentual' ? `(${descontoValor}%)` : ''}
             </span>
-            <span style={{ color: '#4ADE80', fontSize: 14 }}>- {formatBRL(desconto)}</span>
+            <span style={{ color: '#1F7A4D', fontSize: 14 }}>- {formatBRL(desconto)}</span>
           </div>
         )}
 

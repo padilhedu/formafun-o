@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -89,7 +89,7 @@ export function ContratoAcoes({ contratoId, status, pdfToken }: Props) {
             onClick={cancelar}
             disabled={!!loading}
             className="btn-ghost text-xs"
-            style={{ padding: '7px 14px', color: '#F87171' }}
+            style={{ padding: '7px 14px', color: '#C0392B' }}
           >
             Cancelar
           </button>
@@ -97,7 +97,7 @@ export function ContratoAcoes({ contratoId, status, pdfToken }: Props) {
       </div>
 
       {msg && (
-        <p style={{ fontSize: 11, color: '#FBBF24', fontFamily: 'var(--font-montserrat)', maxWidth: 320, textAlign: 'right' }}>
+        <p style={{ fontSize: 11, color: '#C98A1E', fontFamily: 'var(--font-montserrat)', maxWidth: 320, textAlign: 'right' }}>
           {msg}
         </p>
       )}

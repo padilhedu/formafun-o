@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 
@@ -13,15 +13,15 @@ export function FluxoCaixaChart({ data }: { data: FluxoMes[] }) {
     <div style={{ width: '100%', height: 280 }}>
       <ResponsiveContainer>
         <BarChart data={data} barGap={4}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
           <XAxis
             dataKey="mes"
-            tick={{ fill: '#8A8A93', fontSize: 11, fontFamily: 'Montserrat' }}
-            axisLine={{ stroke: 'rgba(255,255,255,0.07)' }}
+            tick={{ fill: '#6B6B66', fontSize: 11, fontFamily: 'Montserrat' }}
+            axisLine={{ stroke: 'rgba(0,0,0,0.08)' }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: '#8A8A93', fontSize: 10, fontFamily: 'Montserrat' }}
+            tick={{ fill: '#6B6B66', fontSize: 10, fontFamily: 'Montserrat' }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}k`}
@@ -29,13 +29,13 @@ export function FluxoCaixaChart({ data }: { data: FluxoMes[] }) {
           <Tooltip
             cursor={{ fill: 'rgba(255,255,255,0.03)' }}
             contentStyle={{
-              background: '#1A1A1E',
+              background: '#FAF8F4',
               border: '1px solid rgba(255,255,255,0.1)',
               borderRadius: 10,
               fontFamily: 'Montserrat',
               fontSize: 12,
             }}
-            labelStyle={{ color: '#F5F2EA' }}
+            labelStyle={{ color: '#1C1C1C' }}
             formatter={(value, name) => [
               Number(value ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
               name === 'recebido' ? 'Recebido' : 'Pago',
@@ -43,13 +43,13 @@ export function FluxoCaixaChart({ data }: { data: FluxoMes[] }) {
           />
           <Legend
             formatter={(v: string) => (
-              <span style={{ color: '#8A8A93', fontSize: 11, fontFamily: 'Montserrat' }}>
+              <span style={{ color: '#6B6B66', fontSize: 11, fontFamily: 'Montserrat' }}>
                 {v === 'recebido' ? 'Recebido' : 'Pago'}
               </span>
             )}
           />
-          <Bar dataKey="recebido" fill="#B89A5A" radius={[4, 4, 0, 0]} maxBarSize={32} />
-          <Bar dataKey="pago" fill="#F87171" radius={[4, 4, 0, 0]} maxBarSize={32} opacity={0.7} />
+          <Bar dataKey="recebido" fill="#1F7A4D" radius={[4, 4, 0, 0]} maxBarSize={32} />
+          <Bar dataKey="pago" fill="#C0392B" radius={[4, 4, 0, 0]} maxBarSize={32} opacity={0.7} />
         </BarChart>
       </ResponsiveContainer>
     </div>

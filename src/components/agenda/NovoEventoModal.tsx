@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { AgendaEvento, TIPO_LABEL, STATUS_LABEL, TIPO_COR } from '@/types/agenda';
@@ -113,7 +113,7 @@ export function NovoEventoModal({
       onClick={(e) => { if (e.target === e.currentTarget) onFechar(); }}
     >
       <div className="card-elevated w-full max-w-lg rounded-modal overflow-hidden" style={{ maxHeight: '90vh', overflowY: 'auto' }}>
-        <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
           <h2 className="heading text-offwhite text-lg">{editando ? 'Editar Evento' : 'Novo Evento'}</h2>
           <button onClick={onFechar} className="text-muted hover:text-offwhite text-xl leading-none">×</button>
         </div>
@@ -193,7 +193,7 @@ export function NovoEventoModal({
                   {enviandoWpp ? 'Enviando...' : evento.whatsapp_enviado ? 'Reenviar' : 'Enviar'}
                 </button>
               </div>
-              {wppMsg && <p className="mt-1 text-xs" style={{ color: wppMsg.startsWith('Erro') ? '#F87171' : '#4ADE80' }}>{wppMsg}</p>}
+              {wppMsg && <p className="mt-1 text-xs" style={{ color: wppMsg.startsWith('Erro') ? '#C0392B' : '#1F7A4D' }}>{wppMsg}</p>}
             </div>
           )}
 

@@ -1,4 +1,4 @@
-import type { Paciente, Anamnese, Evolucao } from '@/types/pacientes';
+﻿import type { Paciente, Anamnese, Evolucao } from '@/types/pacientes';
 import { formatDate } from '@/lib/masks';
 
 interface Props { paciente: Paciente; anamnese: Anamnese | null; evolucoes: Evolucao[]; }
@@ -32,7 +32,7 @@ export function AbaVisaoGeral({ paciente, anamnese, evolucoes }: Props) {
         </InfoCard>
 
         {/* Últimas evoluções */}
-        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: '20px' }}>
+        <div style={{ borderRadius: 14, background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', padding: '20px' }}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-offwhite font-semibold text-sm">Últimas Evoluções</h3>
             <a href="?aba=evolucoes" className="text-gold text-xs hover:text-champagne transition-colors">Ver todas →</a>
@@ -43,16 +43,16 @@ export function AbaVisaoGeral({ paciente, anamnese, evolucoes }: Props) {
             <div className="space-y-2">
               {evolucoes.slice(0, 3).map(ev => (
                 <div key={ev.id} className="flex items-start gap-3 py-2"
-                  style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                  style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
                   <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                    style={{ background: ev.travada ? '#8A8A93' : '#4ADE80' }} />
+                    style={{ background: ev.travada ? '#6B6B66' : '#1F7A4D' }} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="text-offwhite text-xs font-medium">{ev.procedimento}</span>
                       {ev.dente && <span className="text-muted text-xs">· Dente {ev.dente}</span>}
                       {ev.travada && (
                         <span className="badge text-[0.6rem]"
-                          style={{ background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.2)' }}>
+                          style={{ background: 'rgba(74,222,128,0.08)', color: '#1F7A4D', border: '1px solid rgba(74,222,128,0.2)' }}>
                           Travado
                         </span>
                       )}
@@ -78,11 +78,11 @@ export function AbaVisaoGeral({ paciente, anamnese, evolucoes }: Props) {
         </InfoCard>
 
         {anamnese && anamnese.alertas.length > 0 && (
-          <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, rgba(248,113,113,0.05) 0%, #111113 100%)', border: '1px solid rgba(248,113,113,0.18)', borderLeft: '3px solid #F87171', padding: '16px' }}>
+          <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, rgba(248,113,113,0.05) 0%, #FAF8F4 100%)', border: '1px solid rgba(248,113,113,0.18)', borderLeft: '3px solid #C0392B', padding: '16px' }}>
             <h3 className="text-error text-xs font-semibold uppercase tracking-wider mb-3">Alertas Clínicos</h3>
             <div className="space-y-1.5">
               {anamnese.alertas.map(a => (
-                <div key={a} className="flex items-center gap-2 text-xs" style={{ color: '#F87171' }}>
+                <div key={a} className="flex items-center gap-2 text-xs" style={{ color: '#C0392B' }}>
                   <span>⚠</span><span>{a}</span>
                 </div>
               ))}
@@ -104,14 +104,14 @@ function InfoCard({ title, children }: { title: string; children: React.ReactNod
   return (
     <div style={{
       borderRadius: 14,
-      background: 'linear-gradient(145deg, #141416 0%, #111113 100%)',
-      border: '1px solid rgba(255,255,255,0.07)',
+      background: '#FFFFFF',
+      border: '1px solid rgba(0,0,0,0.08)',
       padding: '20px',
     }}>
       <h3 style={{
         fontFamily: 'var(--font-montserrat)', fontSize: 11, fontWeight: 700,
-        letterSpacing: '0.07em', textTransform: 'uppercase', color: '#8A8A93',
-        borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.75rem', marginBottom: '1rem',
+        letterSpacing: '0.07em', textTransform: 'uppercase', color: '#6B6B66',
+        borderBottom: '1px solid rgba(0,0,0,0.06)', paddingBottom: '0.75rem', marginBottom: '1rem',
       }}>
         {title}
       </h3>

@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
@@ -21,9 +21,9 @@ export default async function PortalPerfilPage() {
 
   function Row({ label, value }: { label: string; value: string | null | undefined }) {
     return (
-      <div style={{ padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <p style={{ fontSize: 10, color: '#8A8A93', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.06em', margin: 0 }}>{label}</p>
-        <p style={{ fontSize: 14, color: '#F5F2EA', margin: '3px 0 0' }}>{value || '—'}</p>
+      <div style={{ padding: '10px 0', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+        <p style={{ fontSize: 10, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase', letterSpacing: '0.06em', margin: 0 }}>{label}</p>
+        <p style={{ fontSize: 14, color: '#1C1C1C', margin: '3px 0 0' }}>{value || '—'}</p>
       </div>
     );
   }
@@ -31,9 +31,9 @@ export default async function PortalPerfilPage() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3 mb-2">
-        <Link href="/portal" style={{ color: '#8A8A93', fontSize: 13 }}>← Início</Link>
+        <Link href="/portal" style={{ color: '#6B6B66', fontSize: 13 }}>← Início</Link>
       </div>
-      <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.6rem', color: '#B89A5A', fontWeight: 600, margin: 0 }}>
+      <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.6rem', color: '#1F7A4D', fontWeight: 600, margin: 0 }}>
         Meu Perfil
       </h1>
 
@@ -52,7 +52,7 @@ export default async function PortalPerfilPage() {
       <div className="card" style={{ padding: '4px 20px 16px' }}>
         <Row label="E-mail de acesso" value={user.email} />
         <div style={{ paddingTop: 12 }}>
-          <Link href="/portal/perfil/senha" style={{ fontSize: 12, color: '#B89A5A', textDecoration: 'none' }}>
+          <Link href="/portal/perfil/senha" style={{ fontSize: 12, color: '#1F7A4D', textDecoration: 'none' }}>
             Alterar senha →
           </Link>
         </div>

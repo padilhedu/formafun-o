@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr';
+﻿import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { RelatoriosClient } from '@/components/relatorios/RelatoriosClient';
 
@@ -53,10 +53,10 @@ export default async function RelatoriosPage() {
 
   const statusMap: Record<string, { cor: string }> = {
     agendado: { cor: '#7B5DC0' },
-    confirmado: { cor: '#4ADE80' },
-    realizado: { cor: '#8A8A93' },
-    cancelado: { cor: '#F87171' },
-    faltou: { cor: '#FBBF24' },
+    confirmado: { cor: '#1F7A4D' },
+    realizado: { cor: '#6B6B66' },
+    cancelado: { cor: '#C0392B' },
+    faltou: { cor: '#C98A1E' },
   };
   const consultasPorStatus = Object.entries(statusMap).map(([name, { cor }]) => ({
     name: name.charAt(0).toUpperCase() + name.slice(1),
@@ -71,9 +71,9 @@ export default async function RelatoriosPage() {
   return (
     <div className="space-y-4">
       <div style={{ marginBottom: 24 }}>
-        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>OPERACIONAL</p>
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>Relatórios</h1>
-        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Visão consolidada do desempenho clínico e financeiro da clínica.</p>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>OPERACIONAL</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1, marginBottom: 4 }}>Relatórios</h1>
+        <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>Visão consolidada do desempenho clínico e financeiro da clínica.</p>
       </div>
       <RelatoriosClient
         fluxo={fluxo}

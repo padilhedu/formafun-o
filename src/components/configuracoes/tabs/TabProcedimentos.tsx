@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import type { ProcedimentoRow } from '../ConfiguracoesClient';
@@ -37,7 +37,7 @@ function Modal({ item, onFechar, onSalvo }: {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }}
       onClick={e => { if (e.target === e.currentTarget) onFechar(); }}>
       <div className="card-elevated w-full max-w-md rounded-modal">
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
           <h2 className="heading text-offwhite text-base">{item ? 'Editar Procedimento' : 'Novo Procedimento'}</h2>
           <button onClick={onFechar} className="text-muted text-xl">×</button>
         </div>
@@ -137,7 +137,7 @@ export function TabProcedimentos({ procedimentos: initial }: Props) {
               <tr><td colSpan={5} className="text-center text-muted py-12 text-sm">Nenhum procedimento encontrado.</td></tr>
             )}
             {visivel.map(p => (
-              <tr key={p.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+              <tr key={p.id} className="table-row-hover" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                 <td style={{ padding: '11px 16px' }}>
                   <span className="text-muted text-xs">{p.codigo ?? '—'}</span>
                 </td>
@@ -154,7 +154,7 @@ export function TabProcedimentos({ procedimentos: initial }: Props) {
                 <td style={{ padding: '11px 16px' }}>
                   <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
                     <button onClick={() => setModal(p)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11 }}>Editar</button>
-                    <button onClick={() => toggleAtivo(p)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11, color: '#F87171', borderColor: 'rgba(248,113,113,0.2)' }}>Inativar</button>
+                    <button onClick={() => toggleAtivo(p)} className="btn-ghost" style={{ padding: '3px 10px', fontSize: 11, color: '#C0392B', borderColor: 'rgba(248,113,113,0.2)' }}>Inativar</button>
                   </div>
                 </td>
               </tr>

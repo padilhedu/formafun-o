@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   AreaChart,
@@ -74,24 +74,24 @@ export function RevenueChart() {
         <AreaChart data={data} margin={{ top: 4, right: 4, left: -10, bottom: 0 }}>
           <defs>
             <linearGradient id="gradReceita" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#B89A5A" stopOpacity={0.25} />
-              <stop offset="95%" stopColor="#B89A5A" stopOpacity={0} />
+              <stop offset="5%" stopColor="#1F7A4D" stopOpacity={0.25} />
+              <stop offset="95%" stopColor="#1F7A4D" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="gradDespesa" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#F87171" stopOpacity={0.15} />
-              <stop offset="95%" stopColor="#F87171" stopOpacity={0} />
+              <stop offset="5%" stopColor="#C0392B" stopOpacity={0.15} />
+              <stop offset="95%" stopColor="#C0392B" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke="rgba(255,255,255,0.04)" vertical={false} />
+          <CartesianGrid stroke="rgba(0,0,0,0.05)" vertical={false} />
           <XAxis
             dataKey="mes"
-            tick={{ fill: "#8A8A93", fontSize: 10 }}
+            tick={{ fill: "#6B6B66", fontSize: 10 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
             tickFormatter={formatBRL}
-            tick={{ fill: "#8A8A93", fontSize: 10 }}
+            tick={{ fill: "#6B6B66", fontSize: 10 }}
             axisLine={false}
             tickLine={false}
           />
@@ -99,20 +99,20 @@ export function RevenueChart() {
           <Area
             type="monotone"
             dataKey="receita"
-            stroke="#B89A5A"
+            stroke="#1F7A4D"
             strokeWidth={2}
             fill="url(#gradReceita)"
             dot={false}
-            activeDot={{ r: 4, fill: "#B89A5A" }}
+            activeDot={{ r: 4, fill: "#1F7A4D" }}
           />
           <Area
             type="monotone"
             dataKey="despesa"
-            stroke="#F87171"
+            stroke="#C0392B"
             strokeWidth={1.5}
             fill="url(#gradDespesa)"
             dot={false}
-            activeDot={{ r: 4, fill: "#F87171" }}
+            activeDot={{ r: 4, fill: "#C0392B" }}
           />
         </AreaChart>
       </ResponsiveContainer>

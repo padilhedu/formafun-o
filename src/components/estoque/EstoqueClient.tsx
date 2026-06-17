@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { EstoqueItem, CATEGORIAS } from '@/types/estoque';
@@ -32,7 +32,7 @@ function MovimentoModal({ item, onFechar, onAtualizado }: { item: EstoqueItem; o
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }} onClick={e => { if (e.target === e.currentTarget) onFechar(); }}>
       <div className="card-elevated w-full max-w-sm rounded-modal">
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
           <h2 className="heading text-offwhite text-base">Registrar Movimento</h2>
           <button onClick={onFechar} className="text-muted hover:text-offwhite text-xl">×</button>
         </div>
@@ -92,7 +92,7 @@ function ItemModal({ item, onFechar, onSalvo }: { item?: EstoqueItem | null; onF
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }} onClick={e => { if (e.target === e.currentTarget) onFechar(); }}>
       <div className="card-elevated w-full max-w-md rounded-modal">
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
           <h2 className="heading text-offwhite text-base">{item ? 'Editar Item' : 'Novo Item'}</h2>
           <button onClick={onFechar} className="text-muted hover:text-offwhite text-xl">×</button>
         </div>
@@ -153,16 +153,16 @@ export function EstoqueClient({ itensIniciais }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #1F7A4D' }}>
           <p className="table-header mb-2">Total de Itens</p>
           <p className="heading text-3xl font-semibold text-offwhite">{itens.length}</p>
           <p className="text-muted text-xs mt-1">{itens.filter(i => i.categoria).length} categorias</p>
         </div>
-        <div className="card p-5" style={{ borderLeft: `3px solid ${abaixoMinimo.length > 0 ? '#FBBF24' : '#4ADE80'}` }}>
+        <div className="card p-5" style={{ borderLeft: `3px solid ${abaixoMinimo.length > 0 ? '#C98A1E' : '#1F7A4D'}` }}>
           <p className="table-header mb-2">Abaixo do Mínimo</p>
-          <p className="heading text-3xl font-semibold" style={{ color: abaixoMinimo.length > 0 ? '#FBBF24' : '#4ADE80' }}>{abaixoMinimo.length}</p>
+          <p className="heading text-3xl font-semibold" style={{ color: abaixoMinimo.length > 0 ? '#C98A1E' : '#1F7A4D' }}>{abaixoMinimo.length}</p>
           <div className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1"
-            style={{ background: abaixoMinimo.length > 0 ? 'rgba(251,191,36,0.1)' : 'rgba(74,222,128,0.1)', color: abaixoMinimo.length > 0 ? '#FBBF24' : '#4ADE80' }}>
+            style={{ background: abaixoMinimo.length > 0 ? 'rgba(251,191,36,0.1)' : 'rgba(74,222,128,0.1)', color: abaixoMinimo.length > 0 ? '#C98A1E' : '#1F7A4D' }}>
             {abaixoMinimo.length > 0 ? '↓ reposição necessária' : '✓ estoque ok'}
           </div>
         </div>
@@ -179,7 +179,7 @@ export function EstoqueClient({ itensIniciais }: Props) {
       <div className="flex flex-wrap items-center gap-2 lg:gap-3">
         <input className="input-field" style={{ minWidth: 180, maxWidth: 260 }} placeholder="Buscar item..." value={busca} onChange={e => setBusca(e.target.value)} />
         <button onClick={() => setFiltro('todos')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'todos' ? 'rgba(89,57,158,0.5)' : undefined, color: filtro === 'todos' ? '#A07FD4' : undefined }}>Todos</button>
-        <button onClick={() => setFiltro('baixo')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'baixo' ? 'rgba(251,191,36,0.5)' : undefined, color: filtro === 'baixo' ? '#FBBF24' : undefined }}>
+        <button onClick={() => setFiltro('baixo')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'baixo' ? 'rgba(251,191,36,0.5)' : undefined, color: filtro === 'baixo' ? '#C98A1E' : undefined }}>
           Abaixo do mínimo {abaixoMinimo.length > 0 && `(${abaixoMinimo.length})`}
         </button>
         <div className="flex-1" />
@@ -190,7 +190,7 @@ export function EstoqueClient({ itensIniciais }: Props) {
       <div className="card overflow-auto">
         <table className="w-full min-w-[600px]">
           <thead>
-            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+            <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.07)' }}>
               {['Item','Categoria','Estoque','Mínimo','Valor unit.','Fornecedor',''].map(h => (
                 <th key={h} className="table-header text-left px-4 py-3">{h}</th>
               ))}
@@ -203,15 +203,15 @@ export function EstoqueClient({ itensIniciais }: Props) {
             {visíveis.map(item => {
               const alerta = item.quantidade_minima > 0 && item.quantidade <= item.quantidade_minima;
               return (
-                <tr key={item.id} className="table-row-hover" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                <tr key={item.id} className="table-row-hover" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                   <td className="px-4 py-3">
                     <span className="text-offwhite text-sm font-medium">{item.nome}</span>
                     {item.codigo && <span className="text-muted ml-2 text-xs">{item.codigo}</span>}
                   </td>
                   <td className="px-4 py-3 text-muted text-xs">{item.categoria ?? '—'}</td>
                   <td className="px-4 py-3">
-                    <span className="font-semibold text-sm" style={{ color: alerta ? '#FBBF24' : '#F5F2EA' }}>{formatQtd(item.quantidade, item.unidade)}</span>
-                    {alerta && <span className="ml-1 text-xs" style={{ color: '#FBBF24' }}>⚠</span>}
+                    <span className="font-semibold text-sm" style={{ color: alerta ? '#C98A1E' : '#1C1C1C' }}>{formatQtd(item.quantidade, item.unidade)}</span>
+                    {alerta && <span className="ml-1 text-xs" style={{ color: '#C98A1E' }}>⚠</span>}
                   </td>
                   <td className="px-4 py-3 text-muted text-xs">{item.quantidade_minima > 0 ? formatQtd(item.quantidade_minima, item.unidade) : '—'}</td>
                   <td className="px-4 py-3 text-muted text-xs">{item.valor_unitario ? `R$ ${Number(item.valor_unitario).toFixed(2)}` : '—'}</td>

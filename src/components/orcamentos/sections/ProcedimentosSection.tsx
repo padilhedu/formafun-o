@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import type { ProcedimentoCategoria, ProcedimentoTabela } from '@/types/orcamentos';
@@ -26,7 +26,7 @@ function isProcedimento(i: ItemRascunho) {
 
 const th: React.CSSProperties = {
   padding: '7px 10px', fontSize: 10, fontWeight: 700, letterSpacing: '0.07em',
-  color: '#8A8A93', textTransform: 'uppercase', textAlign: 'left',
+  color: '#6B6B66', textTransform: 'uppercase', textAlign: 'left',
   fontFamily: 'var(--font-montserrat)', whiteSpace: 'nowrap',
 };
 
@@ -71,22 +71,22 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
   }, [onAdd]);
 
   const cardStyle: React.CSSProperties = {
-    background: '#121214', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 12, overflow: 'hidden',
+    background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 12, overflow: 'hidden',
   };
   const headerStyle: React.CSSProperties = {
-    padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+    padding: '12px 16px', borderBottom: '1px solid rgba(0,0,0,0.07)',
     display: 'flex', alignItems: 'center', gap: 10,
     background: 'rgba(255,255,255,0.02)',
   };
   const inputInline: React.CSSProperties = {
     background: 'transparent', border: 'none', outline: 'none',
-    color: '#F5F2EA', fontSize: 13, fontFamily: 'var(--font-montserrat)',
+    color: '#1C1C1C', fontSize: 13, fontFamily: 'var(--font-montserrat)',
     width: '100%', padding: 0,
   };
 
   return (
     <div>
-      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#B89A5A', fontFamily: 'var(--font-montserrat)', marginBottom: 10 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', marginBottom: 10 }}>
         Procedimentos
       </div>
 
@@ -103,21 +103,21 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                     checked={allSel}
                     ref={el => { if (el) el.indeterminate = !allSel && someSel; }}
                     onChange={() => onToggleCategoria(cat as ProcedimentoCategoria)}
-                    style={{ accentColor: '#B89A5A', width: 15, height: 15, cursor: 'pointer', flexShrink: 0 }}
+                    style={{ accentColor: '#1F7A4D', width: 15, height: 15, cursor: 'pointer', flexShrink: 0 }}
                     aria-label={`Selecionar todos em ${CATEGORIA_LABELS[cat as ProcedimentoCategoria] ?? cat}`}
                   />
                 )}
-                <span style={{ flex: 1, textAlign: 'center', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', color: '#D9C9A3', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
+                <span style={{ flex: 1, textAlign: 'center', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', color: '#6B6B66', fontFamily: 'var(--font-montserrat)', textTransform: 'uppercase' }}>
                   {CATEGORIA_LABELS[cat as ProcedimentoCategoria] ?? cat}
                 </span>
-                <span style={{ fontSize: 11, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>
+                <span style={{ fontSize: 11, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>
                   {catItens.filter(i => i.selecionado).length}/{catItens.length}
                 </span>
               </div>
 
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <tr style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                     {!travado && <th style={{ ...th, width: 30 }}></th>}
                     <th style={th}>Procedimento</th>
                     <th style={{ ...th, width: 100 }}>Valor</th>
@@ -142,17 +142,17 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                             checked={item.selecionado}
                             disabled={item.fixado}
                             onChange={() => onUpdate(item._key, { selecionado: !item.selecionado })}
-                            style={{ accentColor: '#B89A5A', cursor: item.fixado ? 'not-allowed' : 'pointer' }}
+                            style={{ accentColor: '#1F7A4D', cursor: item.fixado ? 'not-allowed' : 'pointer' }}
                             aria-label={`Selecionar ${item.descricao}`}
                           />
                         </td>
                       )}
                       <td style={{ padding: '8px 10px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                          {item.fixado && <span title="Item fixado" style={{ fontSize: 10, color: '#B89A5A' }}>📌</span>}
+                          {item.fixado && <span title="Item fixado" style={{ fontSize: 10, color: '#1F7A4D' }}>📌</span>}
                           <div>
                             {travado ? (
-                              <span style={{ fontSize: 13, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)' }}>{item.descricao}</span>
+                              <span style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)' }}>{item.descricao}</span>
                             ) : (
                               <input
                                 style={inputInline}
@@ -162,7 +162,7 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                               />
                             )}
                             {(item.dente || item.face) && (
-                              <div style={{ fontSize: 10, color: '#8A8A93', marginTop: 1 }}>
+                              <div style={{ fontSize: 10, color: '#6B6B66', marginTop: 1 }}>
                                 {item.dente && `Dente ${item.dente}`}{item.face && ` · ${item.face}`}
                               </div>
                             )}
@@ -171,7 +171,7 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                       </td>
                       <td style={{ padding: '8px 10px' }}>
                         {travado ? (
-                          <span style={{ fontSize: 13, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)' }}>{formatBRL(item.valor_unitario)}</span>
+                          <span style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)' }}>{formatBRL(item.valor_unitario)}</span>
                         ) : (
                           <input
                             type="number" step="0.01" min="0"
@@ -184,7 +184,7 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                       </td>
                       <td style={{ padding: '8px 10px' }}>
                         {travado ? (
-                          <span style={{ fontSize: 13, color: '#F5F2EA' }}>{item.qtde}</span>
+                          <span style={{ fontSize: 13, color: '#1C1C1C' }}>{item.qtde}</span>
                         ) : (
                           <input
                             type="number" min="1" step="1"
@@ -195,14 +195,14 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                           />
                         )}
                       </td>
-                      <td style={{ padding: '8px 10px', fontFamily: 'var(--font-montserrat)', fontSize: 13, color: '#B89A5A', fontWeight: 600 }}>
+                      <td style={{ padding: '8px 10px', fontFamily: 'var(--font-montserrat)', fontSize: 13, color: '#1F7A4D', fontWeight: 600 }}>
                         {formatBRL(item.total)}
                       </td>
                       {!travado && (
                         <td style={{ padding: '8px 6px', position: 'relative' }}>
                           <button
                             onClick={() => setMenuAberto(menuAberto === item._key ? null : item._key)}
-                            style={{ background: 'none', border: 'none', color: '#8A8A93', cursor: 'pointer', fontSize: 16, padding: '0 4px', lineHeight: 1 }}
+                            style={{ background: 'none', border: 'none', color: '#6B6B66', cursor: 'pointer', fontSize: 16, padding: '0 4px', lineHeight: 1 }}
                             aria-label="Opções do item"
                           >
                             ⋮
@@ -210,7 +210,7 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                           {menuAberto === item._key && (
                             <div style={{
                               position: 'absolute', right: 0, top: '100%', zIndex: 40,
-                              background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.1)',
+                              background: '#FAF8F4', border: '1px solid rgba(255,255,255,0.1)',
                               borderRadius: 8, overflow: 'hidden', minWidth: 140,
                             }}>
                               {[
@@ -221,8 +221,8 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                                 <button
                                   key={opt.label}
                                   onClick={() => { opt.action(); setMenuAberto(null); }}
-                                  style={{ width: '100%', textAlign: 'left', padding: '9px 14px', background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}
-                                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(184,154,90,0.08)')}
+                                  style={{ width: '100%', textAlign: 'left', padding: '9px 14px', background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
+                                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(31,122,77,0.08)')}
                                   onMouseLeave={e => (e.currentTarget.style.background = 'none')}
                                 >
                                   {opt.label}
@@ -238,10 +238,10 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
               </table>
 
               {!travado && (
-                <div style={{ padding: '10px 14px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+                <div style={{ padding: '10px 14px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                   <button
                     onClick={() => { setAddingCat(cat as ProcedimentoCategoria); setBusca(''); }}
-                    style={{ fontSize: 11, color: '#B89A5A', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-montserrat)', padding: 0 }}
+                    style={{ fontSize: 11, color: '#1F7A4D', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-montserrat)', padding: 0 }}
                   >
                     + Adicionar procedimento
                   </button>
@@ -253,8 +253,8 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
 
         {/* Empty state + add */}
         {procItens.length === 0 && (
-          <div style={{ ...cardStyle, padding: 24, textAlign: 'center', borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
-            <p style={{ color: '#8A8A93', fontSize: 13, marginBottom: 12 }}>Nenhum procedimento adicionado</p>
+          <div style={{ ...cardStyle, padding: 24, textAlign: 'center', borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
+            <p style={{ color: '#6B6B66', fontSize: 13, marginBottom: 12 }}>Nenhum procedimento adicionado</p>
           </div>
         )}
 
@@ -278,20 +278,20 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
           style={{ background: 'rgba(0,0,0,0.7)' }}
           onClick={e => { if (e.target === e.currentTarget) setAddingCat(undefined); }}
         >
-          <div style={{ background: '#121214', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, width: 520, maxWidth: '95vw', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <div style={{ padding: '18px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', gap: 12 }}>
-              <span style={{ fontFamily: 'var(--font-cormorant)', fontSize: 20, color: '#F5F2EA', fontWeight: 500, flex: 1 }}>
+          <div style={{ background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, width: 520, maxWidth: '95vw', maxHeight: '80vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <div style={{ padding: '18px 20px', borderBottom: '1px solid rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={{ fontFamily: 'var(--font-cormorant)', fontSize: 20, color: '#1C1C1C', fontWeight: 500, flex: 1 }}>
                 {addingCat ? (CATEGORIA_LABELS[addingCat] ?? addingCat) : 'Todos os procedimentos'}
               </span>
-              <button onClick={() => setAddingCat(undefined)} style={{ background: 'none', border: 'none', color: '#8A8A93', fontSize: 20, cursor: 'pointer' }}>×</button>
+              <button onClick={() => setAddingCat(undefined)} style={{ background: 'none', border: 'none', color: '#6B6B66', fontSize: 20, cursor: 'pointer' }}>×</button>
             </div>
-            <div style={{ padding: '12px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+            <div style={{ padding: '12px 20px', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
               <input
                 autoFocus
                 placeholder="Buscar por nome ou código…"
                 value={busca}
                 onChange={e => setBusca(e.target.value)}
-                style={{ width: '100%', background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, padding: '8px 12px', color: '#F5F2EA', fontSize: 13, fontFamily: 'var(--font-montserrat)', outline: 'none' }}
+                style={{ width: '100%', background: '#FAF8F4', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, padding: '8px 12px', color: '#1C1C1C', fontSize: 13, fontFamily: 'var(--font-montserrat)', outline: 'none' }}
                 aria-label="Buscar procedimento"
               />
             </div>
@@ -300,21 +300,21 @@ export function ProcedimentosSection({ itens, travado, onUpdate, onAdd, onRemove
                 <button
                   key={proc.id}
                   onClick={() => adicionarDoCatalogo(proc)}
-                  style={{ width: '100%', textAlign: 'left', padding: '11px 20px', background: 'none', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.04)', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(184,154,90,0.06)')}
+                  style={{ width: '100%', textAlign: 'left', padding: '11px 20px', background: 'none', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.05)', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(31,122,77,0.06)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'none')}
                 >
                   <div>
-                    <span style={{ fontSize: 13, color: '#F5F2EA', fontFamily: 'var(--font-montserrat)' }}>{proc.nome}</span>
-                    {proc.codigo && <span style={{ fontSize: 11, color: '#8A8A93', marginLeft: 8 }}>{proc.codigo}</span>}
+                    <span style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-montserrat)' }}>{proc.nome}</span>
+                    {proc.codigo && <span style={{ fontSize: 11, color: '#6B6B66', marginLeft: 8 }}>{proc.codigo}</span>}
                   </div>
-                  <span style={{ fontSize: 13, color: '#B89A5A', fontFamily: 'var(--font-montserrat)', fontWeight: 600, flexShrink: 0 }}>
+                  <span style={{ fontSize: 13, color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 600, flexShrink: 0 }}>
                     {formatBRL(proc.valor_base)}
                   </span>
                 </button>
               ))}
               {catalogoFiltrado.length === 0 && (
-                <p style={{ padding: 20, color: '#8A8A93', fontSize: 13, textAlign: 'center' }}>Nenhum resultado</p>
+                <p style={{ padding: 20, color: '#6B6B66', fontSize: 13, textAlign: 'center' }}>Nenhum resultado</p>
               )}
             </div>
           </div>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import type { AuditRow } from '../ConfiguracoesClient';
@@ -36,9 +36,9 @@ export function TabSeguranca({ auditLog }: Props) {
       {/* Info cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {[
-          { label: 'Registros no audit log', value: auditLog.length, color: '#B89A5A' },
+          { label: 'Registros no audit log', value: auditLog.length, color: '#1F7A4D' },
           { label: 'Ações distintas', value: acoes.length, color: '#60A5FA' },
-          { label: 'Tabelas monitoradas', value: tabelas.length, color: '#4ADE80' },
+          { label: 'Tabelas monitoradas', value: tabelas.length, color: '#1F7A4D' },
         ].map(k => (
           <div key={k.label} className="card p-4" style={{ borderLeft: `3px solid ${k.color}` }}>
             <p className="table-header mb-1">{k.label}</p>
@@ -50,7 +50,7 @@ export function TabSeguranca({ auditLog }: Props) {
       {/* Audit log viewer */}
       <div className="card p-5">
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          <p className="table-header" style={{ color: '#B89A5A' }}>AUDIT LOG</p>
+          <p className="table-header" style={{ color: '#1F7A4D' }}>AUDIT LOG</p>
           <div style={{ flex: 1 }} />
           <select className="input-field" style={{ maxWidth: 150, fontSize: 11 }} value={filtroAcao} onChange={e => setFiltroAcao(e.target.value)}>
             <option value="">Todas ações</option>
@@ -65,7 +65,7 @@ export function TabSeguranca({ auditLog }: Props) {
 
         <div style={{ overflow: 'auto', maxHeight: 400 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
-            <thead style={{ position: 'sticky', top: 0, background: '#121214' }}>
+            <thead style={{ position: 'sticky', top: 0, background: '#FFFFFF' }}>
               <tr>
                 {['Data/Hora', 'Usuário', 'Ação', 'Tabela', 'Registro'].map(h => (
                   <th key={h} className="table-header" style={{ padding: '8px 12px', textAlign: 'left', fontSize: 10 }}>{h}</th>
@@ -77,7 +77,7 @@ export function TabSeguranca({ auditLog }: Props) {
                 <tr><td colSpan={5} className="text-center text-muted py-8 text-sm">Nenhum registro.</td></tr>
               )}
               {visivel.map(r => (
-                <tr key={r.id} style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+                <tr key={r.id} style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                   <td style={{ padding: '8px 12px' }}>
                     <span className="text-muted text-xs">{new Date(r.criado_em).toLocaleString('pt-BR')}</span>
                   </td>
@@ -85,7 +85,7 @@ export function TabSeguranca({ auditLog }: Props) {
                     <span className="text-offwhite text-xs">{r.usuario_email ?? '—'}</span>
                   </td>
                   <td style={{ padding: '8px 12px' }}>
-                    <span className="badge" style={{ fontSize: 9, background: 'rgba(184,154,90,0.1)', color: '#B89A5A', border: '1px solid rgba(184,154,90,0.2)' }}>
+                    <span className="badge" style={{ fontSize: 9, background: 'rgba(31,122,77,0.1)', color: '#1F7A4D', border: '1px solid rgba(31,122,77,0.2)' }}>
                       {r.acao}
                     </span>
                   </td>

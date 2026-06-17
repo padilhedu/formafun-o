@@ -1,4 +1,4 @@
-import { getStripe } from '@/lib/stripe';
+﻿import { getStripe } from '@/lib/stripe';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,7 +30,7 @@ export default async function PagamentoSucessoPage({ searchParams }: Props) {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#0A0A0B',
+      background: '#F5F3EF',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -38,8 +38,8 @@ export default async function PagamentoSucessoPage({ searchParams }: Props) {
       fontFamily: 'Montserrat, sans-serif',
     }}>
       <div style={{
-        background: '#121214',
-        border: '1px solid rgba(255,255,255,0.07)',
+        background: '#FFFFFF',
+        border: '1px solid rgba(0,0,0,0.08)',
         borderRadius: 16,
         padding: '3rem 2.5rem',
         maxWidth: 440,
@@ -58,16 +58,16 @@ export default async function PagamentoSucessoPage({ searchParams }: Props) {
             }}>
               ✓
             </div>
-            <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 32, color: '#F5F2EA', fontWeight: 500, marginBottom: '0.5rem' }}>
+            <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 32, color: '#1C1C1C', fontWeight: 500, marginBottom: '0.5rem' }}>
               Pagamento confirmado
             </h1>
             {descricao && (
-              <p style={{ fontSize: 13, color: '#8A8A93', marginBottom: '0.25rem' }}>{descricao}</p>
+              <p style={{ fontSize: 13, color: '#6B6B66', marginBottom: '0.25rem' }}>{descricao}</p>
             )}
             {valor && (
-              <p style={{ fontSize: 20, color: '#4ADE80', fontWeight: 700, marginBottom: '1.5rem' }}>{valor}</p>
+              <p style={{ fontSize: 20, color: '#1F7A4D', fontWeight: 700, marginBottom: '1.5rem' }}>{valor}</p>
             )}
-            <p style={{ fontSize: 12, color: '#8A8A93', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 12, color: '#6B6B66', lineHeight: 1.6 }}>
               Seu pagamento foi recebido com sucesso. A Clínica Forma &amp; Função entrará em contato para confirmar o agendamento ou próximos passos.
             </p>
           </>
@@ -83,16 +83,16 @@ export default async function PagamentoSucessoPage({ searchParams }: Props) {
             }}>
               ⚠
             </div>
-            <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 32, color: '#F5F2EA', fontWeight: 500, marginBottom: '1rem' }}>
+            <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 32, color: '#1C1C1C', fontWeight: 500, marginBottom: '1rem' }}>
               Aguardando confirmação
             </h1>
-            <p style={{ fontSize: 12, color: '#8A8A93', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 12, color: '#6B6B66', lineHeight: 1.6 }}>
               O pagamento ainda não foi confirmado. Se você acabou de pagar, aguarde alguns instantes e atualize a página.
             </p>
           </>
         )}
 
-        <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+        <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
           <p style={{ fontSize: 11, color: '#4A4A53' }}>Clínica Forma &amp; Função · Balneário Camboriú/SC</p>
         </div>
       </div>
