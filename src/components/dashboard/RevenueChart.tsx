@@ -38,11 +38,11 @@ function CustomTooltip({ active, payload, label }: any) {
       className="card-elevated p-3"
       style={{ border: "1px solid rgba(0,0,0,0.08)", minWidth: 140 }}
     >
-      <div className="text-muted text-xs mb-2">{label}</div>
+      <div className="text-text-secondary text-xs mb-2">{label}</div>
       {payload.map((p: { name: string; value: number; color: string }, i: number) => (
         <div key={i} className="flex items-center justify-between gap-4 text-xs">
           <span style={{ color: p.color }}>{p.name === "receita" ? "Receita" : "Despesa"}</span>
-          <span className="text-offwhite font-semibold">
+          <span className="text-text-primary font-semibold">
             {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(p.value)}
           </span>
         </div>
@@ -56,17 +56,17 @@ export function RevenueChart() {
     <div className="card p-5 h-full">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-offwhite font-semibold text-sm">Faturamento 12 Meses</h2>
-          <p className="text-muted text-xs mt-0.5">jul/25 — jun/26</p>
+          <h2 className="text-text-primary font-semibold text-sm">Faturamento 12 Meses</h2>
+          <p className="text-text-secondary text-xs mt-0.5">jul/25 — jun/26</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5 rounded-full" style={{ background: "#59399E" }} />
-            <span className="text-muted text-xs">Receita</span>
+            <span className="text-text-secondary text-xs">Receita</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-0.5 rounded-full bg-error" />
-            <span className="text-muted text-xs">Despesa</span>
+            <span className="text-text-secondary text-xs">Despesa</span>
           </div>
         </div>
       </div>
