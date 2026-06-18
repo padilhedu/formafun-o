@@ -1,4 +1,4 @@
-import type { Paciente, Anamnese, Evolucao } from '@/types/pacientes';
+﻿import type { Paciente, Anamnese, Evolucao } from '@/types/pacientes';
 import { formatDate } from '@/lib/masks';
 
 interface Props { paciente: Paciente; anamnese: Anamnese | null; evolucoes: Evolucao[]; }
@@ -45,7 +45,7 @@ export function AbaVisaoGeral({ paciente, anamnese, evolucoes }: Props) {
                 <div key={ev.id} className="flex items-start gap-3 py-2"
                   style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                   <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                    style={{ background: ev.travada ? '#8A8A93' : '#4ADE80' }} />
+                    style={{ background: ev.travada ? '#6B6B66' : '#4ADE80' }} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="text-offwhite text-xs font-medium">{ev.procedimento}</span>
@@ -110,7 +110,7 @@ function InfoCard({ title, children }: { title: string; children: React.ReactNod
     }}>
       <h3 style={{
         fontFamily: 'var(--font-montserrat)', fontSize: 11, fontWeight: 700,
-        letterSpacing: '0.07em', textTransform: 'uppercase', color: '#8A8A93',
+        letterSpacing: '0.07em', textTransform: 'uppercase', color: '#6B6B66',
         borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.75rem', marginBottom: '1rem',
       }}>
         {title}

@@ -1,4 +1,4 @@
-import type { ContratoStatus } from '@/types/contratos';
+﻿import type { ContratoStatus } from '@/types/contratos';
 
 const STEPS: { status: ContratoStatus; label: string; icon: string }[] = [
   { status: 'rascunho',    label: 'Gerado',     icon: '📄' },
@@ -52,9 +52,9 @@ export function ContratoTimeline({ status, enviadoEm, assinadoEm }: Props) {
                   <div
                     className="w-7 h-7 rounded-full flex items-center justify-center text-xs flex-shrink-0"
                     style={{
-                      background: done ? (active && status !== 'assinado' ? 'rgba(184,154,90,0.15)' : 'rgba(74,222,128,0.15)') : 'rgba(255,255,255,0.04)',
-                      border: `1.5px solid ${done ? (active && status !== 'assinado' ? '#B89A5A' : '#4ADE80') : 'rgba(255,255,255,0.1)'}`,
-                      color: done ? (active && status !== 'assinado' ? '#B89A5A' : '#4ADE80') : '#8A8A93',
+                      background: done ? (active && status !== 'assinado' ? 'rgba(31,122,77,0.15)' : 'rgba(74,222,128,0.15)') : 'rgba(255,255,255,0.04)',
+                      border: `1.5px solid ${done ? (active && status !== 'assinado' ? '#1F7A4D' : '#4ADE80') : 'rgba(255,255,255,0.1)'}`,
+                      color: done ? (active && status !== 'assinado' ? '#1F7A4D' : '#4ADE80') : '#6B6B66',
                     }}
                   >
                     {done ? (status === 'assinado' || idx < currentStep ? '✓' : '●') : idx + 1}
@@ -68,11 +68,11 @@ export function ContratoTimeline({ status, enviadoEm, assinadoEm }: Props) {
                     fontFamily: 'var(--font-montserrat)',
                     fontSize: 12,
                     fontWeight: active ? 600 : 400,
-                    color: done ? (active ? '#F5F2EA' : '#8A8A93') : '#6A6A73',
+                    color: done ? (active ? '#1C1C1C' : '#6B6B66') : '#6A6A73',
                   }}>
                     {step.label}
                   </div>
-                  {ts && <div style={{ fontSize: 10, color: '#8A8A93', marginTop: 2 }}>{ts}</div>}
+                  {ts && <div style={{ fontSize: 10, color: '#6B6B66', marginTop: 2 }}>{ts}</div>}
                 </div>
               </div>
             );

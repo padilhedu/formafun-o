@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { Lead, LeadStatus, LeadOrigem, STATUS_LABEL, STATUS_COR, ORIGEM_LABEL } from '@/types/leads';
@@ -104,7 +104,7 @@ export function LeadsKanban({ leadsIniciais }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #1F7A4D' }}>
           <p className="table-header mb-2">Total de Leads</p>
           <p className="heading text-3xl font-semibold text-offwhite">{leads.length}</p>
           <p className="text-muted text-xs mt-1">{ativos} em andamento</p>
@@ -159,7 +159,7 @@ export function LeadsKanban({ leadsIniciais }: Props) {
                     <p className="text-offwhite font-medium" style={{ fontSize: '0.78rem', lineHeight: 1.3 }}>{lead.nome}</p>
                     {lead.telefone && <p className="text-muted" style={{ fontSize: '0.65rem', marginTop: 2 }}>{lead.telefone}</p>}
                     <div className="flex items-center gap-1 mt-2">
-                      <span className="badge" style={{ background: 'rgba(255,255,255,0.06)', color: '#8A8A93', fontSize: '0.58rem', padding: '0.1rem 0.4rem', textTransform: 'none', letterSpacing: 0, fontWeight: 500 }}>
+                      <span className="badge" style={{ background: 'rgba(255,255,255,0.06)', color: '#6B6B66', fontSize: '0.58rem', padding: '0.1rem 0.4rem', textTransform: 'none', letterSpacing: 0, fontWeight: 500 }}>
                         {ORIGEM_LABEL[lead.origem ?? 'outros']}
                       </span>
                     </div>
@@ -169,7 +169,7 @@ export function LeadsKanban({ leadsIniciais }: Props) {
                         <button onClick={() => moverStatus(lead.id, COLUNAS[COLUNAS.indexOf(colStatus) - 1])} className="text-muted hover:text-offwhite" style={{ fontSize: '0.65rem', background: 'rgba(255,255,255,0.05)', borderRadius: 4, padding: '1px 5px' }}>‹</button>
                       )}
                       {COLUNAS.indexOf(colStatus) < COLUNAS.length - 1 && (
-                        <button onClick={() => moverStatus(lead.id, COLUNAS[COLUNAS.indexOf(colStatus) + 1])} className="text-muted hover:text-offwhite" style={{ fontSize: '0.65rem', background: 'rgba(89,57,158,0.15)', borderRadius: 4, padding: '1px 5px' }}>›</button>
+                        <button onClick={() => moverStatus(lead.id, COLUNAS[COLUNAS.indexOf(colStatus) + 1])} className="text-muted hover:text-offwhite" style={{ fontSize: '0.65rem', background: 'rgba(31,122,77,0.15)', borderRadius: 4, padding: '1px 5px' }}>›</button>
                       )}
                     </div>
                   </div>

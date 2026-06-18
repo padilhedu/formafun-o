@@ -104,7 +104,7 @@ export default async function PacientePage({ params, searchParams }: Props) {
       {/* Header do paciente */}
       <div className="flex items-start gap-5 mb-6">
         <div className="w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold flex-shrink-0"
-          style={{ background: 'rgba(184,154,90,0.12)', border: '1px solid rgba(184,154,90,0.3)', color: '#B89A5A', fontFamily: 'var(--font-montserrat)' }}>
+          style={{ background: 'rgba(31,122,77,0.12)', border: '1px solid rgba(31,122,77,0.3)', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)' }}>
           {(paciente as Paciente).nome.split(' ').slice(0, 2).map((n: string) => n[0]).join('').toUpperCase()}
         </div>
         <div className="flex-1">
@@ -114,7 +114,7 @@ export default async function PacientePage({ params, searchParams }: Props) {
             </h1>
             <span className="badge" style={{
               background: (paciente as Paciente).status === 'ativo' ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)',
-              color: (paciente as Paciente).status === 'ativo' ? '#4ADE80' : '#8A8A93',
+              color: (paciente as Paciente).status === 'ativo' ? '#4ADE80' : '#6B6B66',
               border: `1px solid ${(paciente as Paciente).status === 'ativo' ? 'rgba(74,222,128,0.25)' : 'rgba(138,138,147,0.15)'}`,
             }}>{(paciente as Paciente).status}</span>
           </div>

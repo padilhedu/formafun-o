@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { ProtesePedido, ProteseStatus, STATUS_LABEL, STATUS_COR, TIPOS_PROTESE } from '@/types/protese';
@@ -120,16 +120,16 @@ export function ProteseClient({ pedidosIniciais, pacientes }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #1F7A4D' }}>
           <p className="table-header mb-2">Em Aberto</p>
           <p className="heading text-3xl font-semibold text-offwhite">{emAberto}</p>
           <p className="text-muted text-xs mt-1">pedidos ativos</p>
         </div>
-        <div className="card p-5" style={{ borderLeft: `3px solid ${prontos > 0 ? '#4ADE80' : '#8A8A93'}` }}>
+        <div className="card p-5" style={{ borderLeft: `3px solid ${prontos > 0 ? '#4ADE80' : '#6B6B66'}` }}>
           <p className="table-header mb-2">Prontos para Entrega</p>
-          <p className="heading text-3xl font-semibold" style={{ color: prontos > 0 ? '#4ADE80' : '#F5F2EA' }}>{prontos}</p>
+          <p className="heading text-3xl font-semibold" style={{ color: prontos > 0 ? '#4ADE80' : '#1C1C1C' }}>{prontos}</p>
           <div className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1"
-            style={{ background: prontos > 0 ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)', color: prontos > 0 ? '#4ADE80' : '#8A8A93' }}>
+            style={{ background: prontos > 0 ? 'rgba(74,222,128,0.1)' : 'rgba(138,138,147,0.1)', color: prontos > 0 ? '#4ADE80' : '#6B6B66' }}>
             {prontos > 0 ? '↑ aguardando retirada' : '— nenhum pronto'}
           </div>
         </div>
@@ -146,7 +146,7 @@ export function ProteseClient({ pedidosIniciais, pacientes }: Props) {
           <button key={s} onClick={() => setFiltroStatus(s)} className="btn-ghost text-xs" style={{
             padding: '0.25rem 0.65rem',
             color: filtroStatus === s ? '#fff' : undefined,
-            background: filtroStatus === s ? (s === 'todos' ? '#59399E' : STATUS_COR[s as ProteseStatus]) : undefined,
+            background: filtroStatus === s ? (s === 'todos' ? '#1F7A4D' : STATUS_COR[s as ProteseStatus]) : undefined,
             borderColor: filtroStatus === s ? 'transparent' : undefined,
           }}>
             {s === 'todos' ? 'Todos' : STATUS_LABEL[s as ProteseStatus]}
@@ -175,7 +175,7 @@ export function ProteseClient({ pedidosIniciais, pacientes }: Props) {
                   <td className="px-4 py-3 text-offwhite text-sm font-medium">{p.tipo}</td>
                   <td className="px-4 py-3 text-muted text-xs">{p.pacientes?.nome ?? '—'}</td>
                   <td className="px-4 py-3 text-muted text-xs">{p.laboratorio ?? '—'}</td>
-                  <td className="px-4 py-3 text-xs" style={{ color: atrasado ? '#F87171' : '#8A8A93' }}>
+                  <td className="px-4 py-3 text-xs" style={{ color: atrasado ? '#F87171' : '#6B6B66' }}>
                     {p.prazo ? new Date(p.prazo).toLocaleDateString('pt-BR') : '—'}
                     {atrasado && ' ⚠'}
                   </td>

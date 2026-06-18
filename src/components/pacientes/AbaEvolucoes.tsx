@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { formatDate } from '@/lib/masks';
@@ -40,7 +40,7 @@ export function AbaEvolucoes({ pacienteId, evolucoes: iniciais }: Props) {
 
       {/* Formulário nova evolução */}
       {showForm && (
-        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(184,154,90,0.2)', padding: '20px', marginBottom: 20 }}>
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(31,122,77,0.2)', padding: '20px', marginBottom: 20 }}>
           <h4 className="text-offwhite text-sm font-semibold mb-4">Registrar Evolução</h4>
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
@@ -83,8 +83,8 @@ export function AbaEvolucoes({ pacienteId, evolucoes: iniciais }: Props) {
               <div key={ev.id} className="relative">
                 <div className="absolute -left-7 top-4 w-2.5 h-2.5 rounded-full border-2 flex-shrink-0"
                   style={{
-                    background: ev.travada ? '#1A1A1E' : '#4ADE80',
-                    borderColor: ev.travada ? '#8A8A93' : '#4ADE80',
+                    background: ev.travada ? '#FFFFFF' : '#4ADE80',
+                    borderColor: ev.travada ? '#6B6B66' : '#4ADE80',
                   }} />
                 <div style={{
                   borderRadius: 12,
@@ -94,7 +94,7 @@ export function AbaEvolucoes({ pacienteId, evolucoes: iniciais }: Props) {
                 }}>
                   <div className="flex items-start justify-between gap-3 mb-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: 13, fontWeight: 600, color: '#F5F2EA' }}>{ev.procedimento}</span>
+                      <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: 13, fontWeight: 600, color: '#1C1C1C' }}>{ev.procedimento}</span>
                       {ev.dente && (
                         <span className="badge" style={{ background: 'rgba(96,165,250,0.1)', color: '#60A5FA', border: '1px solid rgba(96,165,250,0.2)', fontSize: 10 }}>
                           Dente {ev.dente}
@@ -106,9 +106,9 @@ export function AbaEvolucoes({ pacienteId, evolucoes: iniciais }: Props) {
                         </span>
                       )}
                     </div>
-                    <span style={{ fontSize: 11, color: '#8A8A93', flexShrink: 0, fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>{formatDate(ev.data)}</span>
+                    <span style={{ fontSize: 11, color: '#6B6B66', flexShrink: 0, fontFamily: 'var(--font-montserrat)', fontVariantNumeric: 'tabular-nums' }}>{formatDate(ev.data)}</span>
                   </div>
-                  {ev.descricao && <p style={{ color: '#8A8A93', fontSize: 13, marginTop: 6, lineHeight: 1.6 }}>{ev.descricao}</p>}
+                  {ev.descricao && <p style={{ color: '#6B6B66', fontSize: 13, marginTop: 6, lineHeight: 1.6 }}>{ev.descricao}</p>}
                   {ev.travada && (
                     <p style={{ fontSize: 11, marginTop: 8, color: '#4ADE80', opacity: 0.6, fontStyle: 'italic' }}>
                       Registro imutável · CFO

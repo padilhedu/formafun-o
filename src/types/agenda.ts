@@ -1,4 +1,4 @@
-export type EventoTipo = 'consulta' | 'retorno' | 'avaliacao' | 'emergencia' | 'bloqueio';
+﻿export type EventoTipo = 'consulta' | 'retorno' | 'avaliacao' | 'emergencia' | 'bloqueio';
 export type EventoStatus = 'agendado' | 'confirmado' | 'realizado' | 'cancelado' | 'faltou';
 
 export interface AgendaEvento {
@@ -36,15 +36,15 @@ export const STATUS_LABEL: Record<EventoStatus, string> = {
 };
 
 export const STATUS_COR: Record<EventoStatus, string> = {
-  agendado: '#7B5DC0',
+  agendado: '#1F7A4D',
   confirmado: '#4ADE80',
-  realizado: '#8A8A93',
+  realizado: '#6B6B66',
   cancelado: '#F87171',
   faltou: '#FBBF24',
 };
 
 export const TIPO_COR: Record<EventoTipo, string> = {
-  consulta: '#59399E',
+  consulta: '#1F7A4D',
   retorno: '#3B82F6',
   avaliacao: '#10B981',
   emergencia: '#EF4444',

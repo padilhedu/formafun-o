@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import type { Anamnese } from '@/types/pacientes';
@@ -114,8 +114,8 @@ export function AbaAnamnese({ pacienteId, anamnese }: Props) {
                           onClick={() => setRespostas(r => ({ ...r, [campo.id]: val }))}
                           className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
                           style={{
-                            background: active ? (opt === 'Sim' ? 'rgba(248,113,113,0.15)' : 'rgba(74,222,128,0.1)') : '#1A1A1E',
-                            color: active ? (opt === 'Sim' ? '#F87171' : '#4ADE80') : '#8A8A93',
+                            background: active ? (opt === 'Sim' ? 'rgba(248,113,113,0.15)' : 'rgba(74,222,128,0.1)') : '#FFFFFF',
+                            color: active ? (opt === 'Sim' ? '#F87171' : '#4ADE80') : '#6B6B66',
                             border: `1px solid ${active ? (opt === 'Sim' ? 'rgba(248,113,113,0.3)' : 'rgba(74,222,128,0.25)') : 'rgba(255,255,255,0.07)'}`,
                           }}>
                           {opt}

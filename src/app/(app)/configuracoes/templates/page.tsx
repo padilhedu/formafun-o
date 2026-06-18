@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import type { ContratoTemplate, TemplateTipo } from '@/types/contratos';
@@ -26,7 +26,7 @@ export default function TemplatesPage() {
     setSelected(t);
     setEditNome(t.nome);
     setEditTipo(t.tipo);
-    setEditHtml(t.corpo_html);
+    setEditHtml(t.corpo_html ?? '');
     setPreview(false);
   };
 
@@ -80,11 +80,11 @@ export default function TemplatesPage() {
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
-        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
-        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
+        <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>COMERCIAL</p>
+        <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1, marginBottom: 4 }}>
           Templates de Contrato
         </h1>
-        <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Editor de modelos HTML com placeholders dinâmicos</p>
+        <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>Editor de modelos HTML com placeholders dinâmicos</p>
       </div>
 
       <div className="grid grid-cols-[220px_1fr] gap-6" style={{ minHeight: 600 }}>
@@ -105,8 +105,8 @@ export default function TemplatesPage() {
                 onClick={() => selectTemplate(t)}
                 className="w-full text-left px-3 py-2.5 rounded-xl transition-colors"
                 style={{
-                  background: selected?.id === t.id ? 'rgba(184,154,90,0.1)' : 'transparent',
-                  border: `1px solid ${selected?.id === t.id ? 'rgba(184,154,90,0.3)' : 'transparent'}`,
+                  background: selected?.id === t.id ? 'rgba(31,122,77,0.1)' : 'transparent',
+                  border: `1px solid ${selected?.id === t.id ? 'rgba(31,122,77,0.3)' : 'transparent'}`,
                   fontFamily: 'var(--font-montserrat)',
                 }}
               >
@@ -156,9 +156,9 @@ export default function TemplatesPage() {
                       borderRadius: 5,
                       fontSize: 11,
                       fontFamily: 'monospace',
-                      background: 'rgba(184,154,90,0.08)',
-                      border: '1px solid rgba(184,154,90,0.2)',
-                      color: '#D9C9A3',
+                      background: 'rgba(31,122,77,0.08)',
+                      border: '1px solid rgba(31,122,77,0.2)',
+                      color: '#6B6B66',
                       cursor: 'pointer',
                     }}
                   >
@@ -173,13 +173,13 @@ export default function TemplatesPage() {
               <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.1)' }}>
                 <button
                   onClick={() => setPreview(false)}
-                  style={{ padding: '6px 14px', fontSize: 11, fontFamily: 'var(--font-montserrat)', background: !preview ? 'rgba(184,154,90,0.12)' : 'transparent', color: !preview ? '#B89A5A' : '#8A8A93', border: 'none', cursor: 'pointer' }}
+                  style={{ padding: '6px 14px', fontSize: 11, fontFamily: 'var(--font-montserrat)', background: !preview ? 'rgba(31,122,77,0.12)' : 'transparent', color: !preview ? '#1F7A4D' : '#6B6B66', border: 'none', cursor: 'pointer' }}
                 >
                   Editor HTML
                 </button>
                 <button
                   onClick={() => setPreview(true)}
-                  style={{ padding: '6px 14px', fontSize: 11, fontFamily: 'var(--font-montserrat)', background: preview ? 'rgba(184,154,90,0.12)' : 'transparent', color: preview ? '#B89A5A' : '#8A8A93', border: 'none', cursor: 'pointer' }}
+                  style={{ padding: '6px 14px', fontSize: 11, fontFamily: 'var(--font-montserrat)', background: preview ? 'rgba(31,122,77,0.12)' : 'transparent', color: preview ? '#1F7A4D' : '#6B6B66', border: 'none', cursor: 'pointer' }}
                 >
                   Pré-visualização
                 </button>
@@ -212,7 +212,7 @@ export default function TemplatesPage() {
             )}
           </div>
         ) : (
-          <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px dashed rgba(184,154,90,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px dashed rgba(31,122,77,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <p className="text-muted text-sm">Selecione um template para editar</p>
           </div>
         )}

@@ -63,7 +63,8 @@ export async function updateSession(request: NextRequest) {
     "/assinar",
     "/api/contratos/assinar", "/api/contratos/recusar",
   ];
-  const isPublic = publicRoutes.some(r => pathname.startsWith(r));
+  const isPublic = publicRoutes.some(r => pathname.startsWith(r))
+    || pathname.endsWith('/completar-dados');
 
   // Portal routes: need auth but separate from internal app
   const isPortalRoute = pathname.startsWith("/portal");

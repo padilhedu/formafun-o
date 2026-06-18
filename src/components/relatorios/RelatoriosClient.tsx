@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -19,15 +19,15 @@ interface Props {
 }
 
 const TOOLTIP_STYLE = {
-  background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.1)',
-  borderRadius: 8, color: '#F5F2EA', fontSize: '0.75rem',
+  background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 8, color: '#1C1C1C', fontSize: '0.75rem',
 };
 
 function KPI({ label, valor, sub, cor, accent }: { label: string; valor: string; sub?: string; cor?: string; accent?: string }) {
   return (
-    <div className="card p-5" style={{ borderLeft: `3px solid ${accent ?? cor ?? '#B89A5A'}` }}>
+    <div className="card p-5" style={{ borderLeft: `3px solid ${accent ?? cor ?? '#1F7A4D'}` }}>
       <p className="table-header mb-2">{label}</p>
-      <p className="heading text-3xl font-semibold" style={{ color: cor ?? '#F5F2EA' }}>{valor}</p>
+      <p className="heading text-3xl font-semibold" style={{ color: cor ?? '#1C1C1C' }}>{valor}</p>
       {sub && <p className="text-muted mt-1" style={{ fontSize: '0.7rem' }}>{sub}</p>}
     </div>
   );
@@ -40,7 +40,7 @@ export function RelatoriosClient({ fluxo, pacientesPorMes, consultasPorStatus, t
     <div className="space-y-6">
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <KPI label="Total de Pacientes" valor={String(totalPacientes)} accent="#B89A5A" />
+        <KPI label="Total de Pacientes" valor={String(totalPacientes)} accent="#1F7A4D" />
         <KPI label="Recebido no Ano" valor={totalRecebidoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#4ADE80" accent="#4ADE80" />
         <KPI label="Pago no Ano" valor={totalPagoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor="#F87171" accent="#F87171" />
         <KPI label="Saldo do Ano" valor={saldoAno.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} cor={saldoAno >= 0 ? '#4ADE80' : '#F87171'} accent={saldoAno >= 0 ? '#4ADE80' : '#F87171'}
@@ -53,10 +53,10 @@ export function RelatoriosClient({ fluxo, pacientesPorMes, consultasPorStatus, t
         <ResponsiveContainer width="100%" height={260}>
           <BarChart data={fluxo} barGap={4} barCategoryGap="30%">
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-            <XAxis dataKey="mes" tick={{ fill: '#8A8A93', fontSize: 11 }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fill: '#8A8A93', fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={v => `R$${(v/1000).toFixed(0)}k`} />
+            <XAxis dataKey="mes" tick={{ fill: '#6B6B66', fontSize: 11 }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fill: '#6B6B66', fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={v => `R$${(v/1000).toFixed(0)}k`} />
             <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => Number(v ?? 0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} />
-            <Legend wrapperStyle={{ fontSize: '0.72rem', color: '#8A8A93' }} />
+            <Legend wrapperStyle={{ fontSize: '0.72rem', color: '#6B6B66' }} />
             <Bar dataKey="recebido" name="Recebido" fill="#4ADE80" radius={[4,4,0,0]} />
             <Bar dataKey="pago" name="Pago" fill="#F87171" radius={[4,4,0,0]} />
           </BarChart>
@@ -70,10 +70,10 @@ export function RelatoriosClient({ fluxo, pacientesPorMes, consultasPorStatus, t
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={pacientesPorMes}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-              <XAxis dataKey="mes" tick={{ fill: '#8A8A93', fontSize: 10 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: '#8A8A93', fontSize: 10 }} axisLine={false} tickLine={false} allowDecimals={false} />
+              <XAxis dataKey="mes" tick={{ fill: '#6B6B66', fontSize: 10 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: '#6B6B66', fontSize: 10 }} axisLine={false} tickLine={false} allowDecimals={false} />
               <Tooltip contentStyle={TOOLTIP_STYLE} />
-              <Line type="monotone" dataKey="novos" name="Novos pacientes" stroke="#7B5DC0" strokeWidth={2} dot={{ fill: '#7B5DC0', r: 3 }} />
+              <Line type="monotone" dataKey="novos" name="Novos pacientes" stroke="#1F7A4D" strokeWidth={2} dot={{ fill: '#1F7A4D', r: 3 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -90,7 +90,7 @@ export function RelatoriosClient({ fluxo, pacientesPorMes, consultasPorStatus, t
                   {consultasPorStatus.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                 </Pie>
                 <Tooltip contentStyle={TOOLTIP_STYLE} />
-                <Legend wrapperStyle={{ fontSize: '0.7rem', color: '#8A8A93' }} />
+                <Legend wrapperStyle={{ fontSize: '0.7rem', color: '#6B6B66' }} />
               </PieChart>
             </ResponsiveContainer>
           )}

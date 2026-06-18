@@ -51,9 +51,9 @@ export default async function ContratoPage({ params }: { params: Promise<{ id: s
               ← Contratos
             </Link>
           </div>
-          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>COMERCIAL</p>
           <div className="flex items-center gap-4 mb-2 flex-wrap">
-            <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 28, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1 }}>
+            <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 28, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1 }}>
               {c.codigo}
             </h1>
             <span className="badge" style={{ background: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}` }}>
@@ -110,7 +110,7 @@ export default async function ContratoPage({ params }: { params: Promise<{ id: s
         {/* Right: contract HTML preview */}
         <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px solid rgba(255,255,255,0.07)', padding: 0, overflow: 'hidden' }}>
           <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-            <span style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.05em', color: '#8A8A93', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: 11, fontFamily: 'var(--font-montserrat)', fontWeight: 600, letterSpacing: '0.05em', color: '#6B6B66', textTransform: 'uppercase' }}>
               Visualização do Contrato
             </span>
             <a

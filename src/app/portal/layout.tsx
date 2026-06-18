@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+﻿import type { ReactNode } from 'react';
 import { Cormorant_Garamond, Montserrat } from 'next/font/google';
 
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['400','500','600'], variable: '--font-cormorant' });
@@ -9,7 +9,7 @@ export const metadata = { title: 'Portal do Paciente — Forma & Função' };
 export default function PortalLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR" className={`${cormorant.variable} ${montserrat.variable}`}>
-      <body style={{ background: '#0A0A0B', color: '#F5F2EA', fontFamily: 'var(--font-montserrat)', margin: 0, padding: 0, minHeight: '100vh' }}>
+      <body style={{ background: '#F5F3EF', color: '#1C1C1C', fontFamily: 'var(--font-montserrat)', margin: 0, padding: 0, minHeight: '100vh' }}>
         {/* Portal header */}
         <header style={{
           position: 'sticky', top: 0, zIndex: 50,
@@ -19,14 +19,14 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
         }}>
           <div style={{ maxWidth: 640, margin: '0 auto', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <span style={{ fontFamily: 'var(--font-cormorant)', color: '#B89A5A', fontWeight: 600, fontSize: '1.2rem' }}>
+              <span style={{ fontFamily: 'var(--font-cormorant)', color: '#1F7A4D', fontWeight: 600, fontSize: '1.2rem' }}>
                 Forma & Função
               </span>
-              <span style={{ fontSize: 11, color: '#8A8A93', marginLeft: 8, fontFamily: 'var(--font-montserrat)' }}>Portal do Paciente</span>
+              <span style={{ fontSize: 11, color: '#6B6B66', marginLeft: 8, fontFamily: 'var(--font-montserrat)' }}>Portal do Paciente</span>
             </div>
             <form method="POST" action="/api/portal/logout">
               <button type="submit" style={{
-                fontSize: 12, color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer',
+                fontSize: 12, color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer',
                 fontFamily: 'var(--font-montserrat)',
               }}>
                 Sair

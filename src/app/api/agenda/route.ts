@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     .insert({
       titulo, descricao: descricao || null, tipo: tipo || 'consulta',
       inicio, fim, paciente_id: paciente_id || null,
-      dentista_id: dentista_id || null, cor: cor || '#59399E',
+      dentista_id: dentista_id || null, cor: cor || '#1F7A4D',
     })
     .select('*, pacientes(nome, telefone)')
     .single();

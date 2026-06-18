@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -120,7 +120,7 @@ export function FormPaciente({ paciente }: Props) {
           </Field>
           <Field label="Sexo">
             <select className="input-field" value={form.sexo} onChange={e => set('sexo', e.target.value)}
-              style={{ background: '#1A1A1E' }}>
+              style={{ background: '#FFFFFF' }}>
               <option value="">Selecionar</option>
               <option value="F">Feminino</option>
               <option value="M">Masculino</option>
@@ -189,7 +189,7 @@ export function FormPaciente({ paciente }: Props) {
           <Field label="Como nos conheceu">
             <select className="input-field" value={form.indicacao_origem}
               onChange={e => set('indicacao_origem', e.target.value)}
-              style={{ background: '#1A1A1E' }}>
+              style={{ background: '#FFFFFF' }}>
               <option value="">Selecionar</option>
               <option value="Indicação">Indicação</option>
               <option value="Instagram">Instagram</option>
@@ -207,7 +207,7 @@ export function FormPaciente({ paciente }: Props) {
             <Field label="Status">
               <select className="input-field" value={form.status}
                 onChange={e => set('status', e.target.value)}
-                style={{ background: '#1A1A1E' }}>
+                style={{ background: '#FFFFFF' }}>
                 <option value="ativo">Ativo</option>
                 <option value="inativo">Inativo</option>
               </select>

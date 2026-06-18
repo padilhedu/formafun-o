@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 interface NavItem { href: string; label: string; icon: React.ReactNode; }
 interface NavGroup { title: string; items: NavItem[]; }
@@ -55,40 +54,42 @@ function IconChevron({ open }: { open: boolean }) {
     </svg>
   );
 }
+function IconClose() {
+  return <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>;
+}
 
 const NAV_GROUPS: NavGroup[] = [
   {
     title: "COMERCIAL",
     items: [
-      { href: "/dashboard", label: "Dashboard", icon: <IconChart /> },
-      { href: "/leads", label: "CRM / Leads", icon: <IconLead /> },
-      { href: "/orcamentos", label: "Orçamentos", icon: <IconDoc /> },
-      { href: "/contratos", label: "Contratos", icon: <IconDoc /> },
+      { href: "/dashboard",  label: "Dashboard",   icon: <IconChart /> },
+      { href: "/leads",      label: "CRM / Leads", icon: <IconLead /> },
+      { href: "/orcamentos", label: "Orçamentos",  icon: <IconDoc /> },
+      { href: "/contratos",  label: "Contratos",   icon: <IconDoc /> },
     ],
   },
   {
     title: "CLÍNICO",
     items: [
       { href: "/pacientes", label: "Pacientes", icon: <IconPeople /> },
-      { href: "/agenda", label: "Agenda", icon: <IconCalendar /> },
+      { href: "/agenda",    label: "Agenda",    icon: <IconCalendar /> },
     ],
   },
   {
     title: "FINANCEIRO",
     items: [
-      { href: "/financeiro", label: "Visão Geral", icon: <IconCoin /> },
-      { href: "/financeiro/receber", label: "Contas a Receber", icon: <IconArrowDown /> },
-      { href: "/financeiro/pagar", label: "Contas a Pagar", icon: <IconArrowUp /> },
+      { href: "/financeiro",         label: "Visão Geral",       icon: <IconCoin /> },
+      { href: "/financeiro/receber", label: "Contas a Receber",  icon: <IconArrowDown /> },
+      { href: "/financeiro/pagar",   label: "Contas a Pagar",    icon: <IconArrowUp /> },
     ],
   },
   {
     title: "OPERACIONAL",
     items: [
-      { href: "/estoque", label: "Estoque", icon: <IconBox /> },
-      { href: "/protese", label: "Prótese", icon: <IconProtese /> },
-      { href: "/marketing", label: "Marketing", icon: <IconMegaphone /> },
-      { href: "/relatorios", label: "Relatórios", icon: <IconReport /> },
-      { href: "/configuracoes", label: "Configurações", icon: <IconSettings /> },
+      { href: "/estoque",      label: "Estoque",       icon: <IconBox /> },
+      { href: "/protese",      label: "Prótese",       icon: <IconProtese /> },
+      { href: "/marketing",    label: "Marketing",     icon: <IconMegaphone /> },
+      { href: "/relatorios",   label: "Relatórios",    icon: <IconReport /> },
     ],
   },
 ];
@@ -101,10 +102,9 @@ interface SidebarProps {
 export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    COMERCIAL: true, CLÍNICO: true, FINANCEIRO: true, OPERACIONAL: true,
+    COMERCIAL: true, "CLÍNICO": true, FINANCEIRO: true, OPERACIONAL: true,
   });
 
-  // Fecha sidebar ao navegar no mobile
   useEffect(() => {
     onClose?.();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,74 +114,67 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     setOpenGroups((prev) => ({ ...prev, [title]: !prev[title] }));
   }
 
+  function isActive(href: string) {
+    return pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
+  }
+
   return (
     <aside
       className="sidebar-panel fixed left-0 top-0 h-screen w-56 flex flex-col z-50 transition-transform duration-300"
       style={{
-        background: "#1A1A1A",
+        background: "#1C1C1C",
         borderRight: "1px solid rgba(255,255,255,0.06)",
-        // Desktop: sempre visível. Mobile: slide in/out
-        transform: isOpen ? "translateX(0)" : undefined,
       }}
-      // No desktop (lg+) sempre visível via CSS class override
     >
-      {/* Ocultar no mobile quando fechado — via classe */}
       <style>{`
         @media (max-width: 1023px) {
-          aside.sidebar-panel {
-            transform: ${isOpen ? "translateX(0)" : "translateX(-100%)"};
-          }
+          aside.sidebar-panel { transform: ${isOpen ? "translateX(0)" : "translateX(-100%)"}; }
         }
         @media (min-width: 1024px) {
-          aside.sidebar-panel {
-            transform: translateX(0) !important;
-          }
+          aside.sidebar-panel { transform: translateX(0) !important; }
         }
       `}</style>
 
       {/* Logo */}
-      <div className="flex items-center justify-between px-5 py-5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-            style={{ background: "rgba(89,57,158,0.35)", border: "1px solid rgba(89,57,158,0.5)" }}>
-            <svg width="16" height="16" viewBox="0 0 28 28" fill="none">
-              <path d="M14 3C8.477 3 4 7.477 4 13c0 3.09 1.394 5.86 3.6 7.73L14 25l6.4-4.27A9.964 9.964 0 0 0 24 13c0-5.523-4.477-10-10-10Z"
-                stroke="#A07FD4" strokeWidth="1.8" fill="none" />
-            </svg>
+      <div className="flex items-center justify-between px-4 py-4"
+        style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 font-bold text-sm"
+            style={{ background: "#1F7A4D", color: "#FFFFFF", fontFamily: "var(--font-cormorant)", fontSize: "1rem" }}>
+            F
           </div>
           <div>
             <div className="text-white font-semibold leading-tight"
-              style={{ fontFamily: "var(--font-cormorant)", fontSize: "1rem" }}>
+              style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.9rem" }}>
               Forma & Função
             </div>
-            <div style={{ fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+            <div style={{ fontSize: "0.55rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
               Odontologia
             </div>
           </div>
         </div>
-        {/* Fechar no mobile */}
         <button
-          className="lg:hidden text-white/50 hover:text-white w-7 h-7 flex items-center justify-center"
+          className="lg:hidden w-7 h-7 flex items-center justify-center transition-colors"
+          style={{ color: "rgba(255,255,255,0.4)" }}
           onClick={onClose}
           aria-label="Fechar menu"
+          onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "#fff")}
+          onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.4)")}
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
+          <IconClose />
         </button>
       </div>
 
       {/* Navegação */}
-      <nav className="flex-1 overflow-y-auto py-3 px-3">
+      <nav className="flex-1 overflow-y-auto py-3 px-2.5">
         {NAV_GROUPS.map((group) => (
           <div key={group.title} className="mb-1">
             <button
               onClick={() => toggleGroup(group.title)}
               className="flex items-center justify-between w-full px-2 py-1.5 mb-0.5 rounded"
-              style={{ color: "rgba(255,255,255,0.35)" }}
+              style={{ color: "rgba(255,255,255,0.3)" }}
             >
-              <span style={{ fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+              <span style={{ fontSize: "0.57rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>
                 {group.title}
               </span>
               <IconChevron open={openGroups[group.title]} />
@@ -190,33 +183,33 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             {openGroups[group.title] && (
               <ul className="space-y-0.5 mb-2">
                 {group.items.map((item) => {
-                  const active =
-                    pathname === item.href ||
-                    (item.href !== "/dashboard" && pathname.startsWith(item.href));
+                  const active = isActive(item.href);
                   return (
                     <li key={item.href}>
                       <Link
                         href={item.href}
                         className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-all"
                         style={{
-                          color: active ? "#ffffff" : "rgba(255,255,255,0.6)",
-                          background: active ? "#59399E" : "transparent",
+                          color: active ? "#FFFFFF" : "rgba(255,255,255,0.55)",
+                          background: active ? "rgba(255,255,255,0.08)" : "transparent",
                           fontFamily: "var(--font-montserrat)",
                         }}
                         onMouseEnter={(e) => {
                           if (!active) {
-                            (e.currentTarget as HTMLElement).style.color = "#ffffff";
-                            (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
+                            (e.currentTarget as HTMLElement).style.color = "#FFFFFF";
+                            (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!active) {
-                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)";
+                            (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.55)";
                             (e.currentTarget as HTMLElement).style.background = "transparent";
                           }
                         }}
                       >
-                        <span style={{ opacity: active ? 1 : 0.7 }}>{item.icon}</span>
+                        <span style={{ color: active ? "#1F7A4D" : "inherit", opacity: active ? 1 : 0.7 }}>
+                          {item.icon}
+                        </span>
                         {item.label}
                       </Link>
                     </li>
@@ -228,9 +221,28 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         ))}
       </nav>
 
-      <div className="px-5 py-3"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.08)", fontSize: "0.6rem", color: "rgba(255,255,255,0.3)" }}>
-        v0.1.0 · Forma & Função
+      {/* Configurações fixo na base */}
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "8px 10px" }}>
+        <Link
+          href="/configuracoes"
+          className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-all"
+          style={{
+            color: isActive("/configuracoes") ? "#FFFFFF" : "rgba(255,255,255,0.55)",
+            background: isActive("/configuracoes") ? "rgba(255,255,255,0.08)" : "transparent",
+            fontFamily: "var(--font-montserrat)",
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#fff"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}
+          onMouseLeave={e => {
+            const active = isActive("/configuracoes");
+            (e.currentTarget as HTMLElement).style.color = active ? "#fff" : "rgba(255,255,255,0.55)";
+            (e.currentTarget as HTMLElement).style.background = active ? "rgba(255,255,255,0.08)" : "transparent";
+          }}
+        >
+          <span style={{ color: isActive("/configuracoes") ? "#1F7A4D" : "inherit", opacity: isActive("/configuracoes") ? 1 : 0.7 }}>
+            <IconSettings />
+          </span>
+          Configurações
+        </Link>
       </div>
     </aside>
   );

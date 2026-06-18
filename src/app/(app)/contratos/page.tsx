@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import type { ContratoComRelacoes, ContratoStatus } from '@/types/contratos';
@@ -35,11 +35,11 @@ export default async function ContratosPage() {
     <div>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#B89A5A', marginBottom: 4 }}>COMERCIAL</p>
-          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#F5F2EA', lineHeight: 1.1, marginBottom: 4 }}>
+          <p style={{ fontSize: 10, fontFamily: 'var(--font-montserrat)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1F7A4D', marginBottom: 4 }}>COMERCIAL</p>
+          <h1 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 32, fontWeight: 600, color: '#1C1C1C', lineHeight: 1.1, marginBottom: 4 }}>
             Contratos
           </h1>
-          <p style={{ fontSize: 13, color: '#8A8A93', fontFamily: 'var(--font-montserrat)' }}>Assinatura digital via ZapSign</p>
+          <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)' }}>Assinatura digital via ZapSign</p>
         </div>
         <Link href="/configuracoes/templates" className="btn-ghost text-xs" style={{ padding: '7px 14px' }}>
           Gerenciar Templates
@@ -67,8 +67,8 @@ export default async function ContratosPage() {
 
       {/* List */}
       {contratos.length === 0 ? (
-        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px dashed rgba(184,154,90,0.2)', textAlign: 'center', padding: '64px 24px' }}>
-          <div className="text-3xl mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#8A8A93' }}>Sem contratos</div>
+        <div style={{ borderRadius: 14, background: 'linear-gradient(145deg, #141416 0%, #111113 100%)', border: '1px dashed rgba(31,122,77,0.2)', textAlign: 'center', padding: '64px 24px' }}>
+          <div className="text-3xl mb-3" style={{ fontFamily: 'var(--font-cormorant)', color: '#6B6B66' }}>Sem contratos</div>
           <p className="text-muted text-sm">Gere um contrato a partir de um orçamento aprovado.</p>
         </div>
       ) : (
@@ -117,7 +117,7 @@ export default async function ContratosPage() {
                       <span className="text-muted text-sm">{c.enviado_em ? formatDate(c.enviado_em) : '—'}</span>
                     </td>
                     <td style={{ padding: '12px 16px' }}>
-                      <span style={{ color: c.assinado_em ? '#4ADE80' : '#8A8A93', fontSize: 13 }}>
+                      <span style={{ color: c.assinado_em ? '#4ADE80' : '#6B6B66', fontSize: 13 }}>
                         {c.assinado_em ? formatDate(c.assinado_em) : '—'}
                       </span>
                     </td>

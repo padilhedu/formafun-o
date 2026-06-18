@@ -11,7 +11,7 @@ export default async function RecusadoPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#0A0A0B', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, background: '#121214', borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '12px 20px', textAlign: 'center' }}>
-        <p style={{ margin: 0, fontFamily: 'var(--font-cormorant,serif)', fontSize: 17, color: '#B89A5A', fontWeight: 600 }}>{clinica.nome ?? 'Clínica Odontológica'}</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-cormorant,serif)', fontSize: 17, color: '#1F7A4D', fontWeight: 600 }}>{clinica.nome ?? 'Clínica Odontológica'}</p>
       </div>
 
       <div style={{ width: '100%', maxWidth: 440, background: '#121214', borderRadius: 20, padding: 36, border: '1px solid rgba(248,113,113,0.25)', marginTop: 60, textAlign: 'center' }}>
@@ -29,7 +29,7 @@ export default async function RecusadoPage() {
             <p style={{ fontSize: 13, color: '#D9C9A3', fontFamily: 'var(--font-montserrat,sans-serif)', margin: 0 }}>
               Contato da clínica:
               {clinica.telefone && <><br /><strong>{clinica.telefone}</strong></>}
-              {clinica.email && <><br /><a href={`mailto:${clinica.email}`} style={{ color: '#B89A5A' }}>{clinica.email}</a></>}
+              {clinica.email && <><br /><a href={`mailto:${clinica.email}`} style={{ color: '#1F7A4D' }}>{clinica.email}</a></>}
             </p>
           </div>
         )}

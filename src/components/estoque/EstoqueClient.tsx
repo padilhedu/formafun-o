@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { EstoqueItem, CATEGORIAS } from '@/types/estoque';
@@ -153,7 +153,7 @@ export function EstoqueClient({ itensIniciais }: Props) {
     <div className="space-y-4">
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="card p-5" style={{ borderLeft: '3px solid #B89A5A' }}>
+        <div className="card p-5" style={{ borderLeft: '3px solid #1F7A4D' }}>
           <p className="table-header mb-2">Total de Itens</p>
           <p className="heading text-3xl font-semibold text-offwhite">{itens.length}</p>
           <p className="text-muted text-xs mt-1">{itens.filter(i => i.categoria).length} categorias</p>
@@ -178,7 +178,7 @@ export function EstoqueClient({ itensIniciais }: Props) {
       {/* Filtros */}
       <div className="flex flex-wrap items-center gap-2 lg:gap-3">
         <input className="input-field" style={{ minWidth: 180, maxWidth: 260 }} placeholder="Buscar item..." value={busca} onChange={e => setBusca(e.target.value)} />
-        <button onClick={() => setFiltro('todos')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'todos' ? 'rgba(89,57,158,0.5)' : undefined, color: filtro === 'todos' ? '#A07FD4' : undefined }}>Todos</button>
+        <button onClick={() => setFiltro('todos')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'todos' ? 'rgba(31,122,77,0.5)' : undefined, color: filtro === 'todos' ? '#A07FD4' : undefined }}>Todos</button>
         <button onClick={() => setFiltro('baixo')} className="btn-ghost text-xs" style={{ borderColor: filtro === 'baixo' ? 'rgba(251,191,36,0.5)' : undefined, color: filtro === 'baixo' ? '#FBBF24' : undefined }}>
           Abaixo do mínimo {abaixoMinimo.length > 0 && `(${abaixoMinimo.length})`}
         </button>
@@ -210,7 +210,7 @@ export function EstoqueClient({ itensIniciais }: Props) {
                   </td>
                   <td className="px-4 py-3 text-muted text-xs">{item.categoria ?? '—'}</td>
                   <td className="px-4 py-3">
-                    <span className="font-semibold text-sm" style={{ color: alerta ? '#FBBF24' : '#F5F2EA' }}>{formatQtd(item.quantidade, item.unidade)}</span>
+                    <span className="font-semibold text-sm" style={{ color: alerta ? '#FBBF24' : '#1C1C1C' }}>{formatQtd(item.quantidade, item.unidade)}</span>
                     {alerta && <span className="ml-1 text-xs" style={{ color: '#FBBF24' }}>⚠</span>}
                   </td>
                   <td className="px-4 py-3 text-muted text-xs">{item.quantidade_minima > 0 ? formatQtd(item.quantidade_minima, item.unidade) : '—'}</td>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { TabClinica } from './tabs/TabClinica';
@@ -49,10 +49,10 @@ export function ConfiguracoesClient({ config, profissionais, procedimentos, usua
               display: 'block', width: '100%', textAlign: 'left',
               padding: '9px 16px', fontSize: 13,
               fontFamily: 'var(--font-montserrat)', fontWeight: activeTab === tab.id ? 600 : 400,
-              background: activeTab === tab.id ? 'rgba(184,154,90,0.1)' : 'transparent',
-              color: activeTab === tab.id ? '#B89A5A' : '#8A8A93',
+              background: activeTab === tab.id ? 'rgba(31,122,77,0.1)' : 'transparent',
+              color: activeTab === tab.id ? '#1F7A4D' : '#6B6B66',
               border: 'none', cursor: 'pointer',
-              borderLeft: activeTab === tab.id ? '3px solid #B89A5A' : '3px solid transparent',
+              borderLeft: activeTab === tab.id ? '3px solid #1F7A4D' : '3px solid transparent',
             }}
           >
             {tab.label}

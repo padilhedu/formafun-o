@@ -9,23 +9,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        base: "#F5F5F0",
-        surface: "#FFFFFF",
-        elevated: "#F0EDE8",
-        "sidebar-dark": "#1A1A1A",
-        "brand-purple": "#59399E",
-        "brand-purple-light": "#7B5DC0",
-        "brand-purple-dim": "rgba(89,57,158,0.10)",
-        muted: "#6B6B70",
-        offwhite: "#1A1A1A",
-        gold: "#59399E",
-        champagne: "#7B5DC0",
-        success: "#4ADE80",
-        warning: "#FBBF24",
-        error: "#F87171",
-        info: "#60A5FA",
+        // Tokens semânticos do projeto
+        base: "#F5F3EF",
+        surface: "#FAF8F4",
+        elevated: "#EFEDE7",
+        "sidebar-dark": "#1C1C1C",
+        "brand-green": "#1F7A4D",
+        "brand-green-hover": "#1A6A43",
+        "brand-green-dim": "rgba(31,122,77,0.10)",
+        muted: "#6B6B66",
+        offwhite: "#1C1C1C",
+        gold: "#1F7A4D",         // alias legado → verde primário
+        champagne: "#3A352B",    // alias legado → texto sobre areia
+        sand: "#E8E0D0",
+        success: "#1F7A4D",
+        warning: "#C98A1E",
+        error: "#C0392B",
+        info: "#2D6AA3",
 
-        // ===== Tokens shadcn (vars em globals.css, suportam /opacity) =====
+        // Tokens shadcn (vars CSS em globals.css, suportam /opacity)
         border: "rgb(var(--border-shad) / <alpha-value>)",
         input: "rgb(var(--input) / <alpha-value>)",
         ring: "rgb(var(--ring) / <alpha-value>)",
@@ -66,7 +68,7 @@ const config: Config = {
         sans: ["var(--font-montserrat)", "system-ui", "sans-serif"],
       },
       borderRadius: {
-        card: "12px",
+        card: "14px",
         modal: "16px",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -74,6 +76,10 @@ const config: Config = {
       },
       borderColor: {
         DEFAULT: "rgba(0,0,0,0.08)",
+      },
+      boxShadow: {
+        card: "0 1px 2px rgba(0,0,0,0.04)",
+        soft: "0 4px 12px rgba(0,0,0,0.06)",
       },
     },
   },

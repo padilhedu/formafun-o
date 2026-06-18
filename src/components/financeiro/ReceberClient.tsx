@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
@@ -75,11 +75,11 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
   };
 
   const FILTROS: { key: Filtro; label: string; cor: string }[] = [
-    { key: 'todos', label: 'Todos', cor: '#8A8A93' },
+    { key: 'todos', label: 'Todos', cor: '#6B6B66' },
     { key: 'pendente', label: 'Pendentes', cor: '#FBBF24' },
     { key: 'vencido', label: 'Vencidos', cor: '#F87171' },
     { key: 'pago', label: 'Pagos', cor: '#4ADE80' },
-    { key: 'cancelado', label: 'Cancelados', cor: '#8A8A93' },
+    { key: 'cancelado', label: 'Cancelados', cor: '#6B6B66' },
   ];
 
   return (
@@ -121,7 +121,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
 
       {/* Table */}
       {filtradas.length === 0 ? (
-        <div className="card text-center py-16" style={{ borderStyle: 'dashed', borderColor: 'rgba(184,154,90,0.15)' }}>
+        <div className="card text-center py-16" style={{ borderStyle: 'dashed', borderColor: 'rgba(31,122,77,0.15)' }}>
           <p className="text-muted text-sm">Nenhuma cobrança neste filtro.</p>
         </div>
       ) : (
@@ -157,7 +157,7 @@ export function ReceberClient({ contas, filtroInicial }: Props) {
                       )}
                     </td>
                     <td style={{ padding: '11px 14px' }}>
-                      <span style={{ fontSize: 12, color: st === 'vencido' ? '#F87171' : '#F5F2EA' }}>
+                      <span style={{ fontSize: 12, color: st === 'vencido' ? '#F87171' : '#1C1C1C' }}>
                         {new Date(c.vencimento + 'T12:00:00').toLocaleDateString('pt-BR')}
                       </span>
                     </td>
@@ -330,19 +330,19 @@ function NovaContaModal({ onClose }: { onClose: () => void }) {
           {pacienteSel ? (
             <div className="flex items-center justify-between input-field">
               <span className="text-offwhite text-sm">{pacienteSel.nome}</span>
-              <button onClick={() => { setPacienteSel(null); setPacienteBusca(''); }} style={{ color: '#8A8A93', background: 'none', border: 'none', cursor: 'pointer' }}>×</button>
+              <button onClick={() => { setPacienteSel(null); setPacienteBusca(''); }} style={{ color: '#6B6B66', background: 'none', border: 'none', cursor: 'pointer' }}>×</button>
             </div>
           ) : (
             <div className="relative">
               <input className="input-field w-full" placeholder="Buscar por nome ou CPF..." value={pacienteBusca} onChange={e => buscar(e.target.value)} />
               {pacientes.length > 0 && (
-                <div className="absolute z-10 w-full mt-1 rounded-xl overflow-hidden" style={{ background: '#1A1A1E', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="absolute z-10 w-full mt-1 rounded-xl overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid rgba(255,255,255,0.1)' }}>
                   {pacientes.map(p => (
                     <button
                       key={p.id}
                       onClick={() => { setPacienteSel(p); setPacientes([]); }}
                       className="w-full text-left px-3 py-2 hover:bg-white/5 transition-colors"
-                      style={{ fontSize: 13, color: '#F5F2EA', background: 'none', border: 'none', cursor: 'pointer' }}
+                      style={{ fontSize: 13, color: '#1C1C1C', background: 'none', border: 'none', cursor: 'pointer' }}
                     >
                       {p.nome} {p.cpf && <span className="text-muted" style={{ fontSize: 11 }}>· {p.cpf}</span>}
                     </button>
@@ -388,8 +388,8 @@ function ModalShell({ title, onClose, children }: { title: string; onClose: () =
     >
       <div className="card" style={{ width: 460, maxWidth: '95vw', padding: 28 }}>
         <div className="flex items-center justify-between mb-5">
-          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#F5F2EA', fontWeight: 500 }}>{title}</h2>
-          <button onClick={onClose} style={{ color: '#8A8A93', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
+          <h2 style={{ fontFamily: 'var(--font-cormorant)', fontSize: 24, color: '#1C1C1C', fontWeight: 500 }}>{title}</h2>
+          <button onClick={onClose} style={{ color: '#6B6B66', fontSize: 20, background: 'none', border: 'none', cursor: 'pointer', lineHeight: 1 }}>×</button>
         </div>
         {children}
       </div>
