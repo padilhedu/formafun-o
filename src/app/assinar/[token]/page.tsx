@@ -49,8 +49,8 @@ export default async function AssinarPage({ params }: { params: Promise<{ token:
   type Pac = { nome: string; email: string | null };
   const paciente = (c as unknown as { pacientes: Pac }).pacientes;
 
-  type CampoPaciente = { key: string; label: string; type: string; options?: string[]; placeholder?: string };
-  const camposPaciente = (c.campos_paciente ?? null) as CampoPaciente[] | null;
+  type CampoPaciente = { key: string; label: string; type: 'text' | 'number' | 'select' | 'cpf'; options?: string[]; placeholder?: string };
+  const camposPaciente = (c.campos_paciente as CampoPaciente[] | null) ?? null;
 
   return (
     <AssinarClient
