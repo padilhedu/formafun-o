@@ -5,6 +5,7 @@ import { checkRateLimit } from '@/lib/rate-limit';
 import { generateSignedPdf } from '@/lib/pdf-assinado';
 import { enviarEmailContratoAssinado } from '@/lib/email-resend';
 import { getSigningSecret } from '@/lib/signing-secret';
+import { enviarArquivoParaDrive } from '@/lib/google-drive';
 import crypto from 'crypto';
 
 export async function POST(req: NextRequest) {
@@ -130,6 +131,47 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Enviar PDF para o Google Drive (não-bloqueante — falha vai para fila)
+  let driveFileUrl: string | null = null;
+  let driveFolderUrl: string | null = null;
+  if (process.env.GOOGLE_APPS_SCRIPT_URL) {
+    try {
+      const driveRes = await enviarArquivoParaDrive({
+        pacienteNome: paciente?.nome ?? nome,
+        pacienteCpf: cpf,
+        arquivoBuffer: pdfBuffer,
+        nomeArquivo: `${c.codigo}-assinado.pdf`,
+        subpasta: '05-Contratos',
+        mimeType: 'application/pdf',
+      });
+      driveFileUrl   = driveRes.fileUrl;
+      driveFolderUrl = driveRes.folderUrl;
+    } catch (driveErr) {
+      console.error('[assinar] Falha ao enviar para o Drive, adicionando à fila:', driveErr);
+      // Adicionar à fila de reenvio — não bloqueia o fluxo de assinatura
+      try {
+        const { createClient: createServiceClient } = await import('@supabase/supabase-js');
+        const supabaseUrl2 = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL!;
+        const admin2 = createServiceClient(supabaseUrl2, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+        await admin2.from('drive_upload_queue').insert({
+          tipo:          'contrato',
+          referencia_id: c.id,
+          paciente_id:   c.paciente_id,
+          paciente_nome: paciente?.nome ?? nome,
+          paciente_cpf:  cpf,
+          subpasta:      '05-Contratos',
+          nome_arquivo:  `${c.codigo}-assinado.pdf`,
+          mime_type:     'application/pdf',
+          storage_path:  pdfPath,
+          status:        'pendente',
+          erro_detalhe:  driveErr instanceof Error ? driveErr.message : String(driveErr),
+        });
+      } catch (qErr) {
+        console.error('[assinar] Falha ao enfileirar reenvio Drive:', qErr);
+      }
+    }
+  }
+
   // Atualizar contrato no banco
   await supabase.from('contratos').update({
     status: 'assinado',
@@ -142,6 +184,8 @@ export async function POST(req: NextRequest) {
     signer_lng: lng ?? null,
     signature_svg: signature_png_base64,
     pdf_signed_url: pdfPath,
+    drive_file_url:   driveFileUrl,
+    drive_folder_url: driveFolderUrl,
     travado: true,
   }).eq('id', c.id);
 
