@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { renderTemplate } from '@/lib/template-render';
+import { renderTemplate, renderTemplateParcial } from '@/lib/template-render';
 import { getSigningSecret } from '@/lib/signing-secret';
 import crypto from 'crypto';
 
@@ -18,6 +18,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   }
 
   const { id } = await params;
+
+  let body: { dados_recepcao?: Record<string, unknown> } = {};
+  try { body = await req.json() as typeof body; } catch { /* empty body */ }
+
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -48,7 +52,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       pacientes(nome, cpf, email, telefone, endereco),
       orcamentos(id, codigo, valor_total, validade, observacoes, clausulas_adicionais,
         orcamento_itens(descricao, dente, face, qtde, valor_unitario, total, selecionado, categoria)),
-      contratos_templates(corpo_html, nome)
+      contratos_templates(corpo_html, nome, campos_paciente, campos_recepcao)
     `)
     .eq('id', id)
     .single();
@@ -58,7 +62,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   type Pac = { nome: string; cpf: string | null; email: string | null; telefone: string | null; endereco: Record<string, string> | null };
   type Orc = { id: string; codigo: string; valor_total: number; validade: string | null; observacoes: string | null; clausulas_adicionais: string | null; orcamento_itens: { descricao: string; dente: string | null; face: string | null; qtde: number; valor_unitario: number; total: number; selecionado: boolean; categoria: string | null }[] };
-  type Tmpl = { corpo_html: string; nome: string };
+  type Tmpl = { corpo_html: string; nome: string; campos_paciente: unknown[] | null; campos_recepcao: unknown[] | null };
 
   const paciente = (c as unknown as { pacientes: Pac }).pacientes;
   const orc = (c as unknown as { orcamentos: Orc | null }).orcamentos;
@@ -66,13 +70,40 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   if (!tmpl) return NextResponse.json({ error: 'Template não encontrado' }, { status: 400 });
 
+  // Extrair dados_recepcao do body
+  const dados_recepcao: Record<string, unknown> = body.dados_recepcao ?? {};
+
+  // Validar campos obrigatórios da recepção
+  if (Array.isArray(tmpl.campos_recepcao)) {
+    const faltando = (tmpl.campos_recepcao as { key: string; label: string }[])
+      .filter(cf => {
+        const v = dados_recepcao[cf.key];
+        return v === undefined || v === null || v === '' || (Array.isArray(v) && v.length === 0);
+      });
+    if (faltando.length > 0) {
+      return NextResponse.json({ error: `Preencha os campos obrigatórios: ${faltando.map(f => f.label).join(', ')}`, campos_faltando: faltando.map(f => f.key) }, { status: 400 });
+    }
+  }
+
   const itens = (orc?.orcamento_itens ?? []).filter(i => i.selecionado);
 
-  const htmlRendered = renderTemplate(tmpl.corpo_html, {
+  const { data: clinicaCfg } = await supabase.from('configuracoes').select('valor').eq('chave', 'clinica').single();
+  const clinicaNome = (clinicaCfg?.valor as { nome?: string } | null)?.nome ?? 'Clínica Odontológica';
+
+  const temCamposPaciente = Array.isArray(tmpl.campos_paciente) && tmpl.campos_paciente.length > 0;
+
+  const templateData = {
     paciente: { nome: paciente.nome, cpf: paciente.cpf, email: paciente.email, telefone: paciente.telefone, endereco: paciente.endereco },
     orcamento: orc ? { ...orc, status: 'aprovado' } as never : null,
     itens: itens as never,
-  });
+    extras: dados_recepcao,
+    clinica_nome: clinicaNome,
+  };
+
+  // Se há campos do paciente: renderiza parcialmente (eles ficam como "a preencher")
+  const htmlRendered = temCamposPaciente
+    ? renderTemplateParcial(tmpl.corpo_html, templateData)
+    : renderTemplate(tmpl.corpo_html, templateData);
 
   const docHash = crypto.createHash('sha256').update(htmlRendered).digest('hex');
 
@@ -110,9 +141,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     sign_token_hmac: tokenHmac,
     sign_token_exp: tokenExp,
     doc_hash: docHash,
-    // Regravar corpo_html_final com o HTML renderizado neste momento,
-    // garantindo que preview PDF e documento assinado sejam idênticos.
     corpo_html_final: htmlRendered,
+    // Campos do paciente: salva template original + definição dos campos para uso na página de assinatura
+    html_template_parcial: temCamposPaciente ? tmpl.corpo_html : null,
+    campos_paciente: temCamposPaciente ? tmpl.campos_paciente : null,
+    dados_paciente_extras: temCamposPaciente ? null : null,
   }).eq('id', id);
 
   if (updateErr) return NextResponse.json({ error: 'Erro ao salvar token' }, { status: 500 });
