@@ -4,6 +4,14 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import SignaturePad from 'signature_pad';
 import DOMPurify from 'dompurify';
 
+export interface CampoPaciente {
+  key: string;
+  label: string;
+  type: 'text' | 'number' | 'select' | 'cpf';
+  options?: string[];
+  placeholder?: string;
+}
+
 interface Props {
   token: string;
   contratoId: string;
@@ -12,6 +20,7 @@ interface Props {
   pacienteEmail: string | null;
   clinicaNome: string;
   clinicaTelefone: string;
+  camposPaciente?: CampoPaciente[] | null;
 }
 
 const STEPS = ['Leitura', 'Identificação', 'Assinatura'];
