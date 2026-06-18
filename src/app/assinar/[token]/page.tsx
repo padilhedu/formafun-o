@@ -11,7 +11,7 @@ export default async function AssinarPage({ params }: { params: Promise<{ token:
 
   const { data: c } = await supabase
     .from('contratos')
-    .select('id, codigo, status, sign_token_exp, assinado_em, paciente_id, pacientes(nome, email), contratos_templates(corpo_html)')
+    .select('id, codigo, status, sign_token_exp, assinado_em, paciente_id, campos_paciente, pacientes(nome, email), contratos_templates(corpo_html)')
     .eq('sign_token', token)
     .single();
 
@@ -49,6 +49,9 @@ export default async function AssinarPage({ params }: { params: Promise<{ token:
   type Pac = { nome: string; email: string | null };
   const paciente = (c as unknown as { pacientes: Pac }).pacientes;
 
+  type CampoPaciente = { key: string; label: string; type: string; options?: string[]; placeholder?: string };
+  const camposPaciente = (c.campos_paciente ?? null) as CampoPaciente[] | null;
+
   return (
     <AssinarClient
       token={token}
@@ -58,6 +61,7 @@ export default async function AssinarPage({ params }: { params: Promise<{ token:
       pacienteEmail={paciente?.email ?? null}
       clinicaNome={clinica.nome ?? 'Clínica Odontológica'}
       clinicaTelefone={clinica.telefone ?? ''}
+      camposPaciente={camposPaciente}
     />
   );
 }

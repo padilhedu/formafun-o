@@ -65,7 +65,8 @@ export async function updateSession(request: NextRequest) {
     // Páginas de retorno do Stripe (acessadas sem sessão do CRM)
     "/pagamentos",
   ];
-  const isPublic = publicRoutes.some(r => pathname.startsWith(r));
+  const isPublic = publicRoutes.some(r => pathname.startsWith(r))
+    || pathname.endsWith('/completar-dados');
 
   // Portal routes: need auth but separate from internal app
   const isPortalRoute = pathname.startsWith("/portal");

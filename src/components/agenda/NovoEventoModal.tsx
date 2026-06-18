@@ -173,7 +173,7 @@ export function NovoEventoModal({
 
           {/* WhatsApp — só no modo edição com paciente */}
           {editando && evento?.paciente_id && (
-            <div style={{ background: 'rgba(89,57,158,0.1)', border: '1px solid rgba(89,57,158,0.25)', borderRadius: 8, padding: '0.75rem 1rem' }}>
+            <div style={{ background: 'rgba(31,122,77,0.1)', border: '1px solid rgba(31,122,77,0.25)', borderRadius: 8, padding: '0.75rem 1rem' }}>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-offwhite text-xs font-semibold">Confirmação via WhatsApp</p>
