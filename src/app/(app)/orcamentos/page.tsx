@@ -3,9 +3,9 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import type { OrcamentoComPaciente, OrcamentoStatus } from '@/types/orcamentos';
 import { StatusChip } from '@/components/ui/StatusChip';
-import { DataTable } from '@/components/ui/DataTable';
 import { KpiCard } from '@/components/ui/KpiCard';
 import { KanbanCard } from '@/components/orcamentos/KanbanCard';
+import { OrcamentosListTable } from '@/components/orcamentos/OrcamentosListTable';
 
 export const dynamic = 'force-dynamic';
 
@@ -142,39 +142,7 @@ export default async function OrcamentosPage() {
           <p style={{ fontSize: 11, fontFamily: 'var(--font-body)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#6B6B66', marginBottom: 12 }}>
             Todos os orçamentos
           </p>
-          <div style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.08)', borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}>
-            <DataTable
-              columns={[
-                { key: 'codigo', header: 'Código', render: (o) => (
-                  <span style={{ fontSize: 12, fontFamily: 'var(--font-body)', fontWeight: 700, color: '#1F7A4D' }}>{(o as OrcamentoComPaciente).codigo}</span>
-                )},
-                { key: 'paciente', header: 'Paciente', render: (o) => (
-                  <span style={{ fontSize: 13, color: '#1C1C1C', fontFamily: 'var(--font-body)' }}>{(o as OrcamentoComPaciente).pacientes?.nome ?? '—'}</span>
-                )},
-                { key: 'status', header: 'Status', render: (o) => (
-                  <StatusChip status={(o as OrcamentoComPaciente).status} type="orcamento" size="sm" />
-                )},
-                { key: 'validade', header: 'Validade', render: (o) => (
-                  <span style={{ fontSize: 12, color: '#6B6B66', fontFamily: 'var(--font-body)', fontVariantNumeric: 'tabular-nums' }}>
-                    {(o as OrcamentoComPaciente).validade ? new Date((o as OrcamentoComPaciente).validade!).toLocaleDateString('pt-BR') : '—'}
-                  </span>
-                )},
-                { key: 'valor_total', header: 'Total', render: (o) => (
-                  <span style={{ fontSize: 13, fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1C1C1C', fontVariantNumeric: 'tabular-nums' }}>
-                    {formatBRL((o as OrcamentoComPaciente).valor_total)}
-                  </span>
-                )},
-                { key: 'acao', header: '', render: (o) => (
-                  <Link href={`/orcamentos/${(o as OrcamentoComPaciente).id}`} style={{ fontSize: 12, color: '#1F7A4D', fontFamily: 'var(--font-body)', fontWeight: 600, textDecoration: 'none' }}>
-                    Ver →
-                  </Link>
-                )},
-              ]}
-              data={orcamentos}
-              pageSize={15}
-              emptyMessage="Nenhum orçamento encontrado."
-            />
-          </div>
+          <OrcamentosListTable orcamentos={orcamentos} />
         </div>
       )}
     </div>
