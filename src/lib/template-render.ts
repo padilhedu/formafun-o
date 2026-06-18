@@ -1,3 +1,4 @@
+﻿import { formatBRL } from '@/lib/fmt';
 import type { Orcamento, OrcamentoItem } from '@/types/orcamentos';
 import { CATEGORIA_LABELS } from '@/types/orcamentos';
 
@@ -15,10 +16,6 @@ interface TemplateData {
   extras?: Record<string, unknown>;
   /** Nome da clínica para templates que não têm orçamento */
   clinica_nome?: string;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 function formatDate(d: string | null | undefined) {

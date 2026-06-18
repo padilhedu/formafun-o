@@ -1,4 +1,5 @@
 ﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import type { ItemRascunho } from '../OrcamentoBuilderV2';
 
@@ -8,10 +9,6 @@ interface Props {
   onUpdate: (key: string, patch: Partial<ItemRascunho>) => void;
   onAdd: (item: Omit<ItemRascunho, '_key'>) => void;
   onRemove: (key: string) => void;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 function isExtra(i: ItemRascunho) {

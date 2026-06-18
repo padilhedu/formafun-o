@@ -1,13 +1,11 @@
-'use client';
+﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import Link from 'next/link';
 import { DataTable } from '@/components/ui/DataTable';
 import { StatusChip } from '@/components/ui/StatusChip';
 import type { OrcamentoComPaciente } from '@/types/orcamentos';
 
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
 
 const COLUMNS = [
   {

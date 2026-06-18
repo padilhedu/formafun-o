@@ -1,4 +1,5 @@
-'use client';
+﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import Link from 'next/link';
 
@@ -11,9 +12,6 @@ interface KanbanCardProps {
   travado?: boolean;
 }
 
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
 
 export function KanbanCard({ id, codigo, pacienteNome, criadoEm, valorTotal, travado }: KanbanCardProps) {
   return (

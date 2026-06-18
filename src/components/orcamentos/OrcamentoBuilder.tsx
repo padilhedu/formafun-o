@@ -1,4 +1,5 @@
 ﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import { useState, useEffect, useCallback } from 'react';
 import type { ProcedimentoTabela, OrcamentoItem, ProcedimentoCategoria } from '@/types/orcamentos';
@@ -16,10 +17,6 @@ interface Props {
   observacoes: string;
   travado: boolean;
   onSaved?: () => void;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 export function OrcamentoBuilder({

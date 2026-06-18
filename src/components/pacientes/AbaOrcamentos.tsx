@@ -1,4 +1,5 @@
-﻿import Link from 'next/link';
+﻿import { formatBRL } from '@/lib/fmt';
+import Link from 'next/link';
 import type { Orcamento } from '@/types/orcamentos';
 import { STATUS_CONFIG } from '@/types/orcamentos';
 
@@ -7,9 +8,6 @@ interface Props {
   orcamentos: Orcamento[];
 }
 
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
 
 export function AbaOrcamentos({ pacienteId, orcamentos }: Props) {
   return (

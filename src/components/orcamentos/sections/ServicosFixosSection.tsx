@@ -1,4 +1,5 @@
 ﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import { useState, useEffect } from 'react';
 import type { ProcedimentoTabela } from '@/types/orcamentos';
@@ -9,10 +10,6 @@ interface Props {
   travado: boolean;
   onAdd: (item: Omit<ItemRascunho, '_key'>) => void;
   onRemove: (key: string) => void;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 export function ServicosFixosSection({ itens, travado, onAdd, onRemove }: Props) {

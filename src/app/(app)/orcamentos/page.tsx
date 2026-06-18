@@ -1,3 +1,4 @@
+﻿import { formatBRL } from '@/lib/fmt';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -15,10 +16,6 @@ const STATUS_LABEL: Record<OrcamentoStatus, string> = {
   rascunho: 'Rascunho', enviado: 'Enviado', negociacao: 'Negociação',
   aprovado: 'Aprovado', recusado: 'Recusado', expirado: 'Expirado',
 };
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
 
 export default async function OrcamentosPage() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {

@@ -1,4 +1,5 @@
 ﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -28,10 +29,6 @@ interface Props {
   onObsInterna: (v: string) => void;
   onObservacoes: (v: string) => void;
   labelStyle: React.CSSProperties;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 function addMonths(base: string, n: number): string {

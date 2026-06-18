@@ -1,4 +1,5 @@
 ﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -52,10 +53,6 @@ interface Props {
   contratos: { id: string; codigo: string; status: string }[];
   atendenteNome: string;
   isAdmin: boolean;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 export function OrcamentoBuilderV2({ orc, itensIniciais, historico, profissionais, modelos, parcelas, contratos, atendenteNome, isAdmin }: Props) {

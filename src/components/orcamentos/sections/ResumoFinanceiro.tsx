@@ -1,4 +1,5 @@
 ﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import type { DescontoTipo } from '@/types/orcamentos';
 
@@ -13,10 +14,6 @@ interface Props {
   onDescontoTipo: (v: DescontoTipo | null) => void;
   onDescontoValor: (v: number) => void;
   onDescontoMotivo: (v: string) => void;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 export function ResumoFinanceiro({ subtotal, descontoAbs, total, descontoTipo, descontoValor, descontoMotivo, travado, onDescontoTipo, onDescontoValor, onDescontoMotivo }: Props) {

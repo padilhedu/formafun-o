@@ -1,4 +1,5 @@
 ﻿'use client';
+import { formatBRL } from '@/lib/fmt';
 
 import { useState, useEffect, useCallback } from 'react';
 import type { ProcedimentoCategoria, ProcedimentoTabela } from '@/types/orcamentos';
@@ -13,10 +14,6 @@ interface Props {
   onRemove: (key: string) => void;
   onDuplicate: (key: string) => void;
   onToggleCategoria: (cat: ProcedimentoCategoria) => void;
-}
-
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 // Apenas procedimentos reais (não serviços nem extras)

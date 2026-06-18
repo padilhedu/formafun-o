@@ -1,10 +1,10 @@
-﻿import { createClient } from '@/lib/supabase/server';
+﻿import { formatBRL } from '@/lib/fmt';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
-
-function formatBRL(v: number) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+
 
 export default async function PortalFinanceiroPage() {
   const sb = await createClient();

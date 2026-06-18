@@ -85,6 +85,4 @@ export const PAGAR_CATEGORIA_LABELS: Record<PagarCategoria, string> = {
   outros:       'Outros',
 };
 
-export function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
+export { formatBRL } from '@/lib/fmt';

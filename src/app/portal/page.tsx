@@ -1,4 +1,5 @@
-﻿import { createClient } from '@/lib/supabase/server';
+﻿import { formatBRL } from '@/lib/fmt';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
@@ -9,9 +10,6 @@ function formatDate(d: string) {
 }
 function formatHour(d: string) {
   return new Date(d).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-}
-function formatBRL(v: number) {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 export default async function PortalHomePage() {
