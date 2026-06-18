@@ -31,7 +31,11 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   // Generate sequential code via DB function
-  const { data: codeData } = await supabase.rpc('gerar_codigo_orcamento');
+  const { data: codeData, error: rpcError } = await supabase.rpc('gerar_codigo_orcamento');
+  if (rpcError) {
+    console.error('[gerar_codigo_orcamento] RPC error:', rpcError.message);
+    return NextResponse.json({ error: `Falha ao gerar código do orçamento: ${rpcError.message}` }, { status: 500 });
+  }
   const codigo = codeData as string;
 
   const validade = new Date();

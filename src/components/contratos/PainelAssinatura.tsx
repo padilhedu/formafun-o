@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { mascararCPF } from '@/lib/cpf';
 
 interface ContratoAssinatura {
@@ -55,20 +55,53 @@ const STEP_ORDER = ['rascunho', 'enviado', 'visualizado', 'assinado'];
 export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
   const [loading, setLoading] = useState(false);
   const [linkGerado, setLinkGerado] = useState<string | null>(null);
+  const [statusLocal, setStatusLocal] = useState<string | null>(null);
+  const [expLocal, setExpLocal] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [erro, setErro] = useState('');
   const [confirmNewLink, setConfirmNewLink] = useState(false);
   const [reenvioOk, setReenvioOk] = useState(false);
+  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Status efetivo: prioriza estado local (atualizado sem refresh)
+  const status = statusLocal ?? c.status;
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';
   const signUrl = linkGerado ?? (c.sign_token ? `${appUrl}/assinar/${c.sign_token}` : null);
-  const expStr = c.sign_token_exp ? new Date(c.sign_token_exp).toLocaleDateString('pt-BR') : null;
+  const expStr = expLocal
+    ? new Date(expLocal).toLocaleDateString('pt-BR')
+    : c.sign_token_exp
+      ? new Date(c.sign_token_exp).toLocaleDateString('pt-BR')
+      : null;
 
-  const step = STEP_ORDER.indexOf(c.status);
-  const isTerminal = c.status === 'recusado' || c.status === 'cancelado';
+  const step = STEP_ORDER.indexOf(status);
+  const isTerminal = status === 'recusado' || status === 'cancelado';
+
+  // Polling a cada 30s quando enviado ou visualizado
+  useEffect(() => {
+    const shouldPoll = status === 'enviado' || status === 'visualizado';
+    if (!shouldPoll) {
+      if (pollingRef.current) clearInterval(pollingRef.current);
+      return;
+    }
+    pollingRef.current = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/contratos/${c.id}/status`);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.status && json.status !== status) {
+          setStatusLocal(json.status);
+          onAtualizar?.();
+        }
+      } catch {}
+    }, 30_000);
+
+    return () => {
+      if (pollingRef.current) clearInterval(pollingRef.current);
+    };
+  }, [status, c.id, onAtualizar]);
 
   async function gerarLink(force = false) {
-    if (!force && c.status === 'enviado' && !confirmNewLink) {
+    if (!force && status === 'enviado' && !confirmNewLink) {
       setConfirmNewLink(true);
       return;
     }
@@ -76,9 +109,12 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
     setLoading(true); setErro('');
     const res = await fetch(`/api/contratos/${c.id}/gerar-link`, { method: 'POST' });
     const json = await res.json();
-    if (!res.ok) { setErro(json.error ?? 'Erro ao gerar link'); setLoading(false); return; }
-    setLinkGerado(json.sign_url);
     setLoading(false);
+    if (!res.ok) { setErro(json.error ?? 'Erro ao gerar link'); return; }
+    // Atualiza estado local imediatamente — sem esperar router.refresh()
+    setLinkGerado(json.sign_url);
+    setStatusLocal('enviado');
+    if (json.sign_token_exp) setExpLocal(json.sign_token_exp);
     onAtualizar?.();
   }
 
@@ -97,10 +133,8 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
     else { const j = await res.json(); setErro(j.error ?? 'Erro ao reenviar'); }
   }
 
-  async function downloadPdf() {
+  function downloadPdf() {
     if (!c.sign_token) return;
-    const { createClient } = await import('@supabase/supabase-js');
-    // Usar URL assinada via rota interna
     window.open(`/api/contratos/${c.id}/download-publico?token=${c.sign_token}`, '_blank');
   }
 
@@ -127,7 +161,7 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
       )}
 
       {/* Estado: RASCUNHO */}
-      {c.status === 'rascunho' && (
+      {status === 'rascunho' && (
         <div>
           <p style={{ fontSize: 13, color: '#6B6B66', fontFamily: 'var(--font-montserrat)', marginBottom: 12 }}>
             Gere o link de assinatura e envie ao paciente pelo WhatsApp.
@@ -150,11 +184,11 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
       )}
 
       {/* Estado: ENVIADO / VISUALIZADO */}
-      {(c.status === 'enviado' || c.status === 'visualizado') && signUrl && (
+      {(status === 'enviado' || status === 'visualizado') && signUrl && (
         <div>
           <div style={{ ...cardStyle, border: '1px solid rgba(96,165,250,0.2)' }}>
             <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 5, background: 'rgba(96,165,250,0.1)', color: '#60A5FA', fontFamily: 'var(--font-montserrat)', fontWeight: 600, display: 'inline-block', marginBottom: 10 }}>
-              {c.status === 'visualizado' ? 'Visualizado pelo paciente' : 'Aguardando assinatura'}
+              {status === 'visualizado' ? 'Visualizado pelo paciente' : 'Aguardando assinatura'}
             </span>
             <p style={labelSmall}>Link de assinatura</p>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -196,7 +230,7 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
               disabled={loading}
               style={{ marginTop: 10, padding: '9px 14px', borderRadius: 8, background: 'transparent', color: '#6B6B66', border: '1px solid rgba(138,138,147,0.2)', cursor: 'pointer', fontSize: 12, fontFamily: 'var(--font-montserrat)' }}
             >
-              Gerar novo link
+              ↺ Gerar novo link
             </button>
           )}
 
@@ -209,7 +243,7 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
       )}
 
       {/* Estado: ASSINADO */}
-      {c.status === 'assinado' && (
+      {status === 'assinado' && (
         <div>
           <div style={{ ...cardStyle, border: '1px solid rgba(74,222,128,0.25)', background: 'rgba(74,222,128,0.04)' }}>
             <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 5, background: 'rgba(74,222,128,0.12)', color: '#1F7A4D', fontFamily: 'var(--font-montserrat)', fontWeight: 600, display: 'inline-block', marginBottom: 12 }}>
@@ -255,7 +289,7 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
       )}
 
       {/* Estado: RECUSADO */}
-      {c.status === 'recusado' && (
+      {status === 'recusado' && (
         <div style={{ ...cardStyle, border: '1px solid rgba(248,113,113,0.25)' }}>
           <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 5, background: 'rgba(248,113,113,0.1)', color: '#C0392B', fontFamily: 'var(--font-montserrat)', fontWeight: 600, display: 'inline-block', marginBottom: 10 }}>
             Contrato recusado
@@ -280,8 +314,8 @@ export function PainelAssinatura({ contrato: c, onAtualizar }: Props) {
         </div>
       )}
 
-      {/* CANCELADO */}
-      {c.status === 'cancelado' && (
+      {/* Estado: CANCELADO */}
+      {status === 'cancelado' && (
         <div style={{ ...cardStyle }}>
           <span style={{ fontSize: 12, padding: '3px 10px', borderRadius: 5, background: 'rgba(138,138,147,0.1)', color: '#6B6B66', fontFamily: 'var(--font-montserrat)', fontWeight: 600 }}>
             Cancelado
